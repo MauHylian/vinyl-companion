@@ -4,47 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFEF">
+    android:background="#EBEBEB">
 
     <EditText
         android:id="@+id/emailEditLogin"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
+        style="@style/CustomFormTextView"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="168dp"
         android:layout_marginEnd="25dp"
-        android:background="#FFFFFF"
-        android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        style="@style/CustomFormTextView"
         android:id="@+id/passwordEditLogin"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:background="#FFFFFF"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_textview"
         android:ems="10"
         android:hint="Contraseña"
-        android:paddingLeft="20dp"
         android:inputType="textPassword"
+        android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="@+id/emailEditLogin"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/emailEditLogin"
         app:layout_constraintTop_toBottomOf="@+id/emailEditLogin" />
 
     <Button
+        style="@style/CustomButton"
         android:id="@+id/loginBtn"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="60dp"
-        android:text="Ingresar"
+        android:text="Iniciar sesión"
         app:layout_constraintEnd_toEndOf="@+id/passwordEditLogin"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/passwordEditLogin"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditLogin" />
 
@@ -52,9 +48,10 @@
         android:id="@+id/regresaRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Regresar a registro"
+        android:layout_marginTop="16dp"
+        android:text="¿No tienes cuenta? Registrate aquí"
         app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="@+id/loginBtn"
         app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 

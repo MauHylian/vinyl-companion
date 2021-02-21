@@ -8,17 +8,13 @@
     tools:context=".RegisterActivity" >
 
     <EditText
+        style="@style/CustomFormTextView"
         android:id="@+id/usernameEdit"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="188dp"
         android:layout_marginEnd="25dp"
-        android:background="#FFFFFF"
-        android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
-        android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,42 +22,33 @@
 
     <EditText
         android:id="@+id/emailEdit"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
+        style="@style/CustomFormTextView"
         android:layout_marginStart="25dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="25dp"
-        android:background="#FFFFFF"
-        android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameEdit" />
 
     <EditText
+        style="@style/CustomFormTextView"
         android:id="@+id/passwordEdit"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="25dp"
-        android:background="#FFFFFF"
-        android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        android:paddingLeft="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEdit" />
 
     <Button
+        style="@style/CustomButton"
         android:id="@+id/registerBtn"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
         android:layout_marginTop="60dp"
         android:text="Registrar"
         app:layout_constraintEnd_toEndOf="@+id/passwordEdit"
