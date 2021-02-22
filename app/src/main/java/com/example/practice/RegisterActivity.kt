@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
@@ -23,8 +24,7 @@ class RegisterActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.yaTienesCuenta).setOnClickListener {
             Log.d("RegisterActivity", "Login activity")
             // Launch login activity somehow
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            finish()
         }
     }
 

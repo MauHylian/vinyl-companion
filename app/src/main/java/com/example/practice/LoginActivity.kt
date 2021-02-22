@@ -1,5 +1,6 @@
 package com.example.practice
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
@@ -17,7 +19,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.regresaRegistro).setOnClickListener {
-            finish()
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
 
     }

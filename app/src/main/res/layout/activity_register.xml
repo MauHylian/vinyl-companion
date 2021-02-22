@@ -8,13 +8,14 @@
     tools:context=".RegisterActivity" >
 
     <EditText
-        style="@style/CustomFormTextView"
         android:id="@+id/usernameEdit"
+        style="@style/CustomFormTextView"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="188dp"
+        android:layout_marginTop="236dp"
         android:layout_marginEnd="25dp"
         android:hint="Username"
         android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,10 +48,11 @@
         app:layout_constraintTop_toBottomOf="@+id/emailEdit" />
 
     <Button
-        style="@style/CustomButton"
         android:id="@+id/registerBtn"
+        style="@style/CustomButton"
         android:layout_marginTop="60dp"
         android:text="Registrar"
+        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="@+id/passwordEdit"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/passwordEdit"

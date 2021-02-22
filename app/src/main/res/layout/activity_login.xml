@@ -10,12 +10,12 @@
         android:id="@+id/emailEditLogin"
         style="@style/CustomFormTextView"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="236dp"
         android:layout_marginEnd="25dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,8 +36,8 @@
         app:layout_constraintTop_toBottomOf="@+id/emailEditLogin" />
 
     <Button
-        style="@style/CustomButton"
         android:id="@+id/loginBtn"
+        style="@style/CustomButton"
         android:text="Iniciar sesión"
         app:layout_constraintEnd_toEndOf="@+id/passwordEditLogin"
         app:layout_constraintHorizontal_bias="0.0"
