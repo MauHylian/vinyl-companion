@@ -50,7 +50,8 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener {
                     if(!it.isSuccessful) return@addOnCompleteListener
                     // else if successful
-                    Log.d("LoginActivity", "Successful log-in with email: $email and password: $password and uis: ${it.result!!.user!!.uid}")
+                    // HERE: Cargar vista de página principal (Collection)
+                    //Log.d("LoginActivity", "Successful log-in with email: $email and password: $password and uis: ${it.result!!.user!!.uid}")
                 }
                 .addOnFailureListener {
                     Log.d("LoginActivity", "Failed to log user: ${it.message}")

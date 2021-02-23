@@ -47,9 +47,9 @@ class RegisterActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if(!it.isSuccessful) return@addOnCompleteListener
-
                     // else if successful
-                    Log.d("Main", "Successfully created user with uid: ${it.result!!.user!!.uid}")
+                    finish()
+                    //Log.d("Main", "Successfully created user with uid: ${it.result!!.user!!.uid}")
                 }
                 .addOnFailureListener {
                     Log.d("Main", "Failed to create user: ${it.message}")
