@@ -26,10 +26,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        findViewById<Button>(R.id.logOutBtn).setOnClickListener {
-            Firebase.auth.signOut()
-        }
-
     }
 
     private fun performLogin() {
@@ -49,8 +45,10 @@ class LoginActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
                     if(!it.isSuccessful) return@addOnCompleteListener
-                    // else if successful
-                    // HERE: Cargar vista de página principal (Collection)
+                    else {
+                        val intent = Intent(this, ScanActivity::class.java)
+                        startActivity(intent)
+                    }
                     //Log.d("LoginActivity", "Successful log-in with email: $email and password: $password and uis: ${it.result!!.user!!.uid}")
                 }
                 .addOnFailureListener {

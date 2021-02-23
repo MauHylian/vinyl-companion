@@ -16,6 +16,7 @@
         <activity android:name=".WebAuth"></activity>
         <activity android:name=".WebAuthPost"></activity>
         <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ScanActivity"></activity>
         <activity android:name=".LoginActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
