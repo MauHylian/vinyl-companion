@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "4119573785",
+    "project_id": "vinyl-companion",
+    "storage_bucket": "vinyl-companion.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4119573785:android:263d44fccefa29eefec188",
+        "android_client_info": {
+          "package_name": "com.example.practice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "4119573785-6utsgr76n8d9b82sc1q92i74rqrnpupf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAubX4UceHT1YDrcjFxPBhWRh1A-RzlYeg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "4119573785-6utsgr76n8d9b82sc1q92i74rqrnpupf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

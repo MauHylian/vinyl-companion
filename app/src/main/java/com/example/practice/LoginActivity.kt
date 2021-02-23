@@ -7,6 +7,9 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +24,10 @@ class LoginActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.regresaRegistro).setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.logOutBtn).setOnClickListener {
+            Firebase.auth.signOut()
         }
 
     }
@@ -39,16 +46,15 @@ class LoginActivity : AppCompatActivity() {
         Log.d("LoginActivity", "Contrasena es: $password")
 
         // FIREBASE AUTH
-        //FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-        //        .addOnCompleteListener {
-        //            if(!it.isSuccessful) return@addOnCompleteListener
-
-        //            // else if successful
-        //            Log.d("LoginActivity", "Successful log-in with email: $email and password: $password and uis: ${it.result!!.user!!.uid}")
-        //        }
-        //        .addOnFailureListener {
-        //            Log.d("LoginActivity", "Failed to log user: ${it.message}")
-        //            Toast.makeText(this, "Failed to log user: ${it.message}", Toast.LENGTH_SHORT).show()
-        //        }
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener {
+                    if(!it.isSuccessful) return@addOnCompleteListener
+                    // else if successful
+                    Log.d("LoginActivity", "Successful log-in with email: $email and password: $password and uis: ${it.result!!.user!!.uid}")
+                }
+                .addOnFailureListener {
+                    Log.d("LoginActivity", "Failed to log user: ${it.message}")
+                    Toast.makeText(this, "Failed to log user: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
     }
 }

@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,16 +44,16 @@ class RegisterActivity : AppCompatActivity() {
         Log.d("RegisterActivity", "Contrasena es: $password")
 
         // FIREBASE AUTH REGISTER
-        //FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-        //        .addOnCompleteListener {
-        //            if(!it.isSuccessful) return@addOnCompleteListener
-//
-        //            // else if successful
-        //            Log.d("Main", "Successfully created user with uid: ${it.result!!.user!!.uid}")
-        //        }
-        //        .addOnFailureListener {
-        //            Log.d("Main", "Failed to create user: ${it.message}")
-        //            Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
-        //        }
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener {
+                    if(!it.isSuccessful) return@addOnCompleteListener
+
+                    // else if successful
+                    Log.d("Main", "Successfully created user with uid: ${it.result!!.user!!.uid}")
+                }
+                .addOnFailureListener {
+                    Log.d("Main", "Failed to create user: ${it.message}")
+                    Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
     }
 }
