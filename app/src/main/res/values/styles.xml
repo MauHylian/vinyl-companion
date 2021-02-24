@@ -18,4 +18,13 @@
         <item name="android:ems">10</item>
         <item name="android:paddingLeft">20dp</item>
     </style>
+
+    <style name="TextViewForm">
+        <item name="android:background">@drawable/rounded_textview</item>
+        <item name="android:ems">10</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:hint">Texto</item>
+    </style>
 </resources>
