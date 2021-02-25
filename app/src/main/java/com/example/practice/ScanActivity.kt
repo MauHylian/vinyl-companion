@@ -22,7 +22,7 @@ class ScanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan)
 
-        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close )
+        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -31,13 +31,15 @@ class ScanActivity : AppCompatActivity() {
         // Send to different views
         navigationView.setNavigationItemSelectedListener {
             when(it.itemId) {
-                R.id.item1 -> Toast.makeText(applicationContext, "Clicked item 1", Toast.LENGTH_SHORT).show()
+                R.id.item1 -> Toast.makeText(applicationContext, "Escáner", Toast.LENGTH_SHORT).show()
                 R.id.item2 -> Toast.makeText(applicationContext, "Clicked item 2", Toast.LENGTH_SHORT).show()
                 R.id.item3 -> Toast.makeText(applicationContext, "Clicked item 3", Toast.LENGTH_SHORT).show()
                 R.id.item4 -> Toast.makeText(applicationContext, "Clicked item 4", Toast.LENGTH_SHORT).show()
                 R.id.item5 -> {
                     Firebase.auth.signOut()
-                    finish()
+                    val intent = Intent(applicationContext, LoginActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
                 }
             }
             true
@@ -65,6 +67,8 @@ class ScanActivity : AppCompatActivity() {
                     Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(this, "Scanned: ${result.contents}", Toast.LENGTH_LONG).show()
+                    val intent = Intent(this, AlbumActivity::class.java)
+                    startActivity(intent)
                 }
             } else {
                 super.onActivityResult(requestCode, resultCode, data)
