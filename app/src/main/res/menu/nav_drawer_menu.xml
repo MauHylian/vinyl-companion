@@ -3,22 +3,22 @@
 
     <item android:id="@+id/item1"
         android:icon="@drawable/ic_document_scanner_24px"
-        android:title="Scanner"/>
+        android:title="@string/escaner"/>
 
     <item android:id="@+id/item2"
         android:icon="@drawable/ic_collections_bookmark_24px"
-        android:title="Colección"/>
+        android:title="@string/coleccion"/>
 
     <item android:id="@+id/item3"
         android:icon="@drawable/ic_shopping_bag_24px"
-        android:title="Marketplace"/>
+        android:title="@string/mercado"/>
 
     <item android:id="@+id/item4"
         android:icon="@drawable/ic_settings_24px"
-        android:title="Ajustes"/>
+        android:title="@string/ajustes"/>
 
     <item android:id="@+id/item5"
         android:icon="@drawable/ic_logout_24px"
-        android:title="Logout"/>
+        android:title="@string/logout"/>
 
 </menu>
