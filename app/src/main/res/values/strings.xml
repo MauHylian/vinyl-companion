@@ -2,4 +2,11 @@
     <string name="app_name">Practice</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="anadir_coleccion">Añadir a la colección</string>
+    <string name="mas_info">Más información</string>
+    <string name="escaner">Escáner</string>
+    <string name="coleccion">Colección</string>
+    <string name="mercado">Marketplace</string>
+    <string name="ajustes">Ajustes</string>
+    <string name="logout">Cerrar sesión</string>
 </resources>
