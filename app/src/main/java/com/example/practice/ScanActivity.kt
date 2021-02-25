@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -14,49 +15,28 @@ import com.google.zxing.integration.android.IntentIntegrator
 
 import kotlinx.android.synthetic.main.activity_scan.* // Para que detecte el drawerLayout id
 
-class ScanActivity : AppCompatActivity() {
-
-    lateinit var toggle: ActionBarDrawerToggle
+class ScanActivity : BaseActivity() {
+    lateinit var editTextBarcode: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan)
 
-        toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
+        loadDrawer();
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        // Send to different views
-        navigationView.setNavigationItemSelectedListener {
-            when(it.itemId) {
-                R.id.item1 -> Toast.makeText(applicationContext, "Escáner", Toast.LENGTH_SHORT).show()
-                R.id.item2 -> Toast.makeText(applicationContext, "Clicked item 2", Toast.LENGTH_SHORT).show()
-                R.id.item3 -> Toast.makeText(applicationContext, "Clicked item 3", Toast.LENGTH_SHORT).show()
-                R.id.item4 -> Toast.makeText(applicationContext, "Clicked item 4", Toast.LENGTH_SHORT).show()
-                R.id.item5 -> {
-                    Firebase.auth.signOut()
-                    val intent = Intent(applicationContext, LoginActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(intent)
-                }
-            }
-            true
-        }
+        editTextBarcode = findViewById(R.id.editTextBarcode)
 
         findViewById<Button>(R.id.scanBtn).setOnClickListener {
-            val scanner = IntentIntegrator(this)
-            scanner.initiateScan()
+            if(editTextBarcode.text.toString().isNotEmpty()) {
+                val intent = Intent(this, AlbumActivity::class.java)
+                intent.putExtra("BARCODE", editTextBarcode.text.toString())
+                startActivity(intent)
+            } else {
+                val scanner = IntentIntegrator(this)
+                scanner.initiateScan()
+            }
         }
 
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item)) {
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
