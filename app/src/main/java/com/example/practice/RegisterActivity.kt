@@ -60,6 +60,5 @@ class RegisterActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
         }
-
     }
 }
