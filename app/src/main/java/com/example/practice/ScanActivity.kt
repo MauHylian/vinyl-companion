@@ -48,6 +48,7 @@ class ScanActivity : BaseActivity() {
                 } else {
                     Toast.makeText(this, "Scanned: ${result.contents}", Toast.LENGTH_LONG).show()
                     val intent = Intent(this, AlbumActivity::class.java)
+                    intent.putExtra("BARCODE", result.contents)
                     startActivity(intent)
                 }
             } else {
