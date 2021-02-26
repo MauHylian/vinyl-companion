@@ -1,21 +1,35 @@
 package com.example.practice.services
 
-import okhttp3.Callback
+import org.json.JSONObject
+import java.lang.Exception
 
+/**
+ * AlbumService class
+ */
 class AlbumService {
+    // TODO: Get services using singletons
     var oneMusicAPIService = OneMusicAPIService()
     var discogsService = DiscogsService()
 
-    fun getByBarcode(barcode : String, callback : Callback) {
-        oneMusicAPIService.get("release", mapOf("barcode" to barcode), callback)
-    }
-
+    /**
+     * Get album by barcode
+     * @param barcode
+     * @param onGetListener
+     */
     fun getByBarcode(barcode : String, onGetListener: BaseService.Companion.OnGetListener) {
-        oneMusicAPIService.get("release", mapOf("barcode" to barcode), onGetListener)
-    }
+        discogsService.get(mapOf("barcode" to barcode), object : BaseService.Companion.OnGetListener() {
+            override fun onGet(data: Any?, e: Exception?) {
+                if(e != null) return onGetListener.onGet(null, e)
 
-    fun getImage(barcode: String, callback : Callback) {
-        //return Picasso.get().load("$url?user_key=${oneMusicAPIService.userKey}")
-        //discogsService.get(mapOf("barcode" to barcode), callback)
+                var album = JSONObject()
+
+                if(data is JSONObject) {
+                    var results = data.getJSONArray("results")
+                    if(results.length() != 0) album = results.getJSONObject(0)
+                }
+
+                onGetListener.onGet(album)
+            }
+        })
     }
 }

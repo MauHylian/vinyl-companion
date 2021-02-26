@@ -6,6 +6,9 @@ import org.json.JSONObject
 import java.io.IOException
 import java.lang.Exception
 
+/**
+ * BaseService class
+ */
 open class BaseService {
     var client : OkHttpClient = OkHttpClient()
 
@@ -18,17 +21,28 @@ open class BaseService {
         }
     }
 
+    /**
+     * BaseService Constructor
+     */
     constructor(scheme : String, host : String) {
         this.scheme = scheme
         this.host = host
     }
 
+    /**
+     * Get base URL builder
+     */
     protected open fun getURLBuilder(): HttpUrl.Builder {
         return HttpUrl.Builder()
                 .scheme(scheme)
                 .host(host)
     }
 
+    /**
+     * Build URL
+     * @param path
+     * @param queryParameters
+     */
     protected fun buildURL(path : String?, queryParameters: Map<String, String>? = null) : String {
         var builder = getURLBuilder()
 
@@ -41,10 +55,21 @@ open class BaseService {
         return builder.build().toString();
     }
 
+    /**
+     * Enqueue passed request
+     * @param req
+     * @param callback
+     */
     protected fun enqueueRequest(req : Request, callback: Callback) {
         return client.newCall(req).enqueue(callback)
     }
 
+    /**
+     * Build new request
+     * @param path
+     * @param queryParameters
+     * @param method - HTTP Method
+     */
     protected fun buildRequest(path : String?, queryParameters : Map<String, String>, method : String = "GET", body: RequestBody? = null) : Request {
         var url = buildURL(path, queryParameters)
 
@@ -54,14 +79,32 @@ open class BaseService {
                 .build()
     }
 
+    /**
+     * Enqueue GET request
+     * @param path
+     * @param queryParameters
+     * @param callback
+     */
+    fun get(path: String?, queryParameters: Map<String, String>, callback: Callback) {
+        var req = buildRequest(path, queryParameters)
+        return enqueueRequest(req, callback)
+    }
+
+    /**
+     * Enqueue GET request
+     * @param queryParameters
+     * @param callback
+     */
     fun get(queryParameters: Map<String, String>, callback: Callback) {
         return get(null, queryParameters, callback)
     }
 
-    fun get(queryParameters: Map<String, String>, onGetListener: OnGetListener) {
-        return get(null, queryParameters, onGetListener)
-    }
-
+    /**
+     * Enqueue GET request
+     * @param path
+     * @param queryParameters
+     * @param onGetListener
+     */
     fun get(path: String?, queryParameters: Map<String, String>, onGetListener: OnGetListener) {
         return get(path, queryParameters,  object : Callback {
             override fun onFailure(call: Call, e: IOException) {
@@ -71,6 +114,7 @@ open class BaseService {
             override fun onResponse(call: Call, res: Response) {
                 if(!res.isSuccessful) {
                     // TODO: Handle error
+                    onGetListener.onGet(null, Exception(res.message))
                 } else if (res.body != null) {
                     var body = res.body!!.string()
                     var data : Any? = null
@@ -92,12 +136,20 @@ open class BaseService {
         })
     }
 
-
-    fun get(path: String?, queryParameters: Map<String, String>, callback: Callback) {
-        var req = buildRequest(path, queryParameters)
-        return enqueueRequest(req, callback)
+    /**
+     * Enqueue GET request
+     * @param queryParameters
+     * @param onGetListener
+     */
+    fun get(queryParameters: Map<String, String>, onGetListener: OnGetListener) {
+        return get(null, queryParameters, onGetListener)
     }
 
+    /**
+     * Enqueue POST request
+     * @param path
+     * @param queryParameters
+     */
     fun post(path : String, queryParameters: Map<String, String>, body: RequestBody?, callback: Callback) {
         var req = buildRequest(path, queryParameters, "POST", body)
         return enqueueRequest(req, callback)
