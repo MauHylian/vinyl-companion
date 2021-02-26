@@ -1,52 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EBEBEB">
+    android:background="#EBEBEB"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <EditText
         android:id="@+id/emailEditLogin"
         style="@style/CustomFormTextView"
-        android:layout_marginStart="25dp"
         android:layout_marginTop="236dp"
-        android:layout_marginEnd="25dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:text="cypo@gmail.com"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center"/>
 
     <EditText
         android:id="@+id/passwordEditLogin"
         style="@style/CustomFormTextView"
-        android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_textview"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPassword"
-        android:paddingLeft="20dp"
         android:text="testingpassword"
         app:layout_constraintEnd_toEndOf="@+id/emailEditLogin"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/emailEditLogin"
-        app:layout_constraintTop_toBottomOf="@+id/emailEditLogin" />
+        android:layout_gravity="center"/>
 
     <Button
         android:id="@+id/loginBtn"
         style="@style/CustomButton"
-        android:layout_width="300dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="40dp"
         android:text="Iniciar sesión"
         app:layout_constraintEnd_toEndOf="@+id/passwordEditLogin"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="@+id/passwordEditLogin"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditLogin" />
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/regresaRegistro"
@@ -54,9 +47,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="¿No tienes cuenta? Registrate aquí"
-        app:layout_constraintEnd_toEndOf="@+id/loginBtn"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="@+id/loginBtn"
-        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+        android:layout_gravity="center"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

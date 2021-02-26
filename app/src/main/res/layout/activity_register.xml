@@ -1,71 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFEF"
-    tools:context=".RegisterActivity" >
+    android:background="#EBEBEB"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
     <EditText
         android:id="@+id/usernameEdit"
         style="@style/CustomFormTextView"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="236dp"
-        android:layout_marginEnd="25dp"
-        android:hint="Username"
+        android:layout_marginTop="200dp"
+        android:hint="Usuario"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_gravity="center"/>
+
+    <EditText
+        android:id="@+id/emailEdit"
+        style="@style/CustomFormTextView"
+        android:layout_marginTop="16dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:layout_gravity="center"/>
 
     <EditText
         android:id="@+id/passwordEdit"
         style="@style/CustomFormTextView"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="25dp"
-        android:hint="Password"
+        android:layout_marginTop="16dp"
+        android:hint="Contraseña"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailEdit" />
+        android:layout_gravity="center"/>
 
-    <TextView
-        android:id="@+id/yaTienesCuenta"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="¿Ya tienes cuenta?"
-        app:layout_constraintEnd_toEndOf="@+id/registerBtn"
-        app:layout_constraintStart_toStartOf="@+id/registerBtn"
-        app:layout_constraintTop_toBottomOf="@+id/registerBtn" />
+    <EditText
+        android:id="@+id/confirmPasswordEdit"
+        style="@style/CustomFormTextView"
+        android:layout_marginTop="16dp"
+        android:hint="Confirmar contraseña"
+        android:inputType="textPassword"
+        android:layout_gravity="center"/>
+
 
     <Button
         android:id="@+id/registerBtn"
         style="@style/CustomButton"
         android:layout_width="300dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="40dp"
         android:text="Registrar"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/passwordEdit"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/passwordEdit"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEdit" />
+        android:layout_gravity="center"/>
 
-    <EditText
-        android:id="@+id/emailEdit"
-        style="@style/CustomFormTextView"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="25dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameEdit" />
+    <TextView
+        android:id="@+id/yaTienesCuenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="¿Ya tienes cuenta?"
+        android:layout_gravity="center"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
