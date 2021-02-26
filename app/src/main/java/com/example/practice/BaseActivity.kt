@@ -32,7 +32,10 @@ open class BaseActivity : AppCompatActivity() {
                 R.id.item4 -> Toast.makeText(applicationContext, "Clicked item 4", Toast.LENGTH_SHORT).show()
                 R.id.item5 -> {
                     Firebase.auth.signOut()
+                    val intent = Intent(applicationContext, LoginActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     finish()
+                    startActivity(intent)
                 }
             }
             true
