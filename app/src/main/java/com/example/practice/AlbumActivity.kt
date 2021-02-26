@@ -79,7 +79,7 @@ class AlbumActivity : BaseActivity() {
     }
 
     private fun fillAlbumImage(url : String) {
-        imageService.get(url)?.into(imageAlbum, object: com.squareup.picasso.Callback {
+        albumService.getImage(url)?.into(imageAlbum, object: com.squareup.picasso.Callback {
             override fun onSuccess() {
             }
 
