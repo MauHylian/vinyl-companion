@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Practice"
+        android:usesCleartextTraffic="true"
         >
         <activity android:name=".WebAuth" />
         <activity android:name=".WebAuthPost" />
