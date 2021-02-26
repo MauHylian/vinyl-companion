@@ -47,7 +47,6 @@ class AlbumActivity : BaseActivity() {
 
     private fun findViews() {
         textAlbum = findViewById(R.id.albumInfoName)
-        textArtist = findViewById(R.id.AlbumArtistGroup)
         textCountry = findViewById(R.id.albumCountry)
         textYear = findViewById(R.id.albumYear)
 
