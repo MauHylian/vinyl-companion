@@ -5,41 +5,51 @@ import okhttp3.*
 open class BaseService {
     var client : OkHttpClient = OkHttpClient()
 
-    var userKey = "8f5a18f191ce9e09607ad98b7aab77fe"
+    protected var scheme : String
+    protected var host : String
 
-    var scheme = "http"
-    var host = "api.onemusicapi.com"
-    var version = "20171116"
-
-    lateinit var endpoint : String
-
-    constructor(endpoint : String) {
-        this.endpoint = endpoint
+    constructor(scheme : String, host : String) {
+        this.scheme = scheme
+        this.host = host
     }
 
-    fun getUrlBuilder() : HttpUrl.Builder {
+    protected open fun getURLBuilder(): HttpUrl.Builder {
         return HttpUrl.Builder()
-            .scheme(scheme)
-            .host(host)
-            .addPathSegment(version)
-            .addPathSegment(endpoint)
-            .addQueryParameter("user_key", userKey)
+                .scheme(scheme)
+                .host(host)
     }
 
-    fun createRequest(urlBuilder :  HttpUrl.Builder) : Request {
-        var url = urlBuilder.build().toString()
+    protected fun buildURL(path : String, queryParameters: Map<String, String>? = null) : String {
+        var builder = getURLBuilder()
+                .addPathSegments(path)
 
-        return Request.Builder()
-            .url(url)
-            .build()
+        if(queryParameters != null)
+            for((name, value) in queryParameters)
+                builder.addQueryParameter(name, value)
+
+        return builder.build().toString();
     }
 
-    fun enqueueRequest(req : Request, callback : Callback) {
+    protected fun enqueueRequest(req : Request, callback: Callback) {
         return client.newCall(req).enqueue(callback)
     }
 
-    fun enqueueRequest(urlBuilder: HttpUrl.Builder, callback: Callback) {
-        var req = createRequest(urlBuilder)
+    protected fun buildRequest(path : String, queryParameters : Map<String, String>, method : String = "GET", body: RequestBody? = null) : Request {
+        var url = buildURL(path, queryParameters)
+
+        return Request.Builder()
+                .method(method, body)
+                .url(url)
+                .build()
+    }
+
+    fun get(path : String, queryParameters: Map<String, String>, callback: Callback) {
+        var req = buildRequest(path, queryParameters)
+        return enqueueRequest(req, callback)
+    }
+
+    fun post(path : String, queryParameters: Map<String, String>, body: RequestBody?, callback: Callback) {
+        var req = buildRequest(path, queryParameters, "POST", body)
         return enqueueRequest(req, callback)
     }
 }

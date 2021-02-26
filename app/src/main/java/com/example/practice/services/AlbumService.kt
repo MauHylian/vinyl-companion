@@ -4,13 +4,9 @@ import okhttp3.Callback
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator
 
-class AlbumService : ReleaseService() {
+class AlbumService : OneMusicAPIService() {
     fun getByBarcode(barcode : String, callback : Callback) {
-        var urlBuilder = getUrlBuilder()
-        urlBuilder.addQueryParameter("barcode", barcode)
-        urlBuilder.addQueryParameter("inc", "images")
-
-        return enqueueRequest(urlBuilder, callback)
+        get("release", mapOf("barcode" to barcode), callback)
     }
 
     fun getImage(url : String): RequestCreator? {

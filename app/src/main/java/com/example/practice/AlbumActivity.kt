@@ -8,7 +8,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.practice.services.AlbumService
-import com.example.practice.services.ImageService
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
@@ -18,7 +17,6 @@ import java.io.IOException
 
 class AlbumActivity : BaseActivity() {
     var albumService = AlbumService()
-    var imageService = ImageService()
 
     lateinit var textAlbum : TextView
     lateinit var textArtist : TextView
