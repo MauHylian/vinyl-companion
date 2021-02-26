@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.practice.services.AlbumService
+import com.example.practice.services.BaseService
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
@@ -77,15 +78,6 @@ class AlbumActivity : BaseActivity() {
     }
 
     private fun fillAlbumImage(url : String) {
-        albumService.getImage(url)?.into(imageAlbum, object: com.squareup.picasso.Callback {
-            override fun onSuccess() {
-            }
-
-            override fun onError(e: java.lang.Exception?) {
-                // TODO: Handle error
-            }
-
-        })
     }
 
     private fun onFindAlbum(albumArray: JSONArray) {
@@ -102,24 +94,14 @@ class AlbumActivity : BaseActivity() {
         var barcode = getBarcode();
 
         if(barcode != null) {
-            albumService.getByBarcode(barcode, object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    print(e.toString())
-                }
-
-                override fun onResponse(call: Call, response: Response) {
-                    if (response.isSuccessful) {
-                        try {
-                            var body = response.body?.string().toString()
-                            var albumArray = JSONArray(body)
-
-                            this@AlbumActivity.runOnUiThread(Runnable {
-                                onFindAlbum(albumArray)
-                            })
-                        } catch (e: Exception) {
-                            Log.e("AlbumActivity", e.toString())
-                            // TODO :Handle error
-                        }
+            albumService.getByBarcode(barcode, object : BaseService.Companion.OnGetListener() {
+                override fun onGet(data: Any?, e: java.lang.Exception?) {
+                    if(e != null) {
+                        // TODO: Handle error
+                    } else if (data is JSONArray) {
+                        this@AlbumActivity.runOnUiThread(Runnable {
+                            onFindAlbum(data)
+                        })
                     }
                 }
             })

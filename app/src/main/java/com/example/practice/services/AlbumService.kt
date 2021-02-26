@@ -1,15 +1,21 @@
 package com.example.practice.services
 
 import okhttp3.Callback
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.RequestCreator
 
-class AlbumService : OneMusicAPIService() {
+class AlbumService {
+    var oneMusicAPIService = OneMusicAPIService()
+    var discogsService = DiscogsService()
+
     fun getByBarcode(barcode : String, callback : Callback) {
-        get("release", mapOf("barcode" to barcode), callback)
+        oneMusicAPIService.get("release", mapOf("barcode" to barcode), callback)
     }
 
-    fun getImage(url : String): RequestCreator? {
-        return Picasso.get().load("$url?user_key=$userKey")
+    fun getByBarcode(barcode : String, onGetListener: BaseService.Companion.OnGetListener) {
+        oneMusicAPIService.get("release", mapOf("barcode" to barcode), onGetListener)
+    }
+
+    fun getImage(barcode: String, callback : Callback) {
+        //return Picasso.get().load("$url?user_key=${oneMusicAPIService.userKey}")
+        //discogsService.get(mapOf("barcode" to barcode), callback)
     }
 }

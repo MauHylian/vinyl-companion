@@ -1,12 +1,22 @@
 package com.example.practice.services
 
 import okhttp3.*
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.IOException
+import java.lang.Exception
 
 open class BaseService {
     var client : OkHttpClient = OkHttpClient()
 
     protected var scheme : String
     protected var host : String
+
+    companion object {
+        abstract class OnGetListener {
+            abstract fun onGet(data : Any?, e : Exception? = null)
+        }
+    }
 
     constructor(scheme : String, host : String) {
         this.scheme = scheme
@@ -19,9 +29,10 @@ open class BaseService {
                 .host(host)
     }
 
-    protected fun buildURL(path : String, queryParameters: Map<String, String>? = null) : String {
+    protected fun buildURL(path : String?, queryParameters: Map<String, String>? = null) : String {
         var builder = getURLBuilder()
-                .addPathSegments(path)
+
+        if(path != null) builder.addPathSegments(path)
 
         if(queryParameters != null)
             for((name, value) in queryParameters)
@@ -34,7 +45,7 @@ open class BaseService {
         return client.newCall(req).enqueue(callback)
     }
 
-    protected fun buildRequest(path : String, queryParameters : Map<String, String>, method : String = "GET", body: RequestBody? = null) : Request {
+    protected fun buildRequest(path : String?, queryParameters : Map<String, String>, method : String = "GET", body: RequestBody? = null) : Request {
         var url = buildURL(path, queryParameters)
 
         return Request.Builder()
@@ -43,7 +54,46 @@ open class BaseService {
                 .build()
     }
 
-    fun get(path : String, queryParameters: Map<String, String>, callback: Callback) {
+    fun get(queryParameters: Map<String, String>, callback: Callback) {
+        return get(null, queryParameters, callback)
+    }
+
+    fun get(queryParameters: Map<String, String>, onGetListener: OnGetListener) {
+        return get(null, queryParameters, onGetListener)
+    }
+
+    fun get(path: String?, queryParameters: Map<String, String>, onGetListener: OnGetListener) {
+        return get(path, queryParameters,  object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                onGetListener.onGet(null, e)
+            }
+
+            override fun onResponse(call: Call, res: Response) {
+                if(!res.isSuccessful) {
+                    // TODO: Handle error
+                } else if (res.body != null) {
+                    var body = res.body!!.string()
+                    var data : Any? = null
+
+                    try {
+                        data = JSONArray(body)
+                    } catch (e : Exception) { }
+
+                    try {
+                        if(data == null) data = JSONObject(body)
+                    } catch (e : Exception) {
+                        // TODO: Handle unknown body type error
+                    }
+
+                    onGetListener.onGet(data, null)
+                }
+            }
+
+        })
+    }
+
+
+    fun get(path: String?, queryParameters: Map<String, String>, callback: Callback) {
         var req = buildRequest(path, queryParameters)
         return enqueueRequest(req, callback)
     }
