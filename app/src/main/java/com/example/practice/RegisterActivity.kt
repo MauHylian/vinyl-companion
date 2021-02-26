@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,21 +40,26 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        Log.d("RegisterActivity", "Username es: $password")
-        Log.d("RegisterActivity", "Email es: $email")
-        Log.d("RegisterActivity", "Contrasena es: $password")
+        if(passwordEdit.text.toString() == confirmPasswordEdit.text.toString()) {
+            Log.d("RegisterActivity", "Username es: $password")
+            Log.d("RegisterActivity", "Email es: $email")
+            Log.d("RegisterActivity", "Contrasena es: $password")
 
-        // FIREBASE AUTH REGISTER
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener {
-                    if(!it.isSuccessful) return@addOnCompleteListener
-                    // else if successful
-                    finish()
-                    //Log.d("Main", "Successfully created user with uid: ${it.result!!.user!!.uid}")
-                }
-                .addOnFailureListener {
-                    Log.d("Main", "Failed to create user: ${it.message}")
-                    Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
-                }
+            // FIREBASE AUTH REGISTER
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener {
+                        if(!it.isSuccessful) return@addOnCompleteListener
+                        // else if successful
+                        finish()
+                        //Log.d("Main", "Successfully created user with uid: ${it.result!!.user!!.uid}")
+                    }
+                    .addOnFailureListener {
+                        Log.d("Main", "Failed to create user: ${it.message}")
+                        Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
+                    }
+        } else {
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
+        }
+
     }
 }
