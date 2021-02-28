@@ -33,7 +33,7 @@
                 android:layout_marginBottom="16dp"
                 android:hint="Codigo de barras" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/scanBtn"
                 style="@style/CustomButton"
                 android:layout_width="300dp"
@@ -74,7 +74,7 @@
                 android:layout_marginBottom="20dp"
                 android:hint="Artista o grupo" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/searchAlbumBtn"
                 style="@style/CustomButton"
                 android:layout_width="300dp"

@@ -1,22 +1,57 @@
 package com.example.practice
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_scan.*
 
+
 open class BaseActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
 
     fun loadDrawer() {
+
+        // Define ActionBar object
+        // Define ActionBar object
+        val actionBar: ActionBar? = supportActionBar
+
+        // Define ColorDrawable object and parse color
+        // using parseColor method
+        // with color hash code as its parameter
+
+        // Define ColorDrawable object and parse color
+        // using parseColor method
+        // with color hash code as its parameter
+        val colorDrawable = ColorDrawable(Color.parseColor("#FFFFFF"))
+
+        // Set BackgroundDrawable
+
+        // Set BackgroundDrawable
+        if (actionBar != null) {
+            actionBar.setBackgroundDrawable(colorDrawable) // Changes action bar color
+            //actionBar.setTitle(Html.fromHtml("<font color='#000000'>${this::class.java.simpleName}</font>"));
+
+            // Changes action bar title color
+            val text: Spannable = SpannableString(actionBar.title)
+            text.setSpan(ForegroundColorSpan(Color.DKGRAY), 0, text.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+            actionBar.title = text
+        }
+
         // Menú desplegable
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+        toggle.drawerArrowDrawable.color = resources.getColor(R.color.black); // Changes hamburger icon color
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -28,7 +63,10 @@ open class BaseActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.item2 -> Toast.makeText(applicationContext, "Clicked item 2", Toast.LENGTH_SHORT).show()
-                R.id.item3 -> Toast.makeText(applicationContext, "Clicked item 3", Toast.LENGTH_SHORT).show()
+                R.id.item3 -> {
+                    val intent = Intent(this, MarketActivity::class.java)
+                    startActivity(intent)
+                }
                 R.id.item4 -> Toast.makeText(applicationContext, "Clicked item 4", Toast.LENGTH_SHORT).show()
                 R.id.item5 -> {
                     Firebase.auth.signOut()

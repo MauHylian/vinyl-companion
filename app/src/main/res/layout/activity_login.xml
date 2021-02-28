@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="@+id/emailEditLogin"
         android:layout_gravity="center"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginBtn"
         style="@style/CustomButton"
         android:layout_marginTop="40dp"

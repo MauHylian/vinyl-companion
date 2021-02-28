@@ -27,5 +27,7 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".AlbumActivity" android:label="Album"/>
+        <activity android:name=".MarketActivity" android:label="Marketplace" />
+        <activity android:name=".ProductActivity" android:label="Información del producto"/>
     </application>
 </manifest>

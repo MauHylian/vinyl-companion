@@ -51,7 +51,7 @@
         android:text="Año"
         android:textSize="20sp" />
 
-    <Button
+        <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addToCollection"
         style="@style/CustomButton"
         android:layout_width="wrap_content"
@@ -60,7 +60,7 @@
         android:layout_marginBottom="15dp"
         android:text="@string/anadir_coleccion" />
 
-    <Button
+        <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/moreInfo"
         style="@style/CustomButton"
         android:layout_width="wrap_content"

@@ -40,7 +40,7 @@
         android:layout_gravity="center"/>
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/registerBtn"
         style="@style/CustomButton"
         android:layout_width="300dp"

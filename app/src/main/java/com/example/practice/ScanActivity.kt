@@ -22,6 +22,7 @@ class ScanActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan)
 
+        actionBar?.title = "Escaner"
         loadDrawer();
 
         editTextBarcode = findViewById(R.id.editTextBarcode)

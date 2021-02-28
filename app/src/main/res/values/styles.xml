@@ -28,4 +28,14 @@
         <item name="android:layout_height">50dp</item>
         <item name="android:hint">Texto</item>
     </style>
+
+    <style name="DescriptionBox">
+        <item name="android:background">@drawable/description_text</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:ems">10</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:hint">Texto</item>
+    </style>
 </resources>
