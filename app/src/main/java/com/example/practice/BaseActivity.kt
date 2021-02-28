@@ -77,7 +77,10 @@ abstract class BaseActivity : AppCompatActivity() {
                     val intent = Intent(this, ScanActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.item2 -> Toast.makeText(applicationContext, "Clicked item 2", Toast.LENGTH_SHORT).show()
+                R.id.item2 -> {
+                    val intent = Intent(this, CollectionActivity::class.java)
+                    startActivity(intent)
+                }
                 R.id.item3 -> {
                     val intent = Intent(this, MarketActivity::class.java)
                     startActivity(intent)

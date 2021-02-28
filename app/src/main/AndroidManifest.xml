@@ -29,5 +29,6 @@
         <activity android:name=".AlbumActivity" android:label="Album"/>
         <activity android:name=".MarketActivity" android:label="Marketplace" />
         <activity android:name=".ProductActivity" android:label="Información del producto"/>
+        <activity android:name=".CollectionActivity" android:label="Colección" />
     </application>
 </manifest>
