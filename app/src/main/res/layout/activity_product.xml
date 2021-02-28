@@ -24,7 +24,7 @@
         style="@style/TextViewForm"
         android:id="@+id/albumTitle"
         android:inputType="textPersonName"
-        android:hint="Título del album"
+        android:hint="@string/t_tulo_del_album"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"/>
 
@@ -41,7 +41,7 @@
         style="@style/TextViewForm"
         android:id="@+id/albumArtist"
         android:inputType="textPersonName"
-        android:hint="Artista o grupo"
+        android:hint="@string/artista_o_grupo"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"/>
 
@@ -49,7 +49,7 @@
         style="@style/TextViewForm"
         android:id="@+id/albumReleaseCountry"
         android:inputType="textPersonName"
-        android:hint="País del album"
+        android:hint="@string/pais_del_album"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"/>
 
@@ -57,7 +57,7 @@
         style="@style/TextViewForm"
         android:id="@+id/albumReleaseYear"
         android:inputType="textPersonName"
-        android:hint="Año de salida"
+        android:hint="@string/ano_de_salida"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"/>
 
@@ -66,7 +66,7 @@
         android:id="@+id/albumPrice"
         android:ems="10"
         android:inputType="number"
-        android:hint="Precio"
+        android:hint="@string/precio"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"/>
 
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="40dp"
-        android:text="Publicar" />
+        android:text="@string/publicar" />
 
     <!-- Ubicacion del vendedor -->
 

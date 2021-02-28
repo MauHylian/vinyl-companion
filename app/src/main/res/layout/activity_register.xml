@@ -11,7 +11,7 @@
         android:id="@+id/usernameEdit"
         style="@style/CustomFormTextView"
         android:layout_marginTop="200dp"
-        android:hint="Usuario"
+        android:hint="@string/usuario"
         android:inputType="textPersonName"
         android:layout_gravity="center"/>
 
@@ -19,7 +19,7 @@
         android:id="@+id/emailEdit"
         style="@style/CustomFormTextView"
         android:layout_marginTop="16dp"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:layout_gravity="center"/>
 
@@ -27,7 +27,7 @@
         android:id="@+id/passwordEdit"
         style="@style/CustomFormTextView"
         android:layout_marginTop="16dp"
-        android:hint="Contraseña"
+        android:hint="@string/contrase_a"
         android:inputType="textPassword"
         android:layout_gravity="center"/>
 
@@ -35,7 +35,7 @@
         android:id="@+id/confirmPasswordEdit"
         style="@style/CustomFormTextView"
         android:layout_marginTop="16dp"
-        android:hint="Confirmar contraseña"
+        android:hint="@string/confirmar_contrasena"
         android:inputType="textPassword"
         android:layout_gravity="center"/>
 
@@ -45,7 +45,7 @@
         style="@style/CustomButton"
         android:layout_width="300dp"
         android:layout_marginTop="40dp"
-        android:text="Registrar"
+        android:text="@string/registrar"
         android:textColor="#FFFFFF"
         android:layout_gravity="center"/>
 
@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="¿Ya tienes cuenta?"
+        android:text="@string/ya_tienes_cuenta"
         android:layout_gravity="center"/>
 
 </LinearLayout>

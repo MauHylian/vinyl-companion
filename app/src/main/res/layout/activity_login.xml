@@ -12,7 +12,7 @@
         android:id="@+id/emailEditLogin"
         style="@style/CustomFormTextView"
         android:layout_marginTop="236dp"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:text="cypo@gmail.com"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_textview"
         android:ems="10"
-        android:hint="Contraseña"
+        android:hint="@string/contrase_a"
         android:inputType="textPassword"
         android:text="testingpassword"
         app:layout_constraintEnd_toEndOf="@+id/emailEditLogin"
@@ -35,7 +35,7 @@
         android:id="@+id/loginBtn"
         style="@style/CustomButton"
         android:layout_marginTop="40dp"
-        android:text="Iniciar sesión"
+        android:text="@string/iniciar_sesi_n"
         app:layout_constraintEnd_toEndOf="@+id/passwordEditLogin"
         android:layout_gravity="center"/>
 
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="¿No tienes cuenta? Registrate aquí"
+        android:text="@string/no_tienes_cuenta_registrate_aqu"
         android:layout_gravity="center"/>
 
 </LinearLayout>
