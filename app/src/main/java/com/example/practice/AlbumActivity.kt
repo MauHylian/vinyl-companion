@@ -15,8 +15,6 @@ import com.squareup.picasso.Picasso
 class AlbumActivity : BaseActivity() {
     var albumService = AlbumService()
 
-    lateinit var albumURI : String
-
     lateinit var textAlbum : TextView
     lateinit var textArtist : TextView
     lateinit var textCountry : TextView
@@ -24,36 +22,87 @@ class AlbumActivity : BaseActivity() {
 
     lateinit var imageAlbum : ImageView
 
+    var albumURI : String? = null
+
+    /**
+     * Get layout resource ID
+     */
     override fun getLayoutResourceID(): Int {
         return R.layout.activity_album
     }
 
+    /**
+     * Find views and set listeners
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        findViews();
-
-        findAlbum();
-
-        findViewById<Button>(R.id.moreInfo).setOnClickListener {
-            try {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(albumURI))
-                startActivity(browserIntent)
-            } catch(e : Exception) {
-                // TODO: Handle error
-                Log.e("AlbumActivity", "Failed to start browser", e)
-            }
-        }
-    }
-
-    private fun findViews() {
         textAlbum = findViewById(R.id.albumInfoName)
         textCountry = findViewById(R.id.albumCountry)
         textYear = findViewById(R.id.albumYear)
 
         imageAlbum = findViewById(R.id.albumCover)
+
+        findViewById<Button>(R.id.moreInfo).setOnClickListener { onClickMoreInfo() }
     }
 
+    /**
+     * Clear previous album (if any) and find album
+     */
+    override fun onStart() {
+        super.onStart()
+
+        clearAlbum()
+        findAlbum()
+    }
+
+    /**
+     * Get barcode from intent extras
+     */
+    private fun getBarcode(): String? {
+        val extras = intent.extras
+
+        var barcode : String? = null
+        if (extras != null) barcode = extras.getString("BARCODE")
+
+        return barcode
+    }
+
+    /**
+     * Load album uri on browser
+     */
+    private fun onClickMoreInfo() {
+        if(albumURI == null || albumURI!!.isEmpty()) return;
+
+        try {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(albumURI))
+            startActivity(browserIntent)
+        } catch(e : Exception) {
+            // TODO: Handle error
+            Log.e("AlbumActivity", "Failed to start browser", e)
+        }
+    }
+
+    /**
+     * Clear album views
+     */
+    private fun clearAlbum() {
+        textAlbum.text = ""
+        textYear.text = ""
+        textCountry.text = ""
+
+        try {
+            imageAlbum.setImageResource(android.R.color.transparent)
+        } catch(e : Exception) {
+            Log.e("AlbumActivity", "Failed to clear album image view", e)
+        }
+
+        albumURI = ""
+    }
+
+    /**
+     * Fill album views
+     */
     private fun fillAlbum(album: JSONObject) {
         try {
             if(album.has("title"))
@@ -75,14 +124,16 @@ class AlbumActivity : BaseActivity() {
         }
     }
 
+    /**
+     * Fill album image view
+     */
     private fun fillAlbumImage(url : String) {
         Picasso.get().load(url).into(imageAlbum)
     }
 
-    private fun onFindAlbum(album: JSONObject) {
-        fillAlbum(album)
-    }
-
+    /**
+     * Find album with barcode
+     */
     private fun findAlbum() {
         var barcode = getBarcode();
 
@@ -92,19 +143,10 @@ class AlbumActivity : BaseActivity() {
                     if(e != null) return  // TODO: Handle error
 
                     this@AlbumActivity.runOnUiThread(Runnable {
-                        onFindAlbum(data as JSONObject)
+                        fillAlbum(data as JSONObject)
                     })
                 }
             })
         }
-    }
-
-    private fun getBarcode(): String? {
-        val extras = intent.extras
-
-        var barcode : String? = null
-        if (extras != null) barcode = extras.getString("BARCODE")
-
-        return barcode
     }
 }
