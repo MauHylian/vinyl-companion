@@ -3,6 +3,8 @@ package com.example.practice
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -16,10 +18,25 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_scan.*
 
 
-open class BaseActivity : AppCompatActivity() {
+/**
+ * BaseActivity class
+ */
+abstract class BaseActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
 
-    fun loadDrawer() {
+    /**
+     * Get layout resource ID
+     */
+    protected abstract fun getLayoutResourceID() : Int
+
+    /**
+     * On Create
+     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(getLayoutResourceID())
+
+        // TODO: Separate in different functions
 
         // Define ActionBar object
         // Define ActionBar object
@@ -33,8 +50,6 @@ open class BaseActivity : AppCompatActivity() {
         // using parseColor method
         // with color hash code as its parameter
         val colorDrawable = ColorDrawable(Color.parseColor("#FFFFFF"))
-
-        // Set BackgroundDrawable
 
         // Set BackgroundDrawable
         if (actionBar != null) {
@@ -80,7 +95,9 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    // Menú desplegable
+    /**
+     * Menú desplegable
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(toggle.onOptionsItemSelected(item)) {
             return true

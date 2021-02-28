@@ -24,11 +24,12 @@ class AlbumActivity : BaseActivity() {
 
     lateinit var imageAlbum : ImageView
 
+    override fun getLayoutResourceID(): Int {
+        return R.layout.activity_album
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_album)
-
-        loadDrawer();
 
         findViews();
 

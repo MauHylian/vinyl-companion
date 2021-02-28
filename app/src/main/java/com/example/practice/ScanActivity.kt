@@ -3,27 +3,21 @@ package com.example.practice
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import com.google.zxing.integration.android.IntentIntegrator
-
-import kotlinx.android.synthetic.main.activity_scan.* // Para que detecte el drawerLayout id
 
 class ScanActivity : BaseActivity() {
     lateinit var editTextBarcode: EditText
+    override fun getLayoutResourceID(): Int {
+        return R.layout.activity_scan
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_scan)
 
         actionBar?.title = "Escaner"
-        loadDrawer();
 
         editTextBarcode = findViewById(R.id.editTextBarcode)
 
