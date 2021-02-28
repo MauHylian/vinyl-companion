@@ -11,12 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
+            android:paddingHorizontal="35dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="150dp"
@@ -28,32 +26,15 @@
             <EditText
                 android:id="@+id/editTextBarcode"
                 style="@style/TextViewForm"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
                 android:hint="@string/codigo_de_barras" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/scanBtn"
-                style="@style/CustomButton"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="40dp"
-                android:text="@string/scan" />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="350dp"
-                android:layout_height="1dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="40dp"
-                android:background="?android:attr/listDivider" />
-
             <EditText
                 android:id="@+id/albumName"
                 style="@style/TextViewForm"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
                 android:hint="@string/nombre_del_album" />
@@ -61,7 +42,7 @@
             <EditText
                 android:id="@+id/releaseYear"
                 style="@style/TextViewForm"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
                 android:hint="@string/ano_de_lanzamiento" />
@@ -69,7 +50,7 @@
             <EditText
                 android:id="@+id/artistGroup"
                 style="@style/TextViewForm"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:hint="@string/artista_o_grupo" />
@@ -77,10 +58,28 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/searchAlbumBtn"
                 style="@style/CustomButton"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
                 android:text="@string/buscar" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"
+                android:textSize="21sp"
+                android:hint="ó">
+            </TextView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/scanBtn"
+                style="@style/CustomButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/scan" />
         </LinearLayout>
     </ScrollView>
 
