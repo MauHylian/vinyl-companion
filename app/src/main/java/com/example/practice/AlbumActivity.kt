@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,6 +12,7 @@ import com.example.practice.services.AlbumService
 import com.example.practice.services.BaseService
 import org.json.JSONObject
 import com.squareup.picasso.Picasso
+import java.io.Serializable
 
 class AlbumActivity : BaseActivity() {
     var albumService = AlbumService()
@@ -23,6 +25,8 @@ class AlbumActivity : BaseActivity() {
     lateinit var imageAlbum : ImageView
 
     var albumURI : String? = null
+
+    var album : JSONObject? = null
 
     /**
      * Get layout resource ID
@@ -43,6 +47,7 @@ class AlbumActivity : BaseActivity() {
 
         imageAlbum = findViewById(R.id.albumCover)
 
+        findViewById<Button>(R.id.addToCollection).setOnClickListener { onClickAddToCollection() }
         findViewById<Button>(R.id.moreInfo).setOnClickListener { onClickMoreInfo() }
     }
 
@@ -66,6 +71,16 @@ class AlbumActivity : BaseActivity() {
         if (extras != null) barcode = extras.getString("BARCODE")
 
         return barcode
+    }
+
+    /**
+     * Launch collection activity
+     */
+    private fun onClickAddToCollection() {
+        val intent = Intent(this, CollectionActivity::class.java)
+        if (album != null)
+            intent.putExtra("ALBUM", album.toString())
+        startActivity(intent)
     }
 
     /**
@@ -98,12 +113,15 @@ class AlbumActivity : BaseActivity() {
         }
 
         albumURI = ""
+        album = null
     }
 
     /**
      * Fill album views
      */
     private fun fillAlbum(album: JSONObject) {
+        this.album = album
+
         try {
             if(album.has("title"))
                 textAlbum.text = album.getString("title")
