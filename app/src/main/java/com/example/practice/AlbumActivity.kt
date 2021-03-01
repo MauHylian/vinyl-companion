@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,8 +11,10 @@ import com.example.practice.services.AlbumService
 import com.example.practice.services.BaseService
 import org.json.JSONObject
 import com.squareup.picasso.Picasso
-import java.io.Serializable
 
+/**
+ * AlbumActivity class
+ */
 class AlbumActivity : BaseActivity() {
     var albumService = AlbumService()
 

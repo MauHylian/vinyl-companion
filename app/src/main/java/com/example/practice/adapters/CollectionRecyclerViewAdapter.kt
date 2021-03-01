@@ -1,6 +1,8 @@
 package com.example.practice.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,69 +10,110 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
-import org.json.JSONArray
 import org.json.JSONObject
+import com.squareup.picasso.Picasso
 import java.lang.Exception
 
-class CollectionRecyclerViewAdapter(internal var context : Context, internal var collection: MutableList<JSONObject>) : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>() {
-
+/**
+ * CollectionRecyclerViewAdapter class
+ */
+class CollectionRecyclerViewAdapter(
+        private var context : Context,
+        private var collection: MutableList<JSONObject>)
+    : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>()
+{
+    /**
+     * ViewHolder class
+     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        //var albumCover: ImageView
-        var albumName: TextView
-        var textFormat: TextView
-        var nameFormat: TextView
-        var descriptionA: TextView
-        var descriptionB: TextView
-        var year: TextView
-        var country: TextView
+        var cover: ImageView
 
+        var title: TextView
+        var format: TextView
+        var description: TextView
+        var yearAndCountry: TextView
+
+        /**
+         * Constructor???
+         */
         init {
-            //albumCover = view.findViewById(R.id.albumCover)
-            albumName = view.findViewById(R.id.artistAndAlbum)
-            textFormat = view.findViewById(R.id.textFormat)
-            nameFormat = view.findViewById(R.id.nameFormat)
-            descriptionA = view.findViewById(R.id.descriptionA)
-            descriptionB = view.findViewById(R.id.descriptionB)
-            year = view.findViewById(R.id.year)
-            country = view.findViewById(R.id.country)
+            cover = view.findViewById(R.id.cover)
+            title = view.findViewById(R.id.title)
+            format = view.findViewById(R.id.format)
+            description = view.findViewById(R.id.description)
+            yearAndCountry = view.findViewById(R.id.yearAndCountry)
+        }
+
+        /**
+         * Bind album data to views
+         */
+        @SuppressLint("SetTextI18n")
+        fun bind(album : JSONObject) {
+            // Title
+            if(album.has("title"))
+                title.text = album.getString("title")
+
+            // Year Country
+            if(album.has("year") && album.has("country"))
+                yearAndCountry.text = "${album.getString("year")} ${album.getString("country")}"
+
+            // Cover
+            try {
+                if(album.has("cover_image"))
+                    Picasso.get().load(album.getString("cover_image")).into(cover)
+            } catch (e : Exception) {
+                Log.e("CollectionRecyclerViewAdapter", "Failed to get cover image", e)
+            }
+
+            // Format text Format name
+            // Descriptions
+            if(album.has("formats")) {
+                var formats = album.getJSONArray("formats")
+                if(formats.length() > 0) {
+                    var value = formats.getJSONObject(0)
+
+                    // Format text Format name
+                    if(value.has("text") && value.has("name"))
+                        format.text = "${value.getString("text")} ${value.getString("name")}"
+
+                    // Descriptions
+                    if(value.has("descriptions")) {
+                        var text = ""
+
+                        var descs = value.getJSONArray("descriptions")
+
+                        var size = descs.length()
+                        for(i in 0 until size - 1)
+                            text += descs.getString(i) + ", "
+                        text += descs.getString(size - 1)
+
+                        description.text = text
+                    }
+                }
+            }
         }
     }
 
+    /**
+     * Create view holder
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.collection_item, parent, false)
 
         return ViewHolder(view)
     }
 
+    /**
+     * Bind view holder listener
+     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var album : JSONObject = collection.get(position)
-        var format : JSONArray = album.getJSONArray("format")
-        var formats : JSONObject? = null
-
-        try {
-            formats = album.getJSONArray("formats").getJSONObject(0)
-        } catch (e : Exception) {
-            // TODO: Handle null formats
-        }
-
-        // TODO: Add album.has and format.has check
-
-        // holder.albumCover
-        holder.albumName.text = album.getString("title")
-
-        //if (formats != null) {
-        //    holder.textFormat.text = formats.getString("text")
-        //    holder.nameFormat.text = formats.getString("name")
-        //}
-
-        // TODO: Get format information
-
-        holder.year.text = album.getString("year")
-        holder.country.text = album.getString("country")
+        holder.bind(collection[position])
     }
 
+    /**
+     * Get item count
+     */
     override fun getItemCount(): Int {
         return collection.size
     }

@@ -1,50 +1,53 @@
 package com.example.practice
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.adapters.CollectionRecyclerViewAdapter
-import com.google.zxing.integration.android.IntentIntegrator
 import org.json.JSONObject
 
 class CollectionActivity : BaseActivity() {
-    var album : JSONObject? = null
-
-    lateinit var adapter : CollectionRecyclerViewAdapter
     lateinit var recyclerView : RecyclerView
 
+    /**
+     * Get layout resource ID
+     */
     override fun getLayoutResourceID(): Int {
         return R.layout.activity_collection
     }
 
+    /**
+     * On create
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var collection : MutableList<JSONObject> = ArrayList()
+        val collection : MutableList<JSONObject> = ArrayList()
 
-        if (intent.extras != null) {
-            var value = intent.extras?.getString("ALBUM")
-            if (value != null) album = JSONObject(value)
-        }
-
-        if (album != null) collection.add(album!!)
+        val album = getAlbum()
+        if (album != null) collection.add(album)
 
         recyclerView = findViewById(R.id.albumCollection)
-        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = CollectionRecyclerViewAdapter(applicationContext, collection)
+    }
 
-        adapter = CollectionRecyclerViewAdapter(applicationContext, collection)
-        recyclerView.adapter = adapter
+    /**
+     * On start
+     */
+    override fun onStart() {
+        super.onStart()
+    }
 
-        recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+    /**
+     * Get album from intent extras
+     */
+    private fun getAlbum() : JSONObject? {
+        var album : JSONObject? = null
 
-        //adapter.notifyDataSetChanged()
+        if(intent.extras != null) {
+            var value = intent.extras?.getString("ALBUM")
+            if(value != null) album = JSONObject(value)
+        }
 
-        Log.d("CollectionActivity", collection.size.toString())
+        return album
     }
 }
