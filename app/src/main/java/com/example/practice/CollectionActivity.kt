@@ -16,7 +16,6 @@ import org.json.JSONObject
 class CollectionActivity : BaseActivity() {
     var album : JSONObject? = null
 
-    var collection : ArrayList<JSONObject> = ArrayList()
     lateinit var adapter : CollectionRecyclerViewAdapter
     lateinit var recyclerView : RecyclerView
 
@@ -27,21 +26,24 @@ class CollectionActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        var collection : ArrayList<JSONObject> = ArrayList()
+
         if (intent.extras != null) {
             var value = intent.extras?.getString("ALBUM")
             if (value != null) album = JSONObject(value)
         }
 
         if (album != null) collection.add(album!!)
-        //adapter.notifyDataSetChanged()
-
-        adapter = CollectionRecyclerViewAdapter(this, collection)
 
         recyclerView = findViewById(R.id.albumCollection)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+
+        adapter = CollectionRecyclerViewAdapter(applicationContext, collection)
         recyclerView.adapter = adapter
 
-        Log.d("CollectionActivity", album.toString())
+        adapter.notifyDataSetChanged()
+
+        Log.d("CollectionActivity", collection.size.toString())
 
     }
 }

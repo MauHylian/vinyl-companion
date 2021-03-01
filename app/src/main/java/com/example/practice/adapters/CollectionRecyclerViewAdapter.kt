@@ -12,9 +12,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
 
-class CollectionRecyclerViewAdapter(context : Context, collection : ArrayList<JSONObject>) : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>() {
-
-    var mCollection : ArrayList<JSONObject> = collection
+class CollectionRecyclerViewAdapter(internal var context : Context, internal var collection: ArrayList<JSONObject>) : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var albumCover: ImageView
@@ -38,7 +36,7 @@ class CollectionRecyclerViewAdapter(context : Context, collection : ArrayList<JS
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectionRecyclerViewAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.collection_item, parent, false)
@@ -46,8 +44,8 @@ class CollectionRecyclerViewAdapter(context : Context, collection : ArrayList<JS
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CollectionRecyclerViewAdapter.ViewHolder, position: Int) {
-        var album : JSONObject = mCollection.get(position)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        var album : JSONObject = collection.get(position)
         var format : JSONArray = album.getJSONArray("format")
         var formats : JSONObject? = null
 
@@ -74,6 +72,6 @@ class CollectionRecyclerViewAdapter(context : Context, collection : ArrayList<JS
     }
 
     override fun getItemCount(): Int {
-        return mCollection.size
+        return collection.size
     }
 }
