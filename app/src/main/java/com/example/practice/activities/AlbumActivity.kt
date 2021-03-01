@@ -1,4 +1,4 @@
-package com.example.practice
+package com.example.practice.activities
 
 import android.content.Intent
 import android.net.Uri
@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.practice.R
 import com.example.practice.services.AlbumService
 import com.example.practice.services.BaseService
 import org.json.JSONObject

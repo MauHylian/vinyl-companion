@@ -1,8 +1,9 @@
-package com.example.practice
+package com.example.practice.activities
 
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
+import com.example.practice.R
 
 class ProductActivity : BaseActivity() {
     override fun getLayoutResourceID(): Int {

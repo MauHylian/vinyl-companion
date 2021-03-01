@@ -1,4 +1,4 @@
-package com.example.practice
+package com.example.practice.activities
 
 import android.app.Activity
 import android.content.Intent
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.practice.R
 import com.google.zxing.integration.android.IntentIntegrator
 
 class ScanActivity : BaseActivity() {

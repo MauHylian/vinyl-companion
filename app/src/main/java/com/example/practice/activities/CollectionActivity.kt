@@ -1,8 +1,9 @@
-package com.example.practice
+package com.example.practice.activities
 
 import android.os.Bundle
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.practice.R
 import com.example.practice.adapters.CollectionRecyclerViewAdapter
 import org.json.JSONObject
 

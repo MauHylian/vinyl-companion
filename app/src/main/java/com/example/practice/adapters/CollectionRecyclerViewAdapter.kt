@@ -54,8 +54,16 @@ class CollectionRecyclerViewAdapter(
                 title.text = album.getString("title")
 
             // Year Country
-            if(album.has("year") && album.has("country"))
-                yearAndCountry.text = "${album.getString("year")} ${album.getString("country")}"
+            yearAndCountry.text = String()
+
+            if(album.has("year"))
+                yearAndCountry.text = album.getString("year") + " "
+
+            if(album.has("country"))
+                yearAndCountry.text = yearAndCountry.text.toString() + album.getString("country")
+
+            if(yearAndCountry.text.isEmpty())
+                yearAndCountry.visibility = View.GONE
 
             // Cover
             try {
