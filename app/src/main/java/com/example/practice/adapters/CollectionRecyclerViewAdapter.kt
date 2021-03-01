@@ -19,7 +19,7 @@ import java.lang.Exception
  */
 class CollectionRecyclerViewAdapter(
         private var context : Context,
-        private var collection: MutableList<JSONObject>)
+        private var collection: ArrayList<JSONObject>)
     : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>()
 {
     /**
@@ -66,33 +66,28 @@ class CollectionRecyclerViewAdapter(
             }
 
             // Format text Format name
-            // Descriptions
-            if(album.has("formats")) {
-                var formats = album.getJSONArray("formats")
-                if(formats.length() > 0) {
-                    var value = formats.getJSONObject(0)
+            if(album.has("format")) {
+                var fmt = album.getJSONObject("format")
 
-                    // Format text Format name
-                    if(value.has("text") && value.has("name"))
-                        format.text = "${value.getString("text")} ${value.getString("name")}"
-                    else
-                        format.visibility = View.GONE
+                if(fmt.has("text") && fmt.has("name"))
+                    format.text = "${fmt.getString("text")} ${fmt.getString("name")}"
+                else
+                    format.visibility = View.GONE
+            }
 
-                    // Descriptions
-                    if(value.has("descriptions")) {
-                        var text = ""
+            // Description
+            if(album.has("description")) {
+                var text = ""
 
-                        var descs = value.getJSONArray("descriptions")
+                var desc = album.getJSONArray("description")
+                var size = desc.length()
 
-                        var size = descs.length()
-                        for(i in 0 until size - 1)
-                            text += descs.getString(i) + ", "
-                        text += descs.getString(size - 1)
+                for(i in 0 until size - 1)
+                    text += desc.getString(i) + ", "
+                text += desc.getString(size - 1)
 
-                        if(text.isNotEmpty()) description.text = text
-                        else description.visibility = View.GONE
-                    }
-                }
+                if(text.isNotEmpty()) description.text = text
+                else description.visibility = View.GONE
             }
         }
     }

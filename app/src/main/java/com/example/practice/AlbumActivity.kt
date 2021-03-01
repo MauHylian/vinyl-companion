@@ -136,7 +136,8 @@ class AlbumActivity : BaseActivity() {
             if(album.has("cover_image"))
                 fillAlbumImage(album.getString("cover_image"))
 
-            if(album.has("uri")) albumURI = "https://discogs.com" + album.getString("uri")
+            if(album.has("uri"))
+                albumURI = "https://discogs.com" + album.getString("uri")
         } catch (e: Exception) {
             Log.e("AlbumActivity", e.toString())
             // TODO: Handle error

@@ -21,7 +21,7 @@ class CollectionActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val collection : MutableList<JSONObject> = ArrayList()
+        val collection : ArrayList<JSONObject> = ArrayList()
 
         val album = getAlbum()
         if (album != null) collection.add(album)
