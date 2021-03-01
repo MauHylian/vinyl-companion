@@ -15,7 +15,7 @@ import java.lang.Exception
 class CollectionRecyclerViewAdapter(internal var context : Context, internal var collection: MutableList<JSONObject>) : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var albumCover: ImageView
+        //var albumCover: ImageView
         var albumName: TextView
         var textFormat: TextView
         var nameFormat: TextView
@@ -25,7 +25,7 @@ class CollectionRecyclerViewAdapter(internal var context : Context, internal var
         var country: TextView
 
         init {
-            albumCover = view.findViewById(R.id.albumCover)
+            //albumCover = view.findViewById(R.id.albumCover)
             albumName = view.findViewById(R.id.artistAndAlbum)
             textFormat = view.findViewById(R.id.textFormat)
             nameFormat = view.findViewById(R.id.nameFormat)
