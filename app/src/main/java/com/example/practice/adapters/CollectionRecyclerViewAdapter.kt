@@ -12,7 +12,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
 
-class CollectionRecyclerViewAdapter(internal var context : Context, internal var collection: ArrayList<JSONObject>) : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>() {
+class CollectionRecyclerViewAdapter(internal var context : Context, internal var collection: MutableList<JSONObject>) : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var albumCover: ImageView
@@ -45,7 +45,7 @@ class CollectionRecyclerViewAdapter(internal var context : Context, internal var
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var album : JSONObject = collection.get(position)
+        var album : JSONObject = collection[position]
         var format : JSONArray = album.getJSONArray("format")
         var formats : JSONObject? = null
 

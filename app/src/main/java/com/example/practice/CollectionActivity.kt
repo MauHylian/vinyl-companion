@@ -26,7 +26,7 @@ class CollectionActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var collection : ArrayList<JSONObject> = ArrayList()
+        var collection : MutableList<JSONObject> = ArrayList()
 
         if (intent.extras != null) {
             var value = intent.extras?.getString("ALBUM")
