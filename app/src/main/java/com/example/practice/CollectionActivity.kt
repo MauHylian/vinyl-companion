@@ -36,14 +36,15 @@ class CollectionActivity : BaseActivity() {
         if (album != null) collection.add(album!!)
 
         recyclerView = findViewById(R.id.albumCollection)
-        recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+        recyclerView.setHasFixedSize(true)
 
         adapter = CollectionRecyclerViewAdapter(applicationContext, collection)
         recyclerView.adapter = adapter
 
-        adapter.notifyDataSetChanged()
+        recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+
+        //adapter.notifyDataSetChanged()
 
         Log.d("CollectionActivity", collection.size.toString())
-
     }
 }

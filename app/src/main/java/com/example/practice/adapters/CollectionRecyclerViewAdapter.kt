@@ -45,7 +45,7 @@ class CollectionRecyclerViewAdapter(internal var context : Context, internal var
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var album : JSONObject = collection[position]
+        var album : JSONObject = collection.get(position)
         var format : JSONArray = album.getJSONArray("format")
         var formats : JSONObject? = null
 
