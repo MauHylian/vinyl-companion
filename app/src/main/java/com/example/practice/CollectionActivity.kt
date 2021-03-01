@@ -1,12 +1,15 @@
 package com.example.practice
 
 import android.os.Bundle
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.adapters.CollectionRecyclerViewAdapter
 import org.json.JSONObject
 
+
 class CollectionActivity : BaseActivity() {
     lateinit var recyclerView : RecyclerView
+    lateinit var adapter : CollectionRecyclerViewAdapter
 
     /**
      * Get layout resource ID
@@ -26,8 +29,23 @@ class CollectionActivity : BaseActivity() {
         val album = getAlbum()
         if (album != null) collection.add(album)
 
+        adapter = CollectionRecyclerViewAdapter(applicationContext, collection)
+
         recyclerView = findViewById(R.id.albumCollection)
-        recyclerView.adapter = CollectionRecyclerViewAdapter(applicationContext, collection)
+        recyclerView.adapter = adapter
+
+        val mIth = ItemTouchHelper(
+                object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+
+                    override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+                        return false
+                    }
+
+                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                        adapter.notifyDataSetChanged()
+                    }
+                }).attachToRecyclerView(recyclerView)
+
     }
 
     /**
