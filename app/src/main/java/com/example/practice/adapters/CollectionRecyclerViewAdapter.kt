@@ -76,19 +76,10 @@ class CollectionRecyclerViewAdapter(
             }
 
             // Description
-            if(album.has("description")) {
-                var text = ""
-
-                var desc = album.getJSONArray("description")
-                var size = desc.length()
-
-                for(i in 0 until size - 1)
-                    text += desc.getString(i) + ", "
-                text += desc.getString(size - 1)
-
-                if(text.isNotEmpty()) description.text = text
-                else description.visibility = View.GONE
-            }
+            if(album.has("description"))
+                description.text = album.getString("description")
+            else
+                description.visibility = View.GONE
         }
     }
 

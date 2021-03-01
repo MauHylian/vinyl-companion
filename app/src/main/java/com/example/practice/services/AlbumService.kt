@@ -17,7 +17,7 @@ class AlbumService {
      * @param album - JSONObject received from service
      */
     private fun extractRelevantData(data : JSONObject): JSONObject {
-        var album = JSONObject()
+        val album = JSONObject()
 
         if(data.has("title"))
             album.put("title", data.get("title"))
@@ -34,8 +34,9 @@ class AlbumService {
         if(data.has("uri"))
             album.put("uri", data.get("uri"))
 
-        var format = JSONObject()
-        var description = JSONArray()
+        val format = JSONObject()
+        var descriptions = JSONArray()
+        var description = ""
 
         if(data.has("formats")) {
             var fmts = data.getJSONArray("formats")
@@ -49,12 +50,20 @@ class AlbumService {
                 if(fmt.has("name"))
                     format.put("name", fmt.get("name"))
 
-                if(fmt.has("descriptions"))
-                    description = fmt.getJSONArray("descriptions")
+                if(fmt.has("descriptions")) {
+                    descriptions = fmt.getJSONArray("descriptions")
+
+                    val size = descriptions.length()
+
+                    for(i in 0 until size - 1)
+                        description += descriptions.getString(i) + ", "
+                    description += descriptions.getString(size - 1)
+                }
             }
         }
 
         album.put("format", format)
+        album.put("descriptions", descriptions)
         album.put("description", description)
 
         return album
