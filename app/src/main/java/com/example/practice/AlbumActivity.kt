@@ -81,6 +81,8 @@ class AlbumActivity : BaseActivity() {
         val intent = Intent(this, CollectionActivity::class.java)
         if (album != null)
             intent.putExtra("ALBUM", album.toString())
+
+        finish()
         startActivity(intent)
     }
 

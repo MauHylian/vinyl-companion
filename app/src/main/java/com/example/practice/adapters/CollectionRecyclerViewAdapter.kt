@@ -115,4 +115,13 @@ class CollectionRecyclerViewAdapter(
     override fun getItemCount(): Int {
         return collection.size
     }
+
+    /**
+     * Remove item
+     * @param index
+     */
+    fun removeAt(index : Int) {
+        collection.removeAt(index)
+        notifyDataSetChanged()
+    }
 }

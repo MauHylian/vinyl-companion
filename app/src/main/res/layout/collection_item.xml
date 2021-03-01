@@ -7,45 +7,45 @@
 
     <ImageView
         android:id="@+id/cover"
-        android:layout_width="100dp"
-        android:layout_height="100dp" />
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"/>
 
-    <HorizontalScrollView
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="10dp">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="title"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="title"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/format"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="format.text format.name" />
+        <TextView
+            android:id="@+id/format"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="format.text format.name" />
 
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="descriptions" />
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="descriptions" />
 
-            <TextView
-                android:id="@+id/yearAndCountry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="year country" />
+        <TextView
+            android:id="@+id/yearAndCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="year country" />
 
-        </LinearLayout>
-    </HorizontalScrollView>
+    </LinearLayout>
 </LinearLayout>

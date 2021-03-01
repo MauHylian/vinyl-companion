@@ -11,6 +11,10 @@ class CollectionActivity : BaseActivity() {
     lateinit var recyclerView : RecyclerView
     lateinit var adapter : CollectionRecyclerViewAdapter
 
+    companion object {
+        var collection = ArrayList<JSONObject>()
+    }
+
     /**
      * Get layout resource ID
      */
@@ -24,8 +28,6 @@ class CollectionActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val collection : ArrayList<JSONObject> = ArrayList()
-
         val album = getAlbum()
         if (album != null) collection.add(album)
 
@@ -34,18 +36,16 @@ class CollectionActivity : BaseActivity() {
         recyclerView = findViewById(R.id.albumCollection)
         recyclerView.adapter = adapter
 
-        val mIth = ItemTouchHelper(
-                object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        ItemTouchHelper(
+            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+                override fun onMove(recyclerView: RecyclerView,
+                                    viewHolder: RecyclerView.ViewHolder,
+                                    target: RecyclerView.ViewHolder): Boolean { return false }
 
-                    override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-                        return false
-                    }
-
-                    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                        adapter.notifyDataSetChanged()
-                    }
-                }).attachToRecyclerView(recyclerView)
-
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    adapter.removeAt(viewHolder.adapterPosition)
+                }
+            }).attachToRecyclerView(recyclerView)
     }
 
     /**
