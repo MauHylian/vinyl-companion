@@ -75,6 +75,8 @@ class CollectionRecyclerViewAdapter(
                     // Format text Format name
                     if(value.has("text") && value.has("name"))
                         format.text = "${value.getString("text")} ${value.getString("name")}"
+                    else
+                        format.visibility = View.GONE
 
                     // Descriptions
                     if(value.has("descriptions")) {
@@ -87,7 +89,8 @@ class CollectionRecyclerViewAdapter(
                             text += descs.getString(i) + ", "
                         text += descs.getString(size - 1)
 
-                        description.text = text
+                        if(text.isNotEmpty()) description.text = text
+                        else description.visibility = View.GONE
                     }
                 }
             }
