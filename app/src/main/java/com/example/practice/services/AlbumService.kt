@@ -7,11 +7,7 @@ import java.lang.Exception
 /**
  * AlbumService class
  */
-class AlbumService {
-    // TODO: Get services using singletons
-    var oneMusicAPIService = OneMusicAPIService()
-    var discogsService = DiscogsService()
-
+class AlbumService : DiscogsService() {
     /**
      * Get album by barcode
      * @param barcode
@@ -19,7 +15,7 @@ class AlbumService {
      */
     fun getByBarcode(barcode : String,
                      onGetListener: BaseService.Companion.OnGetListener) {
-        discogsService.get(mapOf("barcode" to barcode), object : BaseService.Companion.OnGetListener() {
+        get(mapOf("barcode" to barcode), object : BaseService.Companion.OnGetListener() {
             override fun onGet(data: Any?, e: Exception?) {
                 if(e != null) return onGetListener.onGet(null, e)
 
@@ -30,7 +26,7 @@ class AlbumService {
                     if(results.length() != 0) album = results.getJSONObject(0)
                 }
 
-                onGetListener.onGet(discogsService.extractRelevantData(album))
+                onGetListener.onGet(extractRelevantData(album))
             }
         })
     }
@@ -62,7 +58,7 @@ class AlbumService {
 
         queryParameters["q"] = qParam
 
-        discogsService.get(queryParameters, object : BaseService.Companion.OnGetListener() {
+        get(queryParameters, object : BaseService.Companion.OnGetListener() {
             override fun onGet(data: Any?, e: Exception?) {
                 if(e != null) return onGetListener.onGet(null, e)
 
@@ -71,7 +67,7 @@ class AlbumService {
                 if(data is JSONObject)
                     results = data.getJSONArray("results")
 
-                onGetListener.onGet(discogsService.extractRelevantData(results))
+                onGetListener.onGet(extractRelevantData(results))
             }
         })
     }

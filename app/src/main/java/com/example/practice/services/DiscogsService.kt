@@ -4,7 +4,7 @@ import okhttp3.HttpUrl
 import org.json.JSONArray
 import org.json.JSONObject
 
-class DiscogsService : BaseService("https", "api.discogs.com") {
+open class DiscogsService : BaseService("https", "api.discogs.com") {
     // TODO: Write constants to config file
 
     val consumerKey = "FrRkJYVAJJOjgXtulkDY"
