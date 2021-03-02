@@ -159,9 +159,9 @@ class AlbumActivity : BaseActivity() {
                 override fun onGet(data: Any?, e: java.lang.Exception?) {
                     if(e != null) return  // TODO: Handle error
 
-                    this@AlbumActivity.runOnUiThread(Runnable {
+                    this@AlbumActivity.runOnUiThread {
                         fillAlbum(data as JSONObject)
-                    })
+                    }
                 }
             })
         }

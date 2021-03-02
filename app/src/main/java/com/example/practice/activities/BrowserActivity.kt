@@ -1,15 +1,25 @@
 package com.example.practice.activities
 
 import android.os.Bundle
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
+import com.example.practice.adapters.CollectionRecyclerViewAdapter
 import com.example.practice.services.AlbumService
 import com.example.practice.services.BaseService
+import com.example.practice.utils.ItemTouchHelperCallback
+import org.json.JSONArray
+import org.json.JSONObject
+import java.util.*
 
 /**
  * BrowserActivity class
  */
 class BrowserActivity : BaseActivity() {
     var albumService = AlbumService()
+
+    lateinit var recyclerView : RecyclerView
+    lateinit var adapter : CollectionRecyclerViewAdapter
 
     /**
      * Get layout resource ID
@@ -23,6 +33,14 @@ class BrowserActivity : BaseActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        adapter = CollectionRecyclerViewAdapter(applicationContext, LinkedList())
+
+        recyclerView = findViewById(R.id.albumsRecyclerView)
+        recyclerView.adapter = adapter
+
+        ItemTouchHelper(ItemTouchHelperCallback(adapter))
+            .attachToRecyclerView(recyclerView)
     }
 
     /**
@@ -32,6 +50,15 @@ class BrowserActivity : BaseActivity() {
         super.onStart()
 
         findAlbums()
+    }
+
+    /**
+     * Fill albums recycler view
+     * @param albums
+     */
+    private fun fillAlbums(albums : JSONArray) {
+        for(i in 0 until albums.length())
+            adapter.add(albums.getJSONObject(i))
     }
 
     /**
@@ -45,6 +72,10 @@ class BrowserActivity : BaseActivity() {
         albumService.get(title, year, artist, object : BaseService.Companion.OnGetListener() {
             override fun onGet(data: Any?, e: java.lang.Exception?) {
                 if(e != null) return  // TODO: Handle error
+
+                this@BrowserActivity.runOnUiThread {
+                    fillAlbums(data as JSONArray)
+                }
             }
         })
     }

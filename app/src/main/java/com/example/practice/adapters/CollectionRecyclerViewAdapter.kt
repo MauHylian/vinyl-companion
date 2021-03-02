@@ -123,9 +123,18 @@ class CollectionRecyclerViewAdapter(
      * Remove item
      * @param position
      */
-    private fun removeAt(position : Int) {
+    fun removeAt(position : Int) {
         collection.removeAt(position)
         notifyItemRemoved(position)
+    }
+
+    /**
+     * Add item
+     * @param item
+     */
+    fun add(item : JSONObject) {
+        collection.add(item)
+        notifyItemInserted(collection.size - 1)
     }
 
     /**
