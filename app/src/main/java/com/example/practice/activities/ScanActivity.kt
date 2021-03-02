@@ -28,41 +28,36 @@ class ScanActivity : BaseActivity() {
         editTextArtist = findViewById(R.id.artistGroup)
 
         findViewById<Button>(R.id.scanBtn).setOnClickListener {
-            val scanner = IntentIntegrator(this)
-            scanner.initiateScan()
+            IntentIntegrator(this).initiateScan()
         }
 
         findViewById<Button>(R.id.searchAlbumBtn).setOnClickListener {
-            val intent = Intent(this, AlbumActivity::class.java)
-
-            var extras = Bundle()
+            val extras = Bundle()
 
             extras.putString("BARCODE", editTextBarcode.text.toString())
             extras.putString("TITLE", editTextTitle.text.toString())
             extras.putString("YEAR", editTextYear.text.toString())
             extras.putString("ARTIST", editTextArtist.text.toString())
 
-            intent.putExtras(extras)
-
-            startActivity(intent)
+            launchActivity(AlbumActivity::class.java, extras)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(resultCode == Activity.RESULT_OK) {
-            val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-            if(result != null) {
-                if(result.contents == null) {
-                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(this, "Scanned: ${result.contents}", Toast.LENGTH_LONG).show()
-                    val intent = Intent(this, AlbumActivity::class.java)
-                    intent.putExtra("BARCODE", result.contents)
-                    startActivity(intent)
-                }
-            } else {
-                super.onActivityResult(requestCode, resultCode, data)
-            }
+        if(resultCode != Activity.RESULT_OK)
+            return super.onActivityResult(requestCode, resultCode, data)
+
+        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+            ?: return super.onActivityResult(requestCode, resultCode, data)
+
+
+        if(result.contents != null) {
+            Toast.makeText(this, "Scanned: ${result.contents}", Toast.LENGTH_LONG).show()
+
+            val extras = Bundle()
+            extras.putString("BARCODE", result.contents)
+
+            launchActivity(AlbumActivity::class.java, extras)
         }
     }
 }

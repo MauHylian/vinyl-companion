@@ -111,7 +111,7 @@ abstract class BaseActivity : AppCompatActivity() {
                            flags: Int = 0,
                            shouldFinish: Boolean = false
     ) {
-        val intent = Intent(applicationContext, cls)
+        val intent = Intent(this, cls)
             .addFlags(flags)
 
         if(extras != null)
