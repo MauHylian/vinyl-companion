@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Practice</string>
+    <string name="app_name">Vinyl Companion</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="anadir_coleccion">Añadir a la colección</string>

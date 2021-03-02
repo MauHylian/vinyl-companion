@@ -11,6 +11,10 @@ import com.google.zxing.integration.android.IntentIntegrator
 
 class ScanActivity : BaseActivity() {
     lateinit var editTextBarcode: EditText
+    lateinit var editTextTitle : EditText
+    lateinit var editTextYear : EditText
+    lateinit var editTextArtist : EditText
+
     override fun getLayoutResourceID(): Int {
         return R.layout.activity_scan
     }
@@ -18,21 +22,30 @@ class ScanActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        actionBar?.title = "Escaner"
-
         editTextBarcode = findViewById(R.id.editTextBarcode)
+        editTextTitle = findViewById(R.id.albumName)
+        editTextYear = findViewById(R.id.releaseYear)
+        editTextArtist = findViewById(R.id.artistGroup)
 
         findViewById<Button>(R.id.scanBtn).setOnClickListener {
-            if(editTextBarcode.text.toString().isNotEmpty()) {
-                val intent = Intent(this, AlbumActivity::class.java)
-                intent.putExtra("BARCODE", editTextBarcode.text.toString())
-                startActivity(intent)
-            } else {
-                val scanner = IntentIntegrator(this)
-                scanner.initiateScan()
-            }
+            val scanner = IntentIntegrator(this)
+            scanner.initiateScan()
         }
 
+        findViewById<Button>(R.id.searchAlbumBtn).setOnClickListener {
+            val intent = Intent(this, AlbumActivity::class.java)
+
+            var extras = Bundle()
+
+            extras.putString("BARCODE", editTextBarcode.text.toString())
+            extras.putString("TITLE", editTextTitle.text.toString())
+            extras.putString("YEAR", editTextYear.text.toString())
+            extras.putString("ARTIST", editTextArtist.text.toString())
+
+            intent.putExtras(extras)
+
+            startActivity(intent)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

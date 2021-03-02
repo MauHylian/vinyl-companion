@@ -12,20 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Practice"
-        android:usesCleartextTraffic="true"
-        >
+        android:usesCleartextTraffic="true">
         <activity android:name=".WebAuth" />
         <activity android:name=".WebAuthPost" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".activities.ScanActivity" android:label="Escáner"/>
         <activity android:name=".activities.LoginActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.ScanActivity" android:label="Escáner"/>
         <activity android:name=".activities.AlbumActivity" android:label="Album"/>
         <activity android:name=".activities.MarketActivity" android:label="Marketplace" />
         <activity android:name=".activities.ProductActivity" android:label="Información del producto"/>

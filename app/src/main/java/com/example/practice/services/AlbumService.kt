@@ -13,68 +13,12 @@ class AlbumService {
     var discogsService = DiscogsService()
 
     /**
-     * Extract relevant data from album
-     * @param album - JSONObject received from service
-     */
-    private fun extractRelevantData(data : JSONObject): JSONObject {
-        val album = JSONObject()
-
-        if(data.has("title"))
-            album.put("title", data.get("title"))
-
-        if(data.has("year"))
-            album.put("year", data.get("year"))
-
-        if(data.has("country"))
-            album.put("country", data.get("country"))
-
-        if(data.has("cover_image"))
-            album.put("cover_image", data.get("cover_image"))
-
-        if(data.has("uri"))
-            album.put("uri", data.get("uri"))
-
-        val format = JSONObject()
-        var descriptions = JSONArray()
-        var description = ""
-
-        if(data.has("formats")) {
-            var fmts = data.getJSONArray("formats")
-
-            if(fmts.length() > 0) {
-                var fmt = fmts.getJSONObject(0)
-
-                if(fmt.has("text"))
-                    format.put("text", fmt.get("text"))
-
-                if(fmt.has("name"))
-                    format.put("name", fmt.get("name"))
-
-                if(fmt.has("descriptions")) {
-                    descriptions = fmt.getJSONArray("descriptions")
-
-                    val size = descriptions.length()
-
-                    for(i in 0 until size - 1)
-                        description += descriptions.getString(i) + ", "
-                    description += descriptions.getString(size - 1)
-                }
-            }
-        }
-
-        album.put("format", format)
-        album.put("descriptions", descriptions)
-        album.put("description", description)
-
-        return album
-    }
-
-    /**
      * Get album by barcode
      * @param barcode
      * @param onGetListener
      */
-    fun getByBarcode(barcode : String, onGetListener: BaseService.Companion.OnGetListener) {
+    fun getByBarcode(barcode : String,
+                     onGetListener: BaseService.Companion.OnGetListener) {
         discogsService.get(mapOf("barcode" to barcode), object : BaseService.Companion.OnGetListener() {
             override fun onGet(data: Any?, e: Exception?) {
                 if(e != null) return onGetListener.onGet(null, e)
@@ -86,7 +30,48 @@ class AlbumService {
                     if(results.length() != 0) album = results.getJSONObject(0)
                 }
 
-                onGetListener.onGet(extractRelevantData(album))
+                onGetListener.onGet(discogsService.extractRelevantData(album))
+            }
+        })
+    }
+
+    /**
+     * Get album
+     * @param title
+     * @param year
+     * @param artist
+     * @param onGetListener
+     */
+    fun get(title: String?,
+            year: String?,
+            artist: String?,
+            onGetListener: BaseService.Companion.OnGetListener)
+    {
+        val queryParameters = mutableMapOf<String, String>()
+
+        var qParam = String()
+
+        if(title != null)
+            qParam += title
+
+        if(year != null)
+            qParam += " $year"
+
+        if(artist != null)
+            qParam += " $artist"
+
+        queryParameters["q"] = qParam
+
+        discogsService.get(queryParameters, object : BaseService.Companion.OnGetListener() {
+            override fun onGet(data: Any?, e: Exception?) {
+                if(e != null) return onGetListener.onGet(null, e)
+
+                var results = JSONArray()
+
+                if(data is JSONObject)
+                    results = data.getJSONArray("results")
+
+                onGetListener.onGet(discogsService.extractRelevantData(results))
             }
         })
     }

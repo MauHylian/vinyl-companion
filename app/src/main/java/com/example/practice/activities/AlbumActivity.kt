@@ -20,7 +20,6 @@ class AlbumActivity : BaseActivity() {
     var albumService = AlbumService()
 
     lateinit var textAlbum : TextView
-    lateinit var textArtist : TextView
     lateinit var textCountry : TextView
     lateinit var textYear : TextView
 
@@ -64,15 +63,26 @@ class AlbumActivity : BaseActivity() {
     }
 
     /**
+     * Get extra from intent
+     * @param key
+     */
+    private fun getExtra(key : String) : String? {
+        val extras = intent.extras
+
+        var value : String? = null
+        if(extras != null) {
+            value = extras.getString(key)
+            if(value != null && value.isEmpty()) value = null
+        }
+
+        return value
+    }
+
+    /**
      * Get barcode from intent extras
      */
     private fun getBarcode(): String? {
-        val extras = intent.extras
-
-        var barcode : String? = null
-        if (extras != null) barcode = extras.getString("BARCODE")
-
-        return barcode
+        return getExtra("BARCODE")
     }
 
     /**
@@ -168,6 +178,16 @@ class AlbumActivity : BaseActivity() {
                     this@AlbumActivity.runOnUiThread(Runnable {
                         fillAlbum(data as JSONObject)
                     })
+                }
+            })
+        } else {
+            var title = getExtra("TITLE")
+            var year = getExtra("YEAR")
+            var artist = getExtra("ARTIST")
+
+            albumService.get(title, year, artist, object : BaseService.Companion.OnGetListener() {
+                override fun onGet(data: Any?, e: java.lang.Exception?) {
+                    if(e != null) return  // TODO: Handle error
                 }
             })
         }
