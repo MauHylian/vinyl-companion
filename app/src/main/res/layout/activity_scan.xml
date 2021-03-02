@@ -37,7 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:hint="@string/nombre_del_album" />
+                android:hint="@string/nombre_del_album"
+                android:text="Elton John" />
 
             <EditText
                 android:id="@+id/releaseYear"
@@ -45,7 +46,8 @@
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:hint="@string/ano_de_lanzamiento" />
+                android:hint="@string/ano_de_lanzamiento"
+                android:text="1970" />
 
             <EditText
                 android:id="@+id/artistGroup"
@@ -53,7 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
-                android:hint="@string/artista_o_grupo" />
+                android:hint="@string/artista_o_grupo"
+                android:text="Elton John" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/searchAlbumBtn"

@@ -152,7 +152,7 @@ class AlbumActivity : BaseActivity() {
      * Find album with barcode
      */
     private fun findAlbum() {
-        var barcode = getBarcode();
+        val barcode = getBarcode();
 
         if(barcode != null) {
             albumService.getByBarcode(barcode, object : BaseService.Companion.OnGetListener() {
@@ -162,16 +162,6 @@ class AlbumActivity : BaseActivity() {
                     this@AlbumActivity.runOnUiThread(Runnable {
                         fillAlbum(data as JSONObject)
                     })
-                }
-            })
-        } else {
-            var title = getExtra("TITLE")
-            var year = getExtra("YEAR")
-            var artist = getExtra("ARTIST")
-
-            albumService.get(title, year, artist, object : BaseService.Companion.OnGetListener() {
-                override fun onGet(data: Any?, e: java.lang.Exception?) {
-                    if(e != null) return  // TODO: Handle error
                 }
             })
         }

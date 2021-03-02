@@ -34,12 +34,21 @@ class ScanActivity : BaseActivity() {
         findViewById<Button>(R.id.searchAlbumBtn).setOnClickListener {
             val extras = Bundle()
 
-            extras.putString("BARCODE", editTextBarcode.text.toString())
-            extras.putString("TITLE", editTextTitle.text.toString())
-            extras.putString("YEAR", editTextYear.text.toString())
-            extras.putString("ARTIST", editTextArtist.text.toString())
+            val barcode = editTextBarcode.text.toString()
 
-            launchActivity(AlbumActivity::class.java, extras)
+            if(barcode.isNotEmpty()) {
+                extras.putString("BARCODE", barcode)
+
+                // Start AlbumActivity
+                launchActivity(AlbumActivity::class.java, extras)
+            } else {
+                extras.putString("TITLE", editTextTitle.text.toString())
+                extras.putString("YEAR", editTextYear.text.toString())
+                extras.putString("ARTIST", editTextArtist.text.toString())
+
+                // Start BrowserActivity
+                launchActivity(BrowserActivity::class.java, extras)
+            }
         }
     }
 
