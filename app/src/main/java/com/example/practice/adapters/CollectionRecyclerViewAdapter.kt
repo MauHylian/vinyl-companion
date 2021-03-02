@@ -152,10 +152,18 @@ class CollectionRecyclerViewAdapter(
     }
 
     /**
+     * Remove all items
+     */
+    fun removeAll() {
+        collection.clear()
+        notifyDataSetChanged()
+    }
+
+    /**
      * Remove item
      * @param position
      */
-    fun removeAt(position : Int) {
+    fun remove(position : Int) {
         collection.removeAt(position)
         notifyItemRemoved(position)
     }
@@ -209,6 +217,6 @@ class CollectionRecyclerViewAdapter(
      * @param position
      */
     override fun onSwiped(position: Int) {
-        removeAt(position)
+        remove(position)
     }
 }

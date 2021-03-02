@@ -48,6 +48,7 @@ class BrowserActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.
     override fun onStart() {
         super.onStart()
 
+        clearAlbums()
         findAlbums()
     }
 
@@ -58,6 +59,13 @@ class BrowserActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.
     private fun fillAlbums(albums : JSONArray) {
         for(i in 0 until albums.length())
             adapter.add(albums.getJSONObject(i))
+    }
+
+    /**
+     * Clear albums recycler view
+     */
+    private fun clearAlbums() {
+        adapter.removeAll()
     }
 
     /**
@@ -79,6 +87,10 @@ class BrowserActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.
         })
     }
 
+    /**
+     * On album click
+     * @param album
+     */
     override fun onItemClick(album: JSONObject) {
         var extras = Bundle()
         extras.putString("ALBUM", album.toString())
