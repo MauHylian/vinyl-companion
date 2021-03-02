@@ -63,22 +63,6 @@ class AlbumActivity : BaseActivity() {
     }
 
     /**
-     * Get extra from intent
-     * @param key
-     */
-    private fun getExtra(key : String) : String? {
-        val extras = intent.extras
-
-        var value : String? = null
-        if(extras != null) {
-            value = extras.getString(key)
-            if(value != null && value.isEmpty()) value = null
-        }
-
-        return value
-    }
-
-    /**
      * Get barcode from intent extras
      */
     private fun getBarcode(): String? {

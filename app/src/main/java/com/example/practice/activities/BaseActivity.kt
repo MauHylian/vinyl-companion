@@ -36,7 +36,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutResourceID())
 
-        // TODO: Separate in different functions
+        // TODO: Refactor
 
         // Define ActionBar object
         // Define ActionBar object
@@ -99,7 +99,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     /**
-     * Menú desplegable
+     * // TODO: Add description
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(toggle.onOptionsItemSelected(item)) {
@@ -107,5 +107,21 @@ abstract class BaseActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     * Get extra from intent
+     * @param key
+     */
+    fun getExtra(key : String) : String? {
+        val extras = intent.extras
+
+        var value : String? = null
+        if(extras != null) {
+            value = extras.getString(key)
+            if(value != null && value.isEmpty()) value = null
+        }
+
+        return value
     }
 }
