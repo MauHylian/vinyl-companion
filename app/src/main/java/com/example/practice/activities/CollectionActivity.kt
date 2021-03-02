@@ -5,15 +5,19 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
 import com.example.practice.adapters.CollectionRecyclerViewAdapter
+import com.example.practice.utils.ItemTouchHelperCallback
 import org.json.JSONObject
+import java.util.*
 
-
+/**
+ * CollectionActivity class
+ */
 class CollectionActivity : BaseActivity() {
     lateinit var recyclerView : RecyclerView
     lateinit var adapter : CollectionRecyclerViewAdapter
 
     companion object {
-        var collection = ArrayList<JSONObject>()
+        var collection = LinkedList<JSONObject>()
     }
 
     /**
@@ -37,16 +41,8 @@ class CollectionActivity : BaseActivity() {
         recyclerView = findViewById(R.id.albumCollection)
         recyclerView.adapter = adapter
 
-        ItemTouchHelper(
-            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-                override fun onMove(recyclerView: RecyclerView,
-                                    viewHolder: RecyclerView.ViewHolder,
-                                    target: RecyclerView.ViewHolder): Boolean { return false }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    adapter.removeAt(viewHolder.adapterPosition)
-                }
-            }).attachToRecyclerView(recyclerView)
+        ItemTouchHelper(ItemTouchHelperCallback(adapter))
+                .attachToRecyclerView(recyclerView)
     }
 
     /**

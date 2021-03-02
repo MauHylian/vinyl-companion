@@ -13,14 +13,18 @@ import com.example.practice.R
 import org.json.JSONObject
 import com.squareup.picasso.Picasso
 import java.lang.Exception
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * CollectionRecyclerViewAdapter class
+ * @param context
+ * @param collection
  */
 class CollectionRecyclerViewAdapter(
         private var context : Context,
-        private var collection: ArrayList<JSONObject>)
-    : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>()
+        private var collection: LinkedList<JSONObject>)
+    : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>(), ItemTouchHelperAdapter
 {
     /**
      * ViewHolder class
@@ -117,10 +121,45 @@ class CollectionRecyclerViewAdapter(
 
     /**
      * Remove item
-     * @param index
+     * @param position
      */
-    fun removeAt(index : Int) {
-        collection.removeAt(index)
-        notifyDataSetChanged()
+    private fun removeAt(position : Int) {
+        collection.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    /**
+     * On move
+     * @param from
+     * @param to
+     */
+    override fun onMove(from: Int, to: Int): Boolean {
+        var i = from
+
+        if(from < to) {
+            while(i < to) {
+                Collections.swap(collection, i, i + 1)
+
+                ++i
+            }
+        } else {
+            while(i > to) {
+                Collections.swap(collection, i, i - 1)
+
+                --i
+            }
+        }
+
+        notifyItemMoved(from, to)
+
+        return true
+    }
+
+    /**
+     * On swiped
+     * @param position
+     */
+    override fun onSwiped(position: Int) {
+        removeAt(position)
     }
 }
