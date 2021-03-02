@@ -1,6 +1,7 @@
 package com.example.practice.activities
 
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
@@ -15,7 +16,7 @@ import java.util.*
 /**
  * BrowserActivity class
  */
-class BrowserActivity : BaseActivity() {
+class BrowserActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.OnItemClickListener {
     var albumService = AlbumService()
 
     lateinit var recyclerView : RecyclerView
@@ -35,6 +36,7 @@ class BrowserActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         adapter = CollectionRecyclerViewAdapter(applicationContext, LinkedList())
+        adapter.setOnClickListener(this)
 
         recyclerView = findViewById(R.id.albumsRecyclerView)
         recyclerView.adapter = adapter
@@ -75,5 +77,9 @@ class BrowserActivity : BaseActivity() {
                 }
             }
         })
+    }
+
+    override fun onItemClick(album: JSONObject) {
+        Log.d("BrowserActivity", album.toString())
     }
 }

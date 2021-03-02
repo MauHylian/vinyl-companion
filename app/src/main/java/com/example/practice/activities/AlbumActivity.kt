@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.practice.R
+import com.example.practice.adapters.CollectionRecyclerViewAdapter
 import com.example.practice.services.AlbumService
 import com.example.practice.services.BaseService
 import org.json.JSONObject

@@ -26,10 +26,13 @@ class CollectionRecyclerViewAdapter(
         private var collection: LinkedList<JSONObject>)
     : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>(), ItemTouchHelperAdapter
 {
+
+    var onItemClickListener : OnItemClickListener? = null
+
     /**
      * ViewHolder class
      */
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
         var cover: ImageView
 
         var title: TextView
@@ -46,6 +49,11 @@ class CollectionRecyclerViewAdapter(
             format = view.findViewById(R.id.format)
             description = view.findViewById(R.id.description)
             yearAndCountry = view.findViewById(R.id.yearAndCountry)
+        }
+
+        fun setOnClickListener(event : (position : Int, type : Int) -> Unit): ViewHolder {
+            view.setOnClickListener { event.invoke(adapterPosition, itemViewType) }
+            return this
         }
 
         /**
@@ -95,6 +103,16 @@ class CollectionRecyclerViewAdapter(
         }
     }
 
+    companion object {
+        interface OnItemClickListener {
+            fun onItemClick(album: JSONObject)
+        }
+    }
+
+    fun setOnClickListener(onItemClickListener: OnItemClickListener) {
+        this.onItemClickListener = onItemClickListener
+    }
+
     /**
      * Create view holder
      */
@@ -102,7 +120,9 @@ class CollectionRecyclerViewAdapter(
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.collection_item, parent, false)
 
-        return ViewHolder(view)
+        return ViewHolder(view).setOnClickListener { position: Int, type: Int ->
+            onItemClickListener?.onItemClick(collection[position])
+        }
     }
 
     /**
