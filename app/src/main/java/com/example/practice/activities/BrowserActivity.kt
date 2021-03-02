@@ -80,6 +80,9 @@ class BrowserActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.
     }
 
     override fun onItemClick(album: JSONObject) {
-        Log.d("BrowserActivity", album.toString())
+        var extras = Bundle()
+        extras.putString("ALBUM", album.toString())
+
+        launchActivity(AlbumActivity::class.java, extras)
     }
 }

@@ -150,7 +150,7 @@ class AlbumActivity : BaseActivity() {
     }
 
     /**
-     * Find album with barcode
+     * Find album with barcode or get album from intent
      */
     private fun findAlbum() {
         val barcode = getBarcode();
@@ -165,6 +165,9 @@ class AlbumActivity : BaseActivity() {
                     }
                 }
             })
+        } else {
+            var value = getExtra("ALBUM")
+            if(value != null) fillAlbum(JSONObject(value))
         }
     }
 }

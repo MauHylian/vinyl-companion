@@ -14,7 +14,6 @@ import org.json.JSONObject
 import com.squareup.picasso.Picasso
 import java.lang.Exception
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * CollectionRecyclerViewAdapter class
@@ -26,7 +25,6 @@ class CollectionRecyclerViewAdapter(
         private var collection: LinkedList<JSONObject>)
     : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>(), ItemTouchHelperAdapter
 {
-
     var onItemClickListener : OnItemClickListener? = null
 
     /**
@@ -41,7 +39,7 @@ class CollectionRecyclerViewAdapter(
         var yearAndCountry: TextView
 
         /**
-         * Constructor???
+         * Constructor
          */
         init {
             cover = view.findViewById(R.id.cover)
@@ -51,6 +49,9 @@ class CollectionRecyclerViewAdapter(
             yearAndCountry = view.findViewById(R.id.yearAndCountry)
         }
 
+        /**
+         * Set on click listener
+         */
         fun setOnClickListener(event : (position : Int, type : Int) -> Unit): ViewHolder {
             view.setOnClickListener { event.invoke(adapterPosition, itemViewType) }
             return this
@@ -104,11 +105,22 @@ class CollectionRecyclerViewAdapter(
     }
 
     companion object {
+        /**
+         * OnItemClickListener interface
+         */
         interface OnItemClickListener {
+            /**
+             * On item click
+             * @param album
+             */
             fun onItemClick(album: JSONObject)
         }
     }
 
+    /**
+     * Set on item click listener
+     * @param onItemClickListener
+     */
     fun setOnClickListener(onItemClickListener: OnItemClickListener) {
         this.onItemClickListener = onItemClickListener
     }
@@ -121,7 +133,7 @@ class CollectionRecyclerViewAdapter(
                 .inflate(R.layout.collection_item, parent, false)
 
         return ViewHolder(view).setOnClickListener { position: Int, type: Int ->
-            onItemClickListener?.onItemClick(collection[position])
+            onItemClickListener?.onItemClick(get(position))
         }
     }
 
@@ -129,7 +141,7 @@ class CollectionRecyclerViewAdapter(
      * Bind view holder listener
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(collection[position])
+        holder.bind(get(position))
     }
 
     /**
@@ -155,6 +167,14 @@ class CollectionRecyclerViewAdapter(
     fun add(item : JSONObject) {
         collection.add(item)
         notifyItemInserted(collection.size - 1)
+    }
+
+    /**
+     * Get item at position
+     * @param position
+     */
+    fun get(position: Int): JSONObject {
+        return collection[position]
     }
 
     /**
