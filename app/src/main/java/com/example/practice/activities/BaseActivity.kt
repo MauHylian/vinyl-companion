@@ -13,6 +13,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.practice.*
+import com.google.android.gms.common.internal.ServiceSpecificExtraArgs
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_scan.*
@@ -39,20 +40,15 @@ abstract class BaseActivity : AppCompatActivity() {
         // TODO: Refactor
 
         // Define ActionBar object
-        // Define ActionBar object
         val actionBar: ActionBar? = supportActionBar
-
-        // Define ColorDrawable object and parse color
-        // using parseColor method
-        // with color hash code as its parameter
-
-        // Define ColorDrawable object and parse color
-        // using parseColor method
-        // with color hash code as its parameter
-        val colorDrawable = ColorDrawable(Color.parseColor("#FFFFFF"))
 
         // Set BackgroundDrawable
         if (actionBar != null) {
+            // Define ColorDrawable object and parse color
+            // using parseColor method
+            // with color hash code as its parameter
+            val colorDrawable = ColorDrawable(Color.parseColor("#FFFFFF"))
+
             actionBar.setBackgroundDrawable(colorDrawable) // Changes action bar color
             //actionBar.setTitle(Html.fromHtml("<font color='#000000'>${this::class.java.simpleName}</font>"));
 
@@ -60,38 +56,33 @@ abstract class BaseActivity : AppCompatActivity() {
             val text: Spannable = SpannableString(actionBar.title)
             text.setSpan(ForegroundColorSpan(Color.DKGRAY), 0, text.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
             actionBar.title = text
+
+            actionBar.setDisplayHomeAsUpEnabled(true)
         }
 
-        // Menú desplegable
         toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
         toggle.drawerArrowDrawable.color = resources.getColor(R.color.black); // Changes hamburger icon color
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         // Send to different views
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.item1 -> {
-                    val intent = Intent(this, ScanActivity::class.java)
-                    startActivity(intent)
+                    launchActivity(ScanActivity::class.java)
                 }
                 R.id.item2 -> {
-                    val intent = Intent(this, CollectionActivity::class.java)
-                    startActivity(intent)
+                    launchActivity(CollectionActivity::class.java)
                 }
                 R.id.item3 -> {
-                    val intent = Intent(this, MarketActivity::class.java)
-                    startActivity(intent)
+                    launchActivity(MarketActivity::class.java)
                 }
-                R.id.item4 -> Toast.makeText(applicationContext, "Clicked item 4", Toast.LENGTH_SHORT).show()
+                R.id.item4 -> {
+
+                }
                 R.id.item5 -> {
                     Firebase.auth.signOut()
-                    val intent = Intent(applicationContext, LoginActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    finish()
-                    startActivity(intent)
+                    launchActivity(LoginActivity::class.java, null, Intent.FLAG_ACTIVITY_CLEAR_TOP, true)
                 }
             }
             true
@@ -100,13 +91,36 @@ abstract class BaseActivity : AppCompatActivity() {
 
     /**
      * // TODO: Add description
+     * @param item
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item)) {
-            return true
-        }
+        if(toggle.onOptionsItemSelected(item)) return true
 
         return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     * Launch new activity
+     * @param cls
+     * @param extras - Intent extras
+     * @param flags - Intent flags
+     * @param shouldFinish
+     */
+    fun <T> launchActivity(cls: Class<T>,
+                           extras: Bundle? = null,
+                           flags: Int = 0,
+                           shouldFinish: Boolean = false
+    ) {
+        val intent = Intent(applicationContext, cls)
+            .addFlags(flags)
+
+        if(extras != null)
+            intent.putExtras(extras)
+
+        if(shouldFinish)
+            finish()
+
+        startActivity(intent)
     }
 
     /**
