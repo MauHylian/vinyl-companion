@@ -38,9 +38,6 @@ class BrowserActivity : BaseActivity() {
 
         recyclerView = findViewById(R.id.albumsRecyclerView)
         recyclerView.adapter = adapter
-
-        ItemTouchHelper(ItemTouchHelperCallback(adapter))
-            .attachToRecyclerView(recyclerView)
     }
 
     /**
