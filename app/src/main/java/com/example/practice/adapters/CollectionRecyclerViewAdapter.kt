@@ -22,7 +22,8 @@ import java.util.*
  */
 class CollectionRecyclerViewAdapter(
         private var context : Context,
-        private var collection: LinkedList<JSONObject>)
+        var collection: LinkedList<JSONObject> = LinkedList()
+)
     : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>(), ItemTouchHelperAdapter
 {
     var onItemClickListener : OnItemClickListener? = null
@@ -31,23 +32,12 @@ class CollectionRecyclerViewAdapter(
      * ViewHolder class
      */
     class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
-        var cover: ImageView
+        var cover: ImageView = view.findViewById(R.id.cover)
 
-        var title: TextView
-        var format: TextView
-        var description: TextView
-        var yearAndCountry: TextView
-
-        /**
-         * Constructor
-         */
-        init {
-            cover = view.findViewById(R.id.cover)
-            title = view.findViewById(R.id.title)
-            format = view.findViewById(R.id.format)
-            description = view.findViewById(R.id.description)
-            yearAndCountry = view.findViewById(R.id.yearAndCountry)
-        }
+        var title: TextView = view.findViewById(R.id.title)
+        var format: TextView = view.findViewById(R.id.format)
+        var description: TextView = view.findViewById(R.id.description)
+        var yearAndCountry: TextView = view.findViewById(R.id.yearAndCountry)
 
         /**
          * Set on click listener
@@ -94,6 +84,8 @@ class CollectionRecyclerViewAdapter(
                     format.text = "${fmt.getString("text")} ${fmt.getString("name")}"
                 else
                     format.visibility = View.GONE
+            } else {
+                format.visibility = View.GONE
             }
 
             // Description
@@ -132,7 +124,7 @@ class CollectionRecyclerViewAdapter(
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.collection_item, parent, false)
 
-        return ViewHolder(view).setOnClickListener { position: Int, type: Int ->
+        return ViewHolder(view).setOnClickListener { position: Int, _: Int ->
             onItemClickListener?.onItemClick(get(position))
         }
     }
