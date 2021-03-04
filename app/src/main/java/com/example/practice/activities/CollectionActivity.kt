@@ -1,6 +1,7 @@
 package com.example.practice.activities
 
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
@@ -13,7 +14,7 @@ import java.util.*
 /**
  * CollectionActivity class
  */
-class CollectionActivity : BaseActivity() {
+class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.OnSwipedListener {
     var collectionService = CollectionService()
 
     lateinit var recyclerView : RecyclerView
@@ -39,6 +40,8 @@ class CollectionActivity : BaseActivity() {
 
         ItemTouchHelper(ItemTouchHelperCallback(adapter))
                 .attachToRecyclerView(recyclerView)
+
+        adapter.onSwipedListener = this
     }
 
     /**
@@ -56,9 +59,15 @@ class CollectionActivity : BaseActivity() {
     private fun saveAlbum() {
         val album = getAlbum() ?: return
 
-        adapter.add(album)
+        collectionService.saveForCurrentUser(album) { id, e ->
+            if (e != null) {
+                Log.e("CollectionActivity", "Failed to save album into collection", e)
+                return@saveForCurrentUser
+            }
 
-        collectionService.saveAlbumForCurrentUser(album)
+            album.put("id", id)
+            adapter.add(album)
+        }
     }
 
     /**
@@ -99,5 +108,20 @@ class CollectionActivity : BaseActivity() {
         }
 
         return album
+    }
+
+    /**
+     * On swiped item
+     * @param position
+     */
+    override fun onSwiped(position: Int) {
+        collectionService.remove(adapter.get(position)) { e ->
+            if (e != null) {
+                Log.e("CollectionActivity", "Failed to remove album from collection", e)
+                return@remove
+            }
+
+            adapter.remove(position)
+        }
     }
 }

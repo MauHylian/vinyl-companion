@@ -36,7 +36,7 @@ class BrowserActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.
         super.onCreate(savedInstanceState)
 
         adapter = CollectionRecyclerViewAdapter(applicationContext, LinkedList())
-        adapter.setOnClickListener(this)
+        adapter.onItemClickListener = this
 
         recyclerView = findViewById(R.id.albumsRecyclerView)
         recyclerView.adapter = adapter

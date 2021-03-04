@@ -27,6 +27,7 @@ class CollectionRecyclerViewAdapter(
     : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>(), ItemTouchHelperAdapter
 {
     var onItemClickListener : OnItemClickListener? = null
+    var onSwipedListener : OnSwipedListener? = null
 
     /**
      * ViewHolder class
@@ -107,14 +108,17 @@ class CollectionRecyclerViewAdapter(
              */
             fun onItemClick(album: JSONObject)
         }
-    }
 
-    /**
-     * Set on item click listener
-     * @param onItemClickListener
-     */
-    fun setOnClickListener(onItemClickListener: OnItemClickListener) {
-        this.onItemClickListener = onItemClickListener
+        /**
+         * OnSwipedListener interface
+         */
+        interface OnSwipedListener {
+            /**
+             * On swiped item
+             * @param position
+             */
+            fun onSwiped(position: Int)
+        }
     }
 
     /**
@@ -155,9 +159,12 @@ class CollectionRecyclerViewAdapter(
      * Remove item
      * @param position
      */
-    fun remove(position : Int) {
-        collection.removeAt(position)
+    fun remove(position : Int): JSONObject {
+        val removed =  collection.removeAt(position)
+
         notifyItemRemoved(position)
+
+        return removed
     }
 
     /**
@@ -205,10 +212,10 @@ class CollectionRecyclerViewAdapter(
     }
 
     /**
-     * On swiped
+     * On swiped item
      * @param position
      */
     override fun onSwiped(position: Int) {
-        remove(position)
+        onSwipedListener?.onSwiped(position)
     }
 }
