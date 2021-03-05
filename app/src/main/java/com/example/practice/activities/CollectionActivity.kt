@@ -82,7 +82,6 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
         saveAlbum()
     }
 
-
     /**
      * Get collection
      */

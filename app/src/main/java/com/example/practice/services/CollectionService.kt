@@ -31,7 +31,7 @@ class CollectionService {
      * Parse documents to collection
      * @param documents
      */
-    private fun parseCollectionDocument(documents: MutableList<DocumentSnapshot>): CollectionType {
+    private fun parseDocumentsToCollection(documents: MutableList<DocumentSnapshot>): CollectionType {
         val collection = CollectionType()
 
         for (doc in documents) {
@@ -60,7 +60,7 @@ class CollectionService {
                 .whereEqualTo("user", user.uid)
                 .get()
                 .addOnSuccessListener {
-                    onGetCollectionListener(parseCollectionDocument((it.documents)), null)
+                    onGetCollectionListener(parseDocumentsToCollection((it.documents)), null)
                 }
                 .addOnFailureListener { e ->
                     onGetCollectionListener(null, e)
