@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
         val password = findViewById<TextView>(R.id.passwordEditLogin).text.toString()
         Log.d("LoginActivity", "Se intento iniciar con el email: $email y contrasena: $password")
 
-        if(email.isEmpty() || password.isEmpty()) {
+        if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Por favor, ingresa los datos faltantes.", Toast.LENGTH_SHORT).show()
             return
         }
@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
         // FIREBASE AUTH
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener {
-                    if(!it.isSuccessful) return@addOnCompleteListener
+                    if (!it.isSuccessful) return@addOnCompleteListener
                     else {
                         val intent = Intent(this, ScanActivity::class.java)
                         startActivity(intent)

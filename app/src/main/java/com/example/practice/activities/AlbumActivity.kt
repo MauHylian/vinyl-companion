@@ -20,15 +20,15 @@ import com.squareup.picasso.Picasso
 class AlbumActivity : BaseActivity() {
     var albumService = AlbumService()
 
-    lateinit var textAlbum : TextView
-    lateinit var textCountry : TextView
-    lateinit var textYear : TextView
+    lateinit var textAlbum: TextView
+    lateinit var textCountry: TextView
+    lateinit var textYear: TextView
 
-    lateinit var imageAlbum : ImageView
+    lateinit var imageAlbum: ImageView
 
-    var albumURI : String? = null
+    var albumURI: String? = null
 
-    var album : JSONObject? = null
+    var album: JSONObject? = null
 
     /**
      * Get layout resource ID
@@ -86,12 +86,12 @@ class AlbumActivity : BaseActivity() {
      * Load album uri on browser
      */
     private fun onClickMoreInfo() {
-        if(albumURI == null || albumURI!!.isEmpty()) return;
+        if (albumURI == null || albumURI!!.isEmpty()) return;
 
         try {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(albumURI))
             startActivity(browserIntent)
-        } catch(e : Exception) {
+        } catch (e: Exception) {
             // TODO: Handle error
             Log.e("AlbumActivity", "Failed to start browser", e)
         }
@@ -107,7 +107,7 @@ class AlbumActivity : BaseActivity() {
 
         try {
             imageAlbum.setImageResource(android.R.color.transparent)
-        } catch(e : Exception) {
+        } catch (e: Exception) {
             Log.e("AlbumActivity", "Failed to clear album image view", e)
         }
 
@@ -122,19 +122,19 @@ class AlbumActivity : BaseActivity() {
         this.album = album
 
         try {
-            if(album.has("title"))
+            if (album.has("title"))
                 textAlbum.text = album.getString("title")
 
-            if(album.has("year"))
+            if (album.has("year"))
                 textYear.text = album.getString("year")
 
-            if(album.has("country"))
+            if (album.has("country"))
                 textCountry.text = album.getString("country")
 
-            if(album.has("cover_image"))
+            if (album.has("cover_image"))
                 fillAlbumImage(album.getString("cover_image"))
 
-            if(album.has("uri"))
+            if (album.has("uri"))
                 albumURI = "https://discogs.com" + album.getString("uri")
         } catch (e: Exception) {
             Log.e("AlbumActivity", e.toString())
@@ -145,7 +145,7 @@ class AlbumActivity : BaseActivity() {
     /**
      * Fill album image view
      */
-    private fun fillAlbumImage(url : String) {
+    private fun fillAlbumImage(url: String) {
         Picasso.get().load(url).into(imageAlbum)
     }
 
@@ -155,10 +155,10 @@ class AlbumActivity : BaseActivity() {
     private fun findAlbum() {
         val barcode = getBarcode();
 
-        if(barcode != null) {
+        if (barcode != null) {
             albumService.getByBarcode(barcode, object : BaseService.Companion.OnGetListener() {
                 override fun onGet(data: Any?, e: java.lang.Exception?) {
-                    if(e != null) return  // TODO: Handle error
+                    if (e != null) return  // TODO: Handle error
 
                     this@AlbumActivity.runOnUiThread {
                         fillAlbum(data as JSONObject)
@@ -167,7 +167,7 @@ class AlbumActivity : BaseActivity() {
             })
         } else {
             var value = getExtra("ALBUM")
-            if(value != null) fillAlbum(JSONObject(value))
+            if (value != null) fillAlbum(JSONObject(value))
         }
     }
 }

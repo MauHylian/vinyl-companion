@@ -13,17 +13,17 @@ class AlbumService : DiscogsService() {
      * @param barcode
      * @param onGetListener
      */
-    fun getByBarcode(barcode : String,
+    fun getByBarcode(barcode: String,
                      onGetListener: BaseService.Companion.OnGetListener) {
         get(mapOf("barcode" to barcode), object : BaseService.Companion.OnGetListener() {
             override fun onGet(data: Any?, e: Exception?) {
-                if(e != null) return onGetListener.onGet(null, e)
+                if (e != null) return onGetListener.onGet(null, e)
 
                 var album = JSONObject()
 
-                if(data is JSONObject) {
+                if (data is JSONObject) {
                     var results = data.getJSONArray("results")
-                    if(results.length() != 0) album = results.getJSONObject(0)
+                    if (results.length() != 0) album = results.getJSONObject(0)
                 }
 
                 onGetListener.onGet(extractRelevantData(album))
@@ -41,30 +41,29 @@ class AlbumService : DiscogsService() {
     fun get(title: String?,
             year: String?,
             artist: String?,
-            onGetListener: BaseService.Companion.OnGetListener)
-    {
+            onGetListener: BaseService.Companion.OnGetListener) {
         val queryParameters = mutableMapOf<String, String>()
 
         var qParam = String()
 
-        if(title != null)
+        if (title != null)
             qParam += title
 
-        if(year != null)
+        if (year != null)
             qParam += " $year"
 
-        if(artist != null)
+        if (artist != null)
             qParam += " $artist"
 
         queryParameters["q"] = qParam
 
         get(queryParameters, object : BaseService.Companion.OnGetListener() {
             override fun onGet(data: Any?, e: Exception?) {
-                if(e != null) return onGetListener.onGet(null, e)
+                if (e != null) return onGetListener.onGet(null, e)
 
                 var results = JSONArray()
 
-                if(data is JSONObject)
+                if (data is JSONObject)
                     results = data.getJSONArray("results")
 
                 onGetListener.onGet(extractRelevantData(results))

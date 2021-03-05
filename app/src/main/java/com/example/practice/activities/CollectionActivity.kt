@@ -17,8 +17,8 @@ import java.util.*
 class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.OnSwipedListener {
     var collectionService = CollectionService()
 
-    lateinit var recyclerView : RecyclerView
-    lateinit var adapter : CollectionRecyclerViewAdapter
+    lateinit var recyclerView: RecyclerView
+    lateinit var adapter: CollectionRecyclerViewAdapter
 
     /**
      * Get layout resource ID
@@ -72,9 +72,9 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
 
     /**
      * Fill collection recycler view
-     * @param colletion
+     * @param collection
      */
-    private fun fillCollection(collection : LinkedList<JSONObject>) {
+    private fun fillCollection(collection: LinkedList<JSONObject>) {
         // TODO: Create collection setter
         adapter.collection = collection
         adapter.notifyDataSetChanged()
@@ -88,23 +88,25 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
      */
     private fun getCollection() {
         collectionService.getForCurrentUser { collection, e ->
-            if(e != null) return@getForCurrentUser // TODO: Handle error
+            if (e != null) {
+                // TODO: Handle error
+                Log.e("CollectionActivity", "Failed to get collection for current user", e)
+                return@getForCurrentUser
+            }
 
-            if(collection == null) return@getForCurrentUser // TODO: Handle null collection
-
-            fillCollection(collection)
+            if (collection != null) fillCollection(collection)
         }
     }
 
     /**
      * Get album from intent extras
      */
-    private fun getAlbum() : JSONObject? {
-        var album : JSONObject? = null
+    private fun getAlbum(): JSONObject? {
+        var album: JSONObject? = null
 
-        if(intent.extras != null) {
+        if (intent.extras != null) {
             var value = intent.extras?.getString("ALBUM")
-            if(value != null) album = JSONObject(value)
+            if (value != null) album = JSONObject(value)
         }
 
         return album
@@ -117,6 +119,7 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
     override fun onSwiped(position: Int) {
         collectionService.remove(adapter.get(position)) { e ->
             if (e != null) {
+                // TODO: Handle error
                 Log.e("CollectionActivity", "Failed to remove album from collection", e)
                 return@remove
             }

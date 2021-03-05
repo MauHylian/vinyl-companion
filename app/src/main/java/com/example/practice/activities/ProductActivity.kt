@@ -17,6 +17,5 @@ class ProductActivity : BaseActivity() {
             Toast.makeText(applicationContext, "Publicado segment", Toast.LENGTH_SHORT).show()
             finish()
         }
-
     }
 }

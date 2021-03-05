@@ -12,9 +12,9 @@ import java.util.*
 import kotlin.collections.HashMap
 
 typealias CollectionType = LinkedList<JSONObject>
-typealias OnGetCollectionListener = (collection : CollectionType?, e : Exception?) -> Unit
-typealias OnSaveAlbumListener = (id : String?, e : Exception?) -> Unit
-typealias OnRemoveAlbumListener = (e : Exception?) -> Unit
+typealias OnGetCollectionListener = (collection: CollectionType?, e: Exception?) -> Unit
+typealias OnSaveAlbumListener = (id: String?, e: Exception?) -> Unit
+typealias OnRemoveAlbumListener = (e: Exception?) -> Unit
 
 /**
  * CollectionService class
@@ -31,10 +31,10 @@ class CollectionService {
      * Parse documents to collection
      * @param documents
      */
-    private fun parseCollectionDocument(documents : MutableList<DocumentSnapshot>) : CollectionType {
+    private fun parseCollectionDocument(documents: MutableList<DocumentSnapshot>): CollectionType {
         val collection = CollectionType()
 
-        for(doc in documents) {
+        for (doc in documents) {
             var album = JSONObject(doc.data)
             album.put("id", doc.id)
 
@@ -50,9 +50,8 @@ class CollectionService {
      * @param onGetCollectionListener
      */
     fun get(user: FirebaseUser?,
-            onGetCollectionListener: OnGetCollectionListener)
-    {
-        if(user == null) {
+            onGetCollectionListener: OnGetCollectionListener) {
+        if (user == null) {
             onGetCollectionListener(null, UserNotFound())
             return
         }
@@ -74,11 +73,10 @@ class CollectionService {
      * @param album
      * @param onSaveAlbumListener
      */
-    fun save(user : FirebaseUser?,
-             album : JSONObject,
-             onSaveAlbumListener: OnSaveAlbumListener? = null)
-    {
-        if(user == null) {
+    fun save(user: FirebaseUser?,
+             album: JSONObject,
+             onSaveAlbumListener: OnSaveAlbumListener? = null) {
+        if (user == null) {
             onSaveAlbumListener?.invoke(null, UserNotFound())
             return
         }
@@ -87,13 +85,13 @@ class CollectionService {
         map["user"] = user.uid
 
         db.collection("collections")
-            .add(map)
-            .addOnSuccessListener {
-                onSaveAlbumListener?.invoke(it.id, null)
-            }
-            .addOnFailureListener { e ->
-                onSaveAlbumListener?.invoke(null, e)
-            }
+                .add(map)
+                .addOnSuccessListener {
+                    onSaveAlbumListener?.invoke(it.id, null)
+                }
+                .addOnFailureListener { e ->
+                    onSaveAlbumListener?.invoke(null, e)
+                }
     }
 
     /**
@@ -103,14 +101,14 @@ class CollectionService {
      */
     fun remove(id: String, onRemoveAlbumListener: OnRemoveAlbumListener? = null) {
         db.collection("collections")
-            .document(id)
-            .delete()
-            .addOnSuccessListener {
-                onRemoveAlbumListener?.invoke(null)
-            }
-            .addOnFailureListener { e ->
-                onRemoveAlbumListener?.invoke(e)
-            }
+                .document(id)
+                .delete()
+                .addOnSuccessListener {
+                    onRemoveAlbumListener?.invoke(null)
+                }
+                .addOnFailureListener { e ->
+                    onRemoveAlbumListener?.invoke(e)
+                }
     }
 
     /**
@@ -118,8 +116,8 @@ class CollectionService {
      * @param album
      * @param onRemoveAlbumListener
      */
-    fun remove(album : JSONObject, onRemoveAlbumListener: OnRemoveAlbumListener? = null) {
-        if(album.has("id")) remove(album.getString("id"), onRemoveAlbumListener)
+    fun remove(album: JSONObject, onRemoveAlbumListener: OnRemoveAlbumListener? = null) {
+        if (album.has("id")) remove(album.getString("id"), onRemoveAlbumListener)
     }
 
     /**
@@ -135,7 +133,7 @@ class CollectionService {
      * @param album
      * @param onSaveAlbumListener
      */
-    fun saveForCurrentUser(album : JSONObject, onSaveAlbumListener: OnSaveAlbumListener? = null) {
+    fun saveForCurrentUser(album: JSONObject, onSaveAlbumListener: OnSaveAlbumListener? = null) {
         save(FirebaseAuth.getInstance().currentUser, album, onSaveAlbumListener)
     }
 }

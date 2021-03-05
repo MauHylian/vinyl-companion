@@ -9,7 +9,7 @@ interface ItemTouchHelperAdapter {
      * @param from
      * @param to
      */
-    fun onMove(from: Int, to: Int) : Boolean
+    fun onMove(from: Int, to: Int): Boolean
 
     /**
      * On swiped

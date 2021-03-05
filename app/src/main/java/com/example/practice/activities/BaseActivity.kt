@@ -28,7 +28,7 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * Get layout resource ID
      */
-    protected abstract fun getLayoutResourceID() : Int
+    protected abstract fun getLayoutResourceID(): Int
 
     /**
      * On Create
@@ -94,7 +94,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * @param item
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item)) return true
+        if (toggle.onOptionsItemSelected(item)) return true
 
         return super.onOptionsItemSelected(item)
     }
@@ -112,12 +112,12 @@ abstract class BaseActivity : AppCompatActivity() {
                            shouldFinish: Boolean = false
     ) {
         val intent = Intent(this, cls)
-            .addFlags(flags)
+                .addFlags(flags)
 
-        if(extras != null)
+        if (extras != null)
             intent.putExtras(extras)
 
-        if(shouldFinish)
+        if (shouldFinish)
             finish()
 
         startActivity(intent)
@@ -127,13 +127,13 @@ abstract class BaseActivity : AppCompatActivity() {
      * Get extra from intent
      * @param key
      */
-    fun getExtra(key : String) : String? {
+    fun getExtra(key: String): String? {
         val extras = intent.extras
 
-        var value : String? = null
-        if(extras != null) {
+        var value: String? = null
+        if (extras != null) {
             value = extras.getString(key)
-            if(value != null && value.isEmpty()) value = null
+            if (value != null && value.isEmpty()) value = null
         }
 
         return value

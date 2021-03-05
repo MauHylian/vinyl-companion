@@ -11,9 +11,9 @@ import com.google.zxing.integration.android.IntentIntegrator
 
 class ScanActivity : BaseActivity() {
     lateinit var editTextBarcode: EditText
-    lateinit var editTextTitle : EditText
-    lateinit var editTextYear : EditText
-    lateinit var editTextArtist : EditText
+    lateinit var editTextTitle: EditText
+    lateinit var editTextYear: EditText
+    lateinit var editTextArtist: EditText
 
     override fun getLayoutResourceID(): Int {
         return R.layout.activity_scan
@@ -36,7 +36,7 @@ class ScanActivity : BaseActivity() {
 
             val barcode = editTextBarcode.text.toString()
 
-            if(barcode.isNotEmpty()) {
+            if (barcode.isNotEmpty()) {
                 extras.putString("BARCODE", barcode)
 
                 // Start AlbumActivity
@@ -53,14 +53,14 @@ class ScanActivity : BaseActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(resultCode != Activity.RESULT_OK)
+        if (resultCode != Activity.RESULT_OK)
             return super.onActivityResult(requestCode, resultCode, data)
 
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-            ?: return super.onActivityResult(requestCode, resultCode, data)
+                ?: return super.onActivityResult(requestCode, resultCode, data)
 
 
-        if(result.contents != null) {
+        if (result.contents != null) {
             Toast.makeText(this, "Scanned: ${result.contents}", Toast.LENGTH_LONG).show()
 
             val extras = Bundle()

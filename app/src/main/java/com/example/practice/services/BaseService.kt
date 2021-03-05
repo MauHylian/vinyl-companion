@@ -10,21 +10,21 @@ import java.lang.Exception
  * BaseService class
  */
 open class BaseService {
-    var client : OkHttpClient = OkHttpClient()
+    var client: OkHttpClient = OkHttpClient()
 
-    protected var scheme : String
-    protected var host : String
+    protected var scheme: String
+    protected var host: String
 
     companion object {
         abstract class OnGetListener {
-            abstract fun onGet(data : Any?, e : Exception? = null)
+            abstract fun onGet(data: Any?, e: Exception? = null)
         }
     }
 
     /**
      * BaseService Constructor
      */
-    constructor(scheme : String, host : String) {
+    constructor(scheme: String, host: String) {
         this.scheme = scheme
         this.host = host
     }
@@ -43,13 +43,13 @@ open class BaseService {
      * @param path
      * @param queryParameters
      */
-    protected fun buildURL(path : String?, queryParameters: Map<String, String>? = null) : String {
+    protected fun buildURL(path: String?, queryParameters: Map<String, String>? = null): String {
         var builder = getURLBuilder()
 
-        if(path != null) builder.addPathSegments(path)
+        if (path != null) builder.addPathSegments(path)
 
-        if(queryParameters != null)
-            for((name, value) in queryParameters)
+        if (queryParameters != null)
+            for ((name, value) in queryParameters)
                 builder.addQueryParameter(name, value)
 
         return builder.build().toString();
@@ -60,7 +60,7 @@ open class BaseService {
      * @param req
      * @param callback
      */
-    protected fun enqueueRequest(req : Request, callback: Callback) {
+    protected fun enqueueRequest(req: Request, callback: Callback) {
         return client.newCall(req).enqueue(callback)
     }
 
@@ -70,7 +70,7 @@ open class BaseService {
      * @param queryParameters
      * @param method - HTTP Method
      */
-    protected fun buildRequest(path : String?, queryParameters : Map<String, String>, method : String = "GET", body: RequestBody? = null) : Request {
+    protected fun buildRequest(path: String?, queryParameters: Map<String, String>, method: String = "GET", body: RequestBody? = null): Request {
         var url = buildURL(path, queryParameters)
 
         return Request.Builder()
@@ -106,26 +106,27 @@ open class BaseService {
      * @param onGetListener
      */
     fun get(path: String?, queryParameters: Map<String, String>, onGetListener: OnGetListener) {
-        return get(path, queryParameters,  object : Callback {
+        return get(path, queryParameters, object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 onGetListener.onGet(null, e)
             }
 
             override fun onResponse(call: Call, res: Response) {
-                if(!res.isSuccessful) {
+                if (!res.isSuccessful) {
                     // TODO: Handle error
                     onGetListener.onGet(null, Exception(res.message))
                 } else if (res.body != null) {
                     var body = res.body!!.string()
-                    var data : Any? = null
+                    var data: Any? = null
 
                     try {
                         data = JSONArray(body)
-                    } catch (e : Exception) { }
+                    } catch (e: Exception) {
+                    }
 
                     try {
-                        if(data == null) data = JSONObject(body)
-                    } catch (e : Exception) {
+                        if (data == null) data = JSONObject(body)
+                    } catch (e: Exception) {
                         // TODO: Handle unknown body type error
                     }
 
@@ -150,7 +151,7 @@ open class BaseService {
      * @param path
      * @param queryParameters
      */
-    fun post(path : String, queryParameters: Map<String, String>, body: RequestBody?, callback: Callback) {
+    fun post(path: String, queryParameters: Map<String, String>, body: RequestBody?, callback: Callback) {
         var req = buildRequest(path, queryParameters, "POST", body)
         return enqueueRequest(req, callback)
     }

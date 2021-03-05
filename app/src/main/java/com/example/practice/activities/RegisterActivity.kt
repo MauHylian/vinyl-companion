@@ -32,12 +32,12 @@ class RegisterActivity : AppCompatActivity() {
         val email = findViewById<TextView>(R.id.emailEdit).text.toString()
         val password = findViewById<TextView>(R.id.passwordEdit).text.toString()
 
-        if(email.isEmpty() || password.isEmpty()) {
+        if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Por favor, ingresa los datos faltantes.", Toast.LENGTH_SHORT).show()
             return
         }
 
-        if(passwordEdit.text.toString() == confirmPasswordEdit.text.toString()) {
+        if (passwordEdit.text.toString() == confirmPasswordEdit.text.toString()) {
             Log.d("RegisterActivity", "Username es: $password")
             Log.d("RegisterActivity", "Email es: $email")
             Log.d("RegisterActivity", "Contrasena es: $password")
@@ -45,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
             // FIREBASE AUTH REGISTER
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener {
-                        if(!it.isSuccessful) return@addOnCompleteListener
+                        if (!it.isSuccessful) return@addOnCompleteListener
                         // else if successful
                         finish()
                         //Log.d("Main", "Successfully created user with uid: ${it.result!!.user!!.uid}")

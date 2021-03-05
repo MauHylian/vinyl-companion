@@ -21,13 +21,11 @@ import java.util.*
  * @param collection
  */
 class CollectionRecyclerViewAdapter(
-        private var context : Context,
+        private var context: Context,
         var collection: LinkedList<JSONObject> = LinkedList()
-)
-    : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>(), ItemTouchHelperAdapter
-{
-    var onItemClickListener : OnItemClickListener? = null
-    var onSwipedListener : OnSwipedListener? = null
+) : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>(), ItemTouchHelperAdapter {
+    var onItemClickListener: OnItemClickListener? = null
+    var onSwipedListener: OnSwipedListener? = null
 
     /**
      * ViewHolder class
@@ -43,7 +41,7 @@ class CollectionRecyclerViewAdapter(
         /**
          * Set on click listener
          */
-        fun setOnClickListener(event : (position : Int, type : Int) -> Unit): ViewHolder {
+        fun setOnClickListener(event: (position: Int, type: Int) -> Unit): ViewHolder {
             view.setOnClickListener { event.invoke(adapterPosition, itemViewType) }
             return this
         }
@@ -52,36 +50,36 @@ class CollectionRecyclerViewAdapter(
          * Bind album data to views
          */
         @SuppressLint("SetTextI18n")
-        fun bind(album : JSONObject) {
+        fun bind(album: JSONObject) {
             // Title
-            if(album.has("title"))
+            if (album.has("title"))
                 title.text = album.getString("title")
 
             // Year Country
             yearAndCountry.text = String()
 
-            if(album.has("year"))
+            if (album.has("year"))
                 yearAndCountry.text = album.getString("year") + " "
 
-            if(album.has("country"))
+            if (album.has("country"))
                 yearAndCountry.text = yearAndCountry.text.toString() + album.getString("country")
 
-            if(yearAndCountry.text.isEmpty())
+            if (yearAndCountry.text.isEmpty())
                 yearAndCountry.visibility = View.GONE
 
             // Cover
             try {
-                if(album.has("cover_image"))
+                if (album.has("cover_image"))
                     Picasso.get().load(album.getString("cover_image")).into(cover)
-            } catch (e : Exception) {
+            } catch (e: Exception) {
                 Log.e("CollectionRecyclerViewAdapter", "Failed to get cover image", e)
             }
 
             // Format text Format name
-            if(album.has("format")) {
+            if (album.has("format")) {
                 var fmt = album.getJSONObject("format")
 
-                if(fmt.has("text") && fmt.has("name"))
+                if (fmt.has("text") && fmt.has("name"))
                     format.text = "${fmt.getString("text")} ${fmt.getString("name")}"
                 else
                     format.visibility = View.GONE
@@ -90,7 +88,7 @@ class CollectionRecyclerViewAdapter(
             }
 
             // Description
-            if(album.has("description"))
+            if (album.has("description"))
                 description.text = album.getString("description")
             else
                 description.visibility = View.GONE
@@ -159,8 +157,8 @@ class CollectionRecyclerViewAdapter(
      * Remove item
      * @param position
      */
-    fun remove(position : Int): JSONObject {
-        val removed =  collection.removeAt(position)
+    fun remove(position: Int): JSONObject {
+        val removed = collection.removeAt(position)
 
         notifyItemRemoved(position)
 
@@ -171,7 +169,7 @@ class CollectionRecyclerViewAdapter(
      * Add item
      * @param item
      */
-    fun add(item : JSONObject) {
+    fun add(item: JSONObject) {
         collection.add(item)
         notifyItemInserted(collection.size - 1)
     }
@@ -192,14 +190,14 @@ class CollectionRecyclerViewAdapter(
     override fun onMove(from: Int, to: Int): Boolean {
         var i = from
 
-        if(from < to) {
-            while(i < to) {
+        if (from < to) {
+            while (i < to) {
                 Collections.swap(collection, i, i + 1)
 
                 ++i
             }
         } else {
-            while(i > to) {
+            while (i > to) {
                 Collections.swap(collection, i, i - 1)
 
                 --i

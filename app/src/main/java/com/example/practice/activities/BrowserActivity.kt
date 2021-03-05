@@ -19,8 +19,8 @@ import java.util.*
 class BrowserActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.OnItemClickListener {
     var albumService = AlbumService()
 
-    lateinit var recyclerView : RecyclerView
-    lateinit var adapter : CollectionRecyclerViewAdapter
+    lateinit var recyclerView: RecyclerView
+    lateinit var adapter: CollectionRecyclerViewAdapter
 
     /**
      * Get layout resource ID
@@ -56,8 +56,8 @@ class BrowserActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.
      * Fill albums recycler view
      * @param albums
      */
-    private fun fillAlbums(albums : JSONArray) {
-        for(i in 0 until albums.length())
+    private fun fillAlbums(albums: JSONArray) {
+        for (i in 0 until albums.length())
             adapter.add(albums.getJSONObject(i))
     }
 
@@ -78,7 +78,7 @@ class BrowserActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.
 
         albumService.get(title, year, artist, object : BaseService.Companion.OnGetListener() {
             override fun onGet(data: Any?, e: java.lang.Exception?) {
-                if(e != null) return  // TODO: Handle error
+                if (e != null) return  // TODO: Handle error
 
                 this@BrowserActivity.runOnUiThread {
                     fillAlbums(data as JSONArray)

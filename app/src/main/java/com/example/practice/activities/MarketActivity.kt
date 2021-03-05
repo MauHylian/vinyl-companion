@@ -17,6 +17,5 @@ class MarketActivity : BaseActivity() {
             val intent = Intent(this, ProductActivity::class.java)
             startActivity(intent)
         }
-
     }
 }
