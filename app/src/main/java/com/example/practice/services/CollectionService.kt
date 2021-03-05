@@ -28,6 +28,11 @@ class CollectionService {
     inner class UserNotFound : Exception("User was not found") {}
 
     /**
+     * NullAlbumID inner class
+     */
+    inner class NullAlbumID : Exception("Album ID is null") {}
+
+    /**
      * Parse documents to collection
      * @param documents
      */
@@ -118,6 +123,7 @@ class CollectionService {
      */
     fun remove(album: JSONObject, onRemoveAlbumListener: OnRemoveAlbumListener? = null) {
         if (album.has("id")) remove(album.getString("id"), onRemoveAlbumListener)
+        else onRemoveAlbumListener?.invoke(NullAlbumID())
     }
 
     /**
