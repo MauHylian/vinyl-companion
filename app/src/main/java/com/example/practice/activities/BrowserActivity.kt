@@ -3,12 +3,15 @@ package com.example.practice.activities
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
 import com.example.practice.adapters.CollectionRecyclerViewAdapter
 import com.example.practice.services.AlbumService
 import com.example.practice.services.BaseService
 import com.example.practice.utils.ItemTouchHelperCallback
+import kotlinx.android.synthetic.main.activity_browser.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -40,6 +43,7 @@ class BrowserActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.
 
         recyclerView = findViewById(R.id.albumsRecyclerView)
         recyclerView.adapter = adapter
+
     }
 
     /**
@@ -92,7 +96,7 @@ class BrowserActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.
      * @param album
      */
     override fun onItemClick(album: JSONObject) {
-        var extras = Bundle()
+        val extras = Bundle()
         extras.putString("ALBUM", album.toString())
 
         launchActivity(AlbumActivity::class.java, extras)

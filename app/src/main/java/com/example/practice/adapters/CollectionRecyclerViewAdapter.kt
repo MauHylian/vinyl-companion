@@ -6,14 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
-import org.json.JSONObject
 import com.squareup.picasso.Picasso
-import java.lang.Exception
+import org.json.JSONObject
 import java.util.*
+
 
 /**
  * CollectionRecyclerViewAdapter class
@@ -26,6 +27,7 @@ class CollectionRecyclerViewAdapter(
 ) : RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder>(), ItemTouchHelperAdapter {
     var onItemClickListener: OnItemClickListener? = null
     var onSwipedListener: OnSwipedListener? = null
+    private var lastPosition = -1
 
     /**
      * ViewHolder class
@@ -129,6 +131,7 @@ class CollectionRecyclerViewAdapter(
         return ViewHolder(view).setOnClickListener { position: Int, _: Int ->
             onItemClickListener?.onItemClick(get(position))
         }
+
     }
 
     /**
@@ -136,6 +139,20 @@ class CollectionRecyclerViewAdapter(
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(get(position))
+
+        setAnimation(holder.itemView, position)
+    }
+
+    /**
+     * Bind view holder listener
+     */
+    private fun setAnimation(viewToAnimate: View, position: Int){
+        // If the item wasn't previously displayed on screen, it's animated
+        if (position > lastPosition) {
+            val animation = AnimationUtils.loadAnimation(context, R.anim.item_slide_right)
+            viewToAnimate.startAnimation(animation)
+            lastPosition = position
+        }
     }
 
     /**
@@ -166,7 +183,7 @@ class CollectionRecyclerViewAdapter(
     }
 
     /**
-     * Undo remove
+     * Data reaload
      */
     fun reload(){
         notifyDataSetChanged()
