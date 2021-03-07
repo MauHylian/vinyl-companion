@@ -2,12 +2,15 @@ package com.example.practice.activities
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
 import com.example.practice.adapters.CollectionRecyclerViewAdapter
 import com.example.practice.services.CollectionService
 import com.example.practice.utils.ItemTouchHelperCallback
+import com.google.android.material.snackbar.Snackbar
 import org.json.JSONObject
 import java.util.*
 
@@ -54,10 +57,9 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
     }
 
     /**
-     * Save album from intent extras
+     * Save album
      */
-    private fun saveAlbum() {
-        val album = getAlbum() ?: return
+    private fun saveAlbum(album: JSONObject) {
 
         collectionService.saveForCurrentUser(album) { id, e ->
             if (e != null) {
@@ -71,6 +73,15 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
     }
 
     /**
+     * Save album from intent extras
+     */
+    private fun saveNewAlbum() {
+        val album = getAlbum() ?: return
+
+        saveAlbum(album)
+    }
+
+    /**
      * Fill collection recycler view
      * @param collection
      */
@@ -79,7 +90,7 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
         adapter.collection = collection
         adapter.notifyDataSetChanged()
 
-        saveAlbum()
+        saveNewAlbum()
     }
 
     /**
@@ -104,7 +115,7 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
         var album: JSONObject? = null
 
         if (intent.extras != null) {
-            var value = intent.extras?.getString("ALBUM")
+            val value = intent.extras?.getString("ALBUM")
             if (value != null) album = JSONObject(value)
         }
 
@@ -116,14 +127,33 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
      * @param position
      */
     override fun onSwiped(position: Int) {
-        collectionService.remove(adapter.get(position)) { e ->
-            if (e != null) {
-                // TODO: Handle error
-                Log.e("CollectionActivity", "Failed to remove album from collection", e)
-                return@remove
-            }
+        var deletedAlbum: JSONObject
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.BorrarAlbum))
+        builder.setMessage(getString(R.string.RealmenteBorrar))
 
-            adapter.remove(position)
+        builder.setPositiveButton(getString(R.string.Aceptar)) { _, _ ->
+            collectionService.remove(adapter.get(position)) { e ->
+                if (e != null) {
+                    // TODO: Handle error
+                    Log.e("CollectionActivity", "Failed to remove album from collection", e)
+                    return@remove
+                }
+
+                deletedAlbum = adapter.remove(position)
+
+                Snackbar.make(recyclerView,getString(R.string.AlbumEliminado), Snackbar.LENGTH_SHORT).setAction(getString(R.string.Deshacer)
+                ) {
+                    saveAlbum(deletedAlbum)
+                }.show()
+            }
         }
+
+        builder.setNegativeButton(getString(R.string.Cancelar)) { _, _ ->
+            adapter.reload()
+        }
+
+        builder.show()
+
     }
 }

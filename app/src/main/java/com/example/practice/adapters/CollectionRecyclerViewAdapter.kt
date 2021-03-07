@@ -77,7 +77,7 @@ class CollectionRecyclerViewAdapter(
 
             // Format text Format name
             if (album.has("format")) {
-                var fmt = album.getJSONObject("format")
+                val fmt = album.getJSONObject("format")
 
                 if (fmt.has("text") && fmt.has("name"))
                     format.text = "${fmt.getString("text")} ${fmt.getString("name")}"
@@ -163,6 +163,13 @@ class CollectionRecyclerViewAdapter(
         notifyItemRemoved(position)
 
         return removed
+    }
+
+    /**
+     * Undo remove
+     */
+    fun reload(){
+        notifyDataSetChanged()
     }
 
     /**
