@@ -123,6 +123,8 @@ class CollectionRecyclerViewAdapter(
 
     /**
      * Create view holder
+     * @param parent
+     * @param viewType
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -136,6 +138,8 @@ class CollectionRecyclerViewAdapter(
 
     /**
      * Bind view holder listener
+     * @param holder
+     * @param position
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(get(position))
@@ -145,6 +149,8 @@ class CollectionRecyclerViewAdapter(
 
     /**
      * Bind view holder listener
+     * @param viewToAnimate
+     * @param position
      */
     private fun setAnimation(viewToAnimate: View, position: Int){
         // If the item wasn't previously displayed on screen, it's animated
@@ -160,6 +166,14 @@ class CollectionRecyclerViewAdapter(
      */
     override fun getItemCount(): Int {
         return collection.size
+    }
+
+    /**
+     * Notify data set changed
+     */
+    fun reload()
+    {
+        notifyDataSetChanged()
     }
 
     /**
@@ -180,13 +194,6 @@ class CollectionRecyclerViewAdapter(
         notifyItemRemoved(position)
 
         return removed
-    }
-
-    /**
-     * Data reaload
-     */
-    fun reload(){
-        notifyDataSetChanged()
     }
 
     /**
