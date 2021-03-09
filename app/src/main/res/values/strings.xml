@@ -28,10 +28,10 @@
     <string name="nombre_del_album">Nombre del album</string>
     <string name="ano_de_lanzamiento">Año de lanzamiento</string>
     <string name="buscar">Buscar</string>
-    <string name="RealmenteBorrar">¿Realmente desea borrar este albúm de su colección?</string>
-    <string name="BorrarAlbum">Borrar Albúm</string>
-    <string name="Cancelar">Cancelar</string>
-    <string name="Aceptar">Aceptar</string>
-    <string name="AlbumEliminado">Albúm Eliminado</string>
-    <string name="Deshacer">Deshacer</string>
+    <string name="realmente_borrar">¿Realmente desea borrar este album de su colección?</string>
+    <string name="borrar_album">Borrar Album</string>
+    <string name="no">No</string>
+    <string name="si">Si</string>
+    <string name="album_eliminado">Album Eliminado</string>
+    <string name="deshacer">Deshacer</string>
 </resources>

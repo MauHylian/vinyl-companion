@@ -2,7 +2,6 @@ package com.example.practice.activities
 
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -57,18 +56,34 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
     }
 
     /**
-     * Save album
+     * Get album from intent extras
      */
-    private fun saveAlbum(album: JSONObject) {
+    private fun getAlbum(): JSONObject? {
+        var album: JSONObject? = null
 
+        if (intent.extras != null) {
+            val value = intent.extras?.getString("ALBUM")
+            if (value != null) album = JSONObject(value)
+        }
+
+        return album
+    }
+
+    /**
+     * Save album
+     * @param album
+     */
+    private fun saveAlbum(album: JSONObject, position: Int = -1) {
         collectionService.saveForCurrentUser(album) { id, e ->
             if (e != null) {
                 Log.e("CollectionActivity", "Failed to save album into collection", e)
                 return@saveForCurrentUser
             }
 
+            // TODO: Put id in service
             album.put("id", id)
-            adapter.add(album)
+
+            adapter.add(album, position);
         }
     }
 
@@ -109,30 +124,19 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
     }
 
     /**
-     * Get album from intent extras
-     */
-    private fun getAlbum(): JSONObject? {
-        var album: JSONObject? = null
-
-        if (intent.extras != null) {
-            val value = intent.extras?.getString("ALBUM")
-            if (value != null) album = JSONObject(value)
-        }
-
-        return album
-    }
-
-    /**
      * On swiped item
      * @param position
      */
     override fun onSwiped(position: Int) {
-        var deletedAlbum: JSONObject
         val builder = AlertDialog.Builder(this)
-        builder.setTitle(getString(R.string.BorrarAlbum))
-        builder.setMessage(getString(R.string.RealmenteBorrar))
+                .setTitle(getString(R.string.borrar_album))
+                .setMessage(getString(R.string.realmente_borrar))
 
-        builder.setPositiveButton(getString(R.string.Aceptar)) { _, _ ->
+        builder.setNegativeButton(getString(R.string.no)) { _, _ ->
+            adapter.notifyDataSetChanged();
+        }
+
+        builder.setPositiveButton(getString(R.string.si)) { _, _ ->
             collectionService.remove(adapter.get(position)) { e ->
                 if (e != null) {
                     // TODO: Handle error
@@ -140,20 +144,17 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
                     return@remove
                 }
 
-                deletedAlbum = adapter.remove(position)
+                val removed = adapter.remove(position)
 
-                Snackbar.make(recyclerView,getString(R.string.AlbumEliminado), Snackbar.LENGTH_SHORT).setAction(getString(R.string.Deshacer)
-                ) {
-                    saveAlbum(deletedAlbum)
+                Snackbar.make(recyclerView,
+                        getString(R.string.album_eliminado),
+                        Snackbar.LENGTH_SHORT).setAction(getString(R.string.deshacer))
+                {
+                    saveAlbum(removed, position)
                 }.show()
             }
         }
 
-        builder.setNegativeButton(getString(R.string.Cancelar)) { _, _ ->
-            adapter.reload()
-        }
-
         builder.show()
-
     }
 }

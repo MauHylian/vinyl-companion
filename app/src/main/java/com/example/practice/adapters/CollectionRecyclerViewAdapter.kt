@@ -148,7 +148,7 @@ class CollectionRecyclerViewAdapter(
     }
 
     /**
-     * Bind view holder listener
+     * Set animation
      * @param viewToAnimate
      * @param position
      */
@@ -166,14 +166,6 @@ class CollectionRecyclerViewAdapter(
      */
     override fun getItemCount(): Int {
         return collection.size
-    }
-
-    /**
-     * Notify data set changed
-     */
-    fun reload()
-    {
-        notifyDataSetChanged()
     }
 
     /**
@@ -200,9 +192,14 @@ class CollectionRecyclerViewAdapter(
      * Add item
      * @param item
      */
-    fun add(item: JSONObject) {
-        collection.add(item)
-        notifyItemInserted(collection.size - 1)
+    fun add(item: JSONObject, position: Int = -1) {
+        if(position >= 0 && position < collection.size) {
+            collection.add(position, item);
+            notifyItemInserted(position);
+        } else {
+            collection.add(item)
+            notifyItemInserted(collection.size - 1)
+        }
     }
 
     /**

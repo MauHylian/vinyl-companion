@@ -43,7 +43,6 @@ class BrowserActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.
 
         recyclerView = findViewById(R.id.albumsRecyclerView)
         recyclerView.adapter = adapter
-
     }
 
     /**
