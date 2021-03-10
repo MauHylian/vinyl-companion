@@ -194,13 +194,16 @@ class CollectionRecyclerViewAdapter(
      * @param position
      */
     fun add(item: JSONObject, position: Int = -1) {
+        var index = position
+
         if(position >= 0 && position < collection.size) {
             collection.add(position, item);
-            notifyItemInserted(position);
         } else {
             collection.add(item)
-            notifyItemInserted(collection.size - 1)
+            index = collection.size - 1
         }
+
+        notifyItemInserted(index);
     }
 
     /**

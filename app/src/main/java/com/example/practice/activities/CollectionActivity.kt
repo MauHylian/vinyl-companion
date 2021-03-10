@@ -85,6 +85,9 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
             album.put("id", id)
 
             adapter.add(album, position);
+
+            if(position != -1) recyclerView.scrollToPosition(position);
+            else recyclerView.scrollToPosition(adapter.itemCount - 1);
         }
     }
 
