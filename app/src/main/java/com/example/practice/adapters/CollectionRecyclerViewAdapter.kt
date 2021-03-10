@@ -191,6 +191,7 @@ class CollectionRecyclerViewAdapter(
     /**
      * Add item
      * @param item
+     * @param position
      */
     fun add(item: JSONObject, position: Int = -1) {
         if(position >= 0 && position < collection.size) {

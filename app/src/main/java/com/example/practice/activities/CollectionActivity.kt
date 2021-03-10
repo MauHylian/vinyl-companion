@@ -72,6 +72,7 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
     /**
      * Save album
      * @param album
+     * @param position
      */
     private fun saveAlbum(album: JSONObject, position: Int = -1) {
         collectionService.saveForCurrentUser(album) { id, e ->
@@ -128,6 +129,8 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
      * @param position
      */
     override fun onSwiped(position: Int) {
+        val album = adapter.get(position);
+
         val builder = AlertDialog.Builder(this)
                 .setTitle(getString(R.string.borrar_album))
                 .setMessage(getString(R.string.realmente_borrar))
@@ -137,20 +140,20 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
         }
 
         builder.setPositiveButton(getString(R.string.si)) { _, _ ->
-            collectionService.remove(adapter.get(position)) { e ->
+            collectionService.remove(album) { e ->
                 if (e != null) {
                     // TODO: Handle error
                     Log.e("CollectionActivity", "Failed to remove album from collection", e)
                     return@remove
                 }
 
-                val removed = adapter.remove(position)
+                adapter.remove(position)
 
                 Snackbar.make(recyclerView,
                         getString(R.string.album_eliminado),
                         Snackbar.LENGTH_SHORT).setAction(getString(R.string.deshacer))
                 {
-                    saveAlbum(removed, position)
+                    saveAlbum(album, position)
                 }.show()
             }
         }
