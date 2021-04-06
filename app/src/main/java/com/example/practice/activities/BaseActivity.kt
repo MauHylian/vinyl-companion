@@ -94,11 +94,10 @@ abstract class BaseActivity : AppCompatActivity() {
                 R.id.item6 -> {
                     Log.d("BaseActivity", currentAct.toString())
 
-                    if (BaseActivity.isEnglish == true) {
-                        setLocale("es")
-                    } else setLocale("en")
+                    if (BaseActivity.isEnglish == true) setLocale("es")
+                    else setLocale("en")
 
-                    BaseActivity.isEnglish = true
+                    BaseActivity.isEnglish = !BaseActivity.isEnglish
                 }
             }
             true
