@@ -21,6 +21,7 @@ class ProductActivity : BaseActivity() {
     lateinit var aPrice : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTitle(R.string.info_del_producto)
         super.onCreate(savedInstanceState)
 
         findViewById<Button>(R.id.postAlbum).setOnClickListener {

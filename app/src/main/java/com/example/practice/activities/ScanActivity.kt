@@ -20,6 +20,7 @@ class ScanActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTitle(R.string.escaner_bar)
         super.onCreate(savedInstanceState)
 
         editTextBarcode = findViewById(R.id.editTextBarcode)

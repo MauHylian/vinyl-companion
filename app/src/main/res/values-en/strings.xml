@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Vinyl Companion</string>
+    <string name="anadir_coleccion">Add to collection</string>
+    <string name="mas_info">More info</string>
+    <string name="escaner">Scanner</string>
+    <string name="coleccion">Collection</string>
+    <string name="mercado">Marketplace</string>
+    <string name="ajustes">Settings</string>
+    <string name="logout">Logout</string>
+    <string name="no_tienes_cuenta_registrate_aqu">Don\'t have an account? Click here</string>
+    <string name="iniciar_sesi_n">Login</string>
+    <string name="contrase_a">Password</string>
+    <string name="email">Email</string>
+    <string name="t_tulo_del_album">Album title</string>
+    <string name="artista_o_grupo">Artist or group</string>
+    <string name="pais_del_album">Album country</string>
+    <string name="ano_de_salida">Release year</string>
+    <string name="precio">Price</string>
+    <string name="publicar">Post</string>
+    <string name="usuario">User</string>
+    <string name="confirmar_contrasena">Confirm password</string>
+    <string name="registrar">Register</string>
+    <string name="ya_tienes_cuenta">Already have an account?</string>
+    <string name="codigo_de_barras">Barcode</string>
+    <string name="scan">Scan</string>
+    <string name="nombre_del_album">Album name</string>
+    <string name="ano_de_lanzamiento">Release year</string>
+    <string name="buscar">Search</string>
+    <string name="realmente_borrar">Do you really want to delete this album from your collection?</string>
+    <string name="borrar_album">Delete album</string>
+    <string name="no">No</string>
+    <string name="si">Yes</string>
+    <string name="album_eliminado">Album deleted</string>
+    <string name="deshacer">Undo</string>
+    <string name="lenguaje">Languaje</string>
+    <string name="o_separador">or</string>
+    <string name="escaner_bar">Scanner</string>
+    <string name="album_bar">Album</string>
+    <string name="marketplace_bar">Marketplace</string>
+    <string name="info_del_producto">Product info</string>
+    <string name="coleccion_bar">Colection</string>
+    <string name="buscar_bar">Search</string>
+</resources>

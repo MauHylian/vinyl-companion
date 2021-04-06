@@ -36,6 +36,7 @@ class BrowserActivity : BaseActivity(), CollectionRecyclerViewAdapter.Companion.
      * On create
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTitle(R.string.buscar_bar)
         super.onCreate(savedInstanceState)
 
         adapter = CollectionRecyclerViewAdapter(applicationContext, LinkedList())

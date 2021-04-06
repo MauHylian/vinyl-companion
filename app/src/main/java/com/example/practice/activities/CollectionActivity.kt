@@ -33,6 +33,7 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
      * On create
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTitle(R.string.coleccion_bar)
         super.onCreate(savedInstanceState)
 
         adapter = CollectionRecyclerViewAdapter(applicationContext)

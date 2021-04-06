@@ -33,6 +33,7 @@ class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwi
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTitle(R.string.marketplace_bar)
         super.onCreate(savedInstanceState)
 
         adapter = MarketRecyclerViewAdapter(applicationContext)

@@ -41,6 +41,7 @@ class AlbumActivity : BaseActivity() {
      * Find views and set listeners
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTitle(R.string.album_bar)
         super.onCreate(savedInstanceState)
 
         textAlbum = findViewById(R.id.albumInfoName)

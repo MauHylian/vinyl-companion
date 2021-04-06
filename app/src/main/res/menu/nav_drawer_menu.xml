@@ -21,4 +21,8 @@
         android:icon="@drawable/ic_logout_24px"
         android:title="@string/logout"/>
 
+    <item android:id="@+id/item6"
+        android:icon="@drawable/ic_translate_black_24dp"
+        android:title="@string/lenguaje"/>
+
 </menu>

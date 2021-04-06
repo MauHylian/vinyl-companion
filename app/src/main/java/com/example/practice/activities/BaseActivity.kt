@@ -7,23 +7,30 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.practice.*
-import com.google.android.gms.common.internal.ServiceSpecificExtraArgs
+import com.example.practice.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_scan.*
+import java.util.*
+import kotlin.properties.Delegates
 
 
 /**
  * BaseActivity class
  */
+@Suppress("DEPRECATION")
 abstract class BaseActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
+    private var currentAct = this.javaClass
+
+    companion object {
+        private var isEnglish = false
+    }
 
     /**
      * Get layout resource ID
@@ -84,9 +91,30 @@ abstract class BaseActivity : AppCompatActivity() {
                     Firebase.auth.signOut()
                     launchActivity(LoginActivity::class.java, null, Intent.FLAG_ACTIVITY_CLEAR_TOP, true)
                 }
+                R.id.item6 -> {
+                    Log.d("BaseActivity", currentAct.toString())
+
+                    if (BaseActivity.isEnglish == true) {
+                        setLocale("es")
+                    } else setLocale("en")
+
+                    BaseActivity.isEnglish = true
+                }
             }
             true
         }
+    }
+
+    open fun setLocale(lang: String?) {
+        val myLocale = Locale(lang)
+        val res = resources
+        val dm = res.displayMetrics
+        val conf = res.configuration
+        conf.locale = myLocale
+        res.updateConfiguration(conf, dm)
+        val refresh = Intent(this, currentAct)
+        finish()
+        startActivity(refresh)
     }
 
     /**

@@ -1,7 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Vinyl Companion</string>
-    <string name="open" translatable="false">Open</string>
-    <string name="close" translatable="false">Close</string>
     <string name="anadir_coleccion">Añadir a la colección</string>
     <string name="mas_info">Más información</string>
     <string name="escaner">Escáner</string>
