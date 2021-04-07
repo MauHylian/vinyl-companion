@@ -123,6 +123,7 @@ class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwi
             if (e != null) {
                 // TODO: Handle error
                 Log.e("MarketActivity", "Failed to remove listing", e)
+                adapter.notifyDataSetChanged()
                 return@removeForCurrentUser
             }
 
