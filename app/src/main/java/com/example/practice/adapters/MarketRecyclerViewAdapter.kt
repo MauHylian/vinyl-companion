@@ -5,7 +5,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
@@ -14,8 +13,7 @@ import java.util.*
 
 class MarketRecyclerViewAdapter(
         private var context: Context,
-        var listingCollection: LinkedList<JSONObject> = LinkedList() // Maybe linkedlist hashmap
-        //var listingCollection: HashMap<Any, Any> = HashMap()
+        var listings: LinkedList<JSONObject> = LinkedList()
 ) : RecyclerView.Adapter<MarketRecyclerViewAdapter.ViewHolder>(), ItemTouchHelperAdapter{
     var onItemClickListener: OnItemClickListener? = null //check line
     var onSwipedListener: OnSwipedListener? = null
@@ -44,42 +42,24 @@ class MarketRecyclerViewAdapter(
          */
         @SuppressLint("SetTextI18n")
         fun bind(listing: JSONObject) {
-            //if (listing.containsKey("TITLE"))
-            //    lTitle.text = listing["TITLE"] as CharSequence?
-//
-            //if (listing.containsKey("ARTIST"))
-            //    artist.text = listing["ARTIST"] as CharSequence?
-//
-            //if (listing.containsKey("DESCRIPTION"))
-            //    description.text = listing["DESCRIPTION"] as CharSequence?
-//
-            //if (listing.containsKey("PRICE"))
-            //    price.text = listing["PRICE"] as CharSequence?
-//
-            //if (listing.containsKey("YEAR") && listing.containsKey("COUNTRY"))  {
-            //    yearAndCountry.text = listing["YEAR"] as CharSequence?
-            //    yearAndCountry.text = yearAndCountry.text.toString() + " " + listing["COUNTRY"]
-            //}
-
             // TODO: Bind image with try catch
 
-            if (listing.has("TITLE"))
-                lTitle.text = listing.getString("TITLE")
+            if (listing.has("title"))
+                lTitle.text = listing.getString("title")
 
-            if (listing.has("ARTIST"))
-                artist.text = listing.getString("ARTIST")
+            if (listing.has("artist"))
+                artist.text = listing.getString("artist")
 
-            if (listing.has("DESCRIPTION"))
-                description.text = listing.getString("DESCRIPTION")
+            if (listing.has("description"))
+                description.text = listing.getString("description")
 
-            if(listing.has("PRICE"))
-                price.text = listing.getString("PRICE")
+            if(listing.has("price"))
+                price.text = listing.getString("price")
 
-            if (listing.has("YEAR") && listing.has("COUNTRY")) {
-                yearAndCountry.text = listing.getString("YEAR")
-                yearAndCountry.text = yearAndCountry.text.toString() + " " + listing.getString("COUNTRY")
+            if (listing.has("year") && listing.has("country")) {
+                yearAndCountry.text = listing.getString("year")
+                yearAndCountry.text = yearAndCountry.text.toString()+ " " + listing.getString("country")
             }
-
         }
     }
 
@@ -107,7 +87,7 @@ class MarketRecyclerViewAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarketRecyclerViewAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.market_item, parent, false)
 
@@ -124,14 +104,14 @@ class MarketRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        return listingCollection.size
+        return listings.size
     }
 
     /**
      * Remove all items (not needed)
      */
     fun removeAll() {
-        listingCollection.clear()
+        listings.clear()
         notifyDataSetChanged()
     }
 
@@ -140,7 +120,7 @@ class MarketRecyclerViewAdapter(
      * @param position
      */
     fun remove(position: Int): JSONObject {
-        val removed = listingCollection.removeAt(position)
+        val removed = listings.removeAt(position)
 
         notifyItemRemoved(position)
 
@@ -151,9 +131,17 @@ class MarketRecyclerViewAdapter(
      * Add item
      * @param item
      */
-    fun add(item: JSONObject) { // maybe hashmap
-        listingCollection.add(item)
-        notifyItemInserted(listingCollection.size - 1)
+    fun add(item: JSONObject, position: Int = -1) {
+        var index = position
+
+        if(position >= 0 && position < listings.size) {
+            listings.add(position, item);
+        } else {
+            listings.add(item)
+            index = listings.size - 1
+        }
+
+        notifyItemInserted(index);
     }
 
     /**
@@ -161,7 +149,7 @@ class MarketRecyclerViewAdapter(
      * @param position
      */
     fun get(position: Int): JSONObject {
-        return listingCollection[position]
+        return listings[position]
     }
 
     /**
@@ -174,13 +162,13 @@ class MarketRecyclerViewAdapter(
 
         if (from < to) {
             while (i < to) {
-                Collections.swap(listingCollection, i, i + 1)
+                Collections.swap(listings, i, i + 1)
 
                 ++i
             }
         } else {
             while (i > to) {
-                Collections.swap(listingCollection, i, i - 1)
+                Collections.swap(listings, i, i - 1)
 
                 --i
             }

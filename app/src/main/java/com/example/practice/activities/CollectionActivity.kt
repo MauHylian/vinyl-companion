@@ -82,9 +82,6 @@ class CollectionActivity : BaseActivity(), CollectionRecyclerViewAdapter.Compani
                 return@saveForCurrentUser
             }
 
-            // TODO: Put id in service
-            album.put("id", id)
-
             adapter.add(album, position);
 
             if(position != -1) recyclerView.scrollToPosition(position);

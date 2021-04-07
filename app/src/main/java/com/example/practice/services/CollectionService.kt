@@ -88,10 +88,12 @@ class CollectionService {
 
         val map = ObjectMapper().readValue(album.toString(), HashMap::class.java) as HashMap<String, Any>
         map["user"] = user.uid
+        album.put("user", user.uid)
 
         db.collection("collections")
                 .add(map)
                 .addOnSuccessListener {
+                    album.put("id", it.id)
                     onSaveAlbumListener?.invoke(it.id, null)
                 }
                 .addOnFailureListener { e ->

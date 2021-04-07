@@ -7,12 +7,9 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
 import com.example.practice.adapters.MarketRecyclerViewAdapter
+import com.example.practice.services.MarketService
 import com.example.practice.utils.ItemTouchHelperCallback
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import org.json.JSONObject
 import java.util.*
 
@@ -21,12 +18,12 @@ import java.util.*
  * MarketActivity class
  */
 class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwipedListener {
-    private val db = Firebase.firestore
+    var marketService = MarketService()
 
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: MarketRecyclerViewAdapter
 
-    var listingJSON: JSONObject? = null
+    //var listingJSON: JSONObject? = null
 
     override fun getLayoutResourceID(): Int {
         return R.layout.activity_market
@@ -46,19 +43,11 @@ class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwi
 
         adapter.onSwipedListener = this
 
+        // Add button
         findViewById<FloatingActionButton>(R.id.addButton).setOnClickListener {
             val intent = Intent(this, ProductActivity::class.java)
             startActivity(intent)
         }
-
-        Log.d("MarketActivity", listingJSON.toString())
-
-        // adapter.add(listingJSON)
-
-        getListing()
-        saveListing()
-        getListings()
-
     }
 
     override fun onStart() {
@@ -67,65 +56,77 @@ class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwi
         getListings()
     }
 
-    private fun saveListing() {
-        val listing = getListing() ?: return
-
-        listing?.let { adapter.add(it) }
-        Log.d("MarketActivity", listing.toString())
-
-        val retMap: Map<String, Any> = Gson().fromJson(
-                listing.toString(), object : TypeToken<HashMap<String?, Any?>?>() {}.getType()
-        )
-
-        db.collection("marketplace")
-                .add(retMap)
-
-    }
-
-    private fun fillMarket(listingCollection: LinkedList<JSONObject>) {
-        adapter.listingCollection = listingCollection
+    private fun fillListings(listings: LinkedList<JSONObject>) {
+        adapter.listings = listings
         adapter.notifyDataSetChanged()
 
-        //saveListing()
+        saveNewListing()
     }
 
     /**
      * Gets all marketplace listings from firebase
      */
     private fun getListings() {
-        db.collection("marketplace")
-                .get()
+        marketService.get { listings, e ->
+            if (e != null) {
+                // TODO: Handle error
+                Log.e("MarketActivity", "Failed to get listings", e)
+                return@get
+            }
 
-        // TODO: Show listings from firebase
+            if (listings != null) fillListings(listings)
+        }
+    }
 
+    private fun getListing() : JSONObject? {
+        if(intent.extras == null) return null
+
+        val listing = JSONObject()
+
+        listing.put("title", getExtra("title"))
+        listing.put("description", getExtra("description"))
+        listing.put("artist", getExtra("artist"))
+        listing.put("year", getExtra("year"))
+        listing.put("country", getExtra("country"))
+        listing.put("price", getExtra("price"))
+
+        return listing
+    }
+
+    private fun saveListing(listing: JSONObject, position: Int = -1) {
+        marketService.saveForCurrentUser(listing) { id, e ->
+            if (e != null) {
+                Log.e("MarketActivity", "Failed to save listing", e)
+                return@saveForCurrentUser
+            }
+
+            adapter.add(listing, position);
+
+            if(position != -1) recyclerView.scrollToPosition(position);
+            else recyclerView.scrollToPosition(adapter.itemCount - 1);
+        }
     }
 
     /**
-     * Get user posted listing info from intent extras
+     * Save user posted listing info from intent extras
      */
-    private fun getListing(): JSONObject? {
-        if (intent.extras != null) {
-            var title = intent.getStringExtra("title")
-            var description = intent.getStringExtra("description")
-            var artist = intent.getStringExtra("artist")
-            var year = intent.getStringExtra("year")
-            var country = intent.getStringExtra("country")
-            var price = intent.getStringExtra("price")
+    private fun saveNewListing() {
+        val listing = getListing() ?: return
 
-            var listing = hashMapOf("TITLE" to title,
-                    "DESCRIPTION" to description,
-                    "ARTIST" to artist,
-                    "YEAR" to year,
-                    "COUNTRY" to country,
-                    "PRICE" to price)
-
-            listingJSON = JSONObject(listing as Map<*, *>)
-        }
-
-        return listingJSON
+        saveListing(listing)
     }
 
     override fun onSwiped(position: Int) {
-        println("IMPLEMENT SWIPE")
+        val listing = adapter.get(position)
+
+        marketService.removeForCurrentUser(listing) { e ->
+            if (e != null) {
+                // TODO: Handle error
+                Log.e("MarketActivity", "Failed to remove listing", e)
+                return@removeForCurrentUser
+            }
+
+            adapter.remove(position)
+        }
     }
 }

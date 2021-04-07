@@ -13,37 +13,35 @@ class ProductActivity : BaseActivity() {
         return R.layout.activity_product
     }
 
-    lateinit var aTitle : String
-    lateinit var aDescription : String
-    lateinit var aArtist : String
-    lateinit var aYear : String
-    lateinit var aCountry : String
-    lateinit var aPrice : String
+    lateinit var title : String
+    lateinit var description : String
+    lateinit var artist : String
+    lateinit var year : String
+    lateinit var country : String
+    lateinit var price : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTitle(R.string.info_del_producto)
         super.onCreate(savedInstanceState)
 
         findViewById<Button>(R.id.postAlbum).setOnClickListener {
-            Toast.makeText(applicationContext, "Publicado segment", Toast.LENGTH_SHORT).show()
+            title = findViewById<EditText>(R.id.albumTitle).text.toString()
+            description = findViewById<EditText>(R.id.albumDescription).text.toString()
+            artist = findViewById<EditText>(R.id.albumArtist).text.toString()
+            year = findViewById<EditText>(R.id.albumReleaseYear).text.toString()
+            country = findViewById<EditText>(R.id.albumReleaseCountry).text.toString()
+            price = findViewById<EditText>(R.id.albumPrice).text.toString()
 
-            aTitle = findViewById<EditText>(R.id.albumTitle).text.toString()
-            aDescription = findViewById<EditText>(R.id.albumDescription).text.toString()
-            aArtist = findViewById<EditText>(R.id.albumArtist).text.toString()
-            aYear = findViewById<EditText>(R.id.albumReleaseYear).text.toString()
-            aCountry = findViewById<EditText>(R.id.albumReleaseCountry).text.toString()
-            aPrice = findViewById<EditText>(R.id.albumPrice).text.toString()
+            val extras = Bundle();
 
-            val intent = Intent(baseContext, MarketActivity::class.java)
+            extras.putString("artist", artist)
+            extras.putString("description", description)
+            extras.putString("year", year)
+            extras.putString("country", country)
+            extras.putString("price", price)
+            extras.putString("title", title)
 
-            intent.putExtra("artist", aArtist)
-            intent.putExtra("description", aDescription)
-            intent.putExtra("year", aYear)
-            intent.putExtra("country", aCountry)
-            intent.putExtra("price", aPrice)
-            intent.putExtra("title", aTitle)
-
-            startActivity(intent)
+            launchActivity(MarketActivity::class.java, extras)
 
             finish()
         }
