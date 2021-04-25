@@ -94,10 +94,14 @@ abstract class BaseActivity : AppCompatActivity() {
                 R.id.item6 -> {
                     Log.d("BaseActivity", currentAct.toString())
 
-                    if (BaseActivity.isEnglish == true) setLocale("es")
+                    if (BaseActivity.isEnglish) setLocale("es")
                     else setLocale("en")
 
                     BaseActivity.isEnglish = !BaseActivity.isEnglish
+                }
+
+                R.id.item7 -> {
+                    launchActivity(ChatListActivity::class.java)
                 }
             }
             true

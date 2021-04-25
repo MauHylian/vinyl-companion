@@ -10,6 +10,8 @@ import com.example.practice.adapters.MarketRecyclerViewAdapter
 import com.example.practice.services.MarketService
 import com.example.practice.utils.ItemTouchHelperCallback
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.json.JSONObject
 import java.util.*
 
@@ -79,6 +81,7 @@ class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwi
     }
 
     private fun getListing() : JSONObject? {
+
         if(intent.extras == null) return null
 
         val listing = JSONObject()

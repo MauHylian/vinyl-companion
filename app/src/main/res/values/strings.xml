@@ -43,4 +43,5 @@
     <string name="coleccion_bar">Colección</string>
     <string name="buscar_bar">Buscar</string>
     <string name="Chat">Chat</string>
+    <string name="chats">chats</string>
 </resources>
