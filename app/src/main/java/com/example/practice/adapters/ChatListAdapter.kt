@@ -11,8 +11,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
+import com.example.practice.services.UserService
 import com.squareup.picasso.Picasso
 import org.json.JSONObject
+import org.w3c.dom.Text
 import java.util.*
 
 
@@ -33,10 +35,12 @@ class ChatListAdapter(
      * ViewHolder class
      */
     class ViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
-        var textAlbum: TextView = view.findViewById(R.id.albumName)
-        var textUser: TextView = view.findViewById(R.id.vendorsName)
-        var textPrice: TextView = view.findViewById(R.id.price)
-        var textPlace: TextView = view.findViewById(R.id.place)
+        // TODO: Create singleton
+        private val userService = UserService()
+
+        var textFrom: TextView = view.findViewById(R.id.from)
+        var textTo: TextView = view.findViewById(R.id.to)
+        var textMessage: TextView = view.findViewById(R.id.message)
 
         /**
          * Set on click listener
@@ -51,6 +55,39 @@ class ChatListAdapter(
          */
         @SuppressLint("SetTextI18n")
         fun bind(chat: JSONObject) {
+            if(chat.has("from")) {
+                bindUser(chat.getString("from"), textFrom, view.context.getString(R.string.from))
+            }
+
+            if(chat.has("to")) {
+                bindUser(chat.getString("to"), textTo, view.context.getString(R.string.to))
+            }
+
+            if(chat.has("message")) {
+                textMessage.text = chat.getString("message")
+            }
+        }
+
+        @SuppressLint("SetTextI18n")
+        private fun bindUser(id : String, textView: TextView, label : String)
+        {
+            userService.get(id) { user, e ->
+                textView.text = id
+
+                if(e != null) {
+                    Log.e("ChatListAdapter", "Failed to get user", e)
+                }
+
+                if(user != null) {
+                    if(user.has("username")) {
+                        textView.text = user.getString("username")
+                    } else if(user.has("email")) {
+                        textView.text = user.getString("email")
+                    }
+                }
+
+                textView.text = label + ": " + textView.text
+            }
         }
     }
 

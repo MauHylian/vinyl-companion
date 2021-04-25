@@ -8,9 +8,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.practice.R
+import com.example.practice.services.UserService
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
+    private val userService = UserService()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         supportActionBar?.hide()
         super.onCreate(savedInstanceState)
@@ -45,6 +48,10 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener {
                     if (!it.isSuccessful) return@addOnCompleteListener
                     else {
+                        userService.saveCurrentUser { e ->
+                            if(e != null) Log.e("LoginActivity", "Failed to save current user", e)
+                        }
+
                         val intent = Intent(this, ScanActivity::class.java)
                         startActivity(intent)
                     }

@@ -21,12 +21,11 @@
         android:icon="@drawable/ic_translate_black_24dp"
         android:title="@string/lenguaje"/>
 
-    <item android:id="@+id/item5"
-        android:icon="@drawable/ic_logout_24px"
-        android:title="@string/logout"/>
-
     <item android:id="@+id/item7"
         android:icon="@drawable/ic_translate_black_24dp"
         android:title="@string/chats"/>
 
+    <item android:id="@+id/item5"
+        android:icon="@drawable/ic_logout_24px"
+        android:title="@string/logout"/>
 </menu>
