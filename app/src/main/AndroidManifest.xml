@@ -52,5 +52,9 @@
             android:name=".activities.BrowserActivity"
             android:label="@string/buscar_bar" />
 
+        <activity
+            android:name=".activities.ChatActivity"
+            android:label="@string/Chat" />
+
     </application>
 </manifest>

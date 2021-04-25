@@ -41,4 +41,5 @@
     <string name="info_del_producto">Información del producto</string>
     <string name="coleccion_bar">Colección</string>
     <string name="buscar_bar">Buscar</string>
+    <string name="Chat">Chat</string>
 </resources>

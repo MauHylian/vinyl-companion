@@ -2,14 +2,18 @@ package com.example.practice.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
+import com.example.practice.activities.ChatActivity
 import org.json.JSONObject
 import java.util.*
+
 
 class MarketRecyclerViewAdapter(
         private var context: Context,
@@ -33,7 +37,13 @@ class MarketRecyclerViewAdapter(
          * Set on click listener
          */
         fun setOnClickListener(event: (position: Int, type: Int) -> Unit): ViewHolder {
-            view.setOnClickListener { event.invoke(adapterPosition, itemViewType) }
+            view.setOnClickListener {
+                event.invoke(adapterPosition, itemViewType)
+                // Toast.makeText(view.context, "CLICK", Toast.LENGTH_SHORT).show()
+                val intent = Intent(view.context, ChatActivity::class.java)
+                intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+                view.context.startActivity(intent)
+            }
             return this
         }
 
