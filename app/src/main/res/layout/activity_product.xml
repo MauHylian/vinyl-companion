@@ -12,84 +12,87 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp">
 
-<LinearLayout
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp">
+            <!-- Picture loader -->
 
-    <!-- Picture loader -->
+            <EditText
+                android:id="@+id/albumTitle"
+                style="@style/TextViewForm"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/t_tulo_del_album"
+                android:inputType="textPersonName"
+                android:text="Goodbye Yellow Brick Road" />
 
-    <EditText
-        android:id="@+id/albumTitle"
-        style="@style/TextViewForm"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
-        android:hint="@string/t_tulo_del_album"
-        android:inputType="textPersonName"
-        android:text="Goodbye Yellow Brick Road" />
+            <EditText
+                android:id="@+id/albumDescription"
+                style="@style/DescriptionBox"
+                android:layout_width="match_parent"
+                android:layout_height="125dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:gravity="top"
+                android:inputType="textMultiLine|textFilter"
+                android:text="Elton's Magun Opus" />
 
-    <EditText
-        android:id="@+id/albumDescription"
-        style="@style/DescriptionBox"
-        android:layout_height="125dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
-        android:gravity="top"
-        android:inputType="textMultiLine|textFilter"
-        android:text="Elton's Magun Opus" />
+            <EditText
+                android:id="@+id/albumArtist"
+                style="@style/TextViewForm"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/artista_o_grupo"
+                android:inputType="textPersonName"
+                android:text="Elton John" />
 
-    <EditText
-        android:id="@+id/albumArtist"
-        style="@style/TextViewForm"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
-        android:hint="@string/artista_o_grupo"
-        android:inputType="textPersonName"
-        android:text="Elton John" />
+            <EditText
+                android:id="@+id/albumReleaseCountry"
+                style="@style/TextViewForm"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/pais_del_album"
+                android:inputType="textPersonName"
+                android:text="UK" />
 
-    <EditText
-        android:id="@+id/albumReleaseCountry"
-        style="@style/TextViewForm"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
-        android:hint="@string/pais_del_album"
-        android:inputType="textPersonName"
-        android:text="UK" />
+            <EditText
+                android:id="@+id/albumReleaseYear"
+                style="@style/TextViewForm"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="16dp"
+                android:hint="@string/ano_de_salida"
+                android:inputType="textPersonName"
+                android:text="1973" />
 
-    <EditText
-        android:id="@+id/albumReleaseYear"
-        style="@style/TextViewForm"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
-        android:hint="@string/ano_de_salida"
-        android:inputType="textPersonName"
-        android:text="1973" />
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/albumPrice"
+                style="@style/TextViewForm"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:ems="10"
+                android:hint="@string/precio"
+                android:inputType="number"
+                android:text="700" />
 
-    <EditText
-        android:id="@+id/albumPrice"
-        style="@style/TextViewForm"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
-        android:ems="10"
-        android:hint="@string/precio"
-        android:inputType="number"
-        android:text="700" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/postAlbum"
+                style="@style/CustomButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="40dp"
+                android:text="@string/publicar" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/postAlbum"
-        style="@style/CustomButton"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="40dp"
-        android:text="@string/publicar" />
+            <!-- Ubicacion del vendedor -->
 
-    <!-- Ubicacion del vendedor -->
-
-</LinearLayout>
-
+        </LinearLayout>
     </ScrollView>
 
     <com.google.android.material.navigation.NavigationView

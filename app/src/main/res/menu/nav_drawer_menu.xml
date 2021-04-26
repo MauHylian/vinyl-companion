@@ -13,17 +13,13 @@
         android:icon="@drawable/ic_shopping_bag_24px"
         android:title="@string/mercado"/>
 
-    <item android:id="@+id/item4"
-        android:icon="@drawable/ic_settings_24px"
-        android:title="@string/ajustes"/>
+    <item android:id="@+id/item7"
+        android:icon="@drawable/ic_baseline_message_24"
+        android:title="@string/chats"/>
 
     <item android:id="@+id/item6"
         android:icon="@drawable/ic_translate_black_24dp"
         android:title="@string/lenguaje"/>
-
-    <item android:id="@+id/item7"
-        android:icon="@drawable/ic_baseline_message_24"
-        android:title="@string/chats"/>
 
     <item android:id="@+id/item5"
         android:icon="@drawable/ic_logout_24px"

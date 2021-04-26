@@ -84,9 +84,6 @@ abstract class BaseActivity : AppCompatActivity() {
                 R.id.item3 -> {
                     launchActivity(MarketActivity::class.java)
                 }
-                R.id.item4 -> {
-
-                }
                 R.id.item5 -> {
                     Firebase.auth.signOut()
                     launchActivity(LoginActivity::class.java, null, Intent.FLAG_ACTIVITY_CLEAR_TOP, true)
