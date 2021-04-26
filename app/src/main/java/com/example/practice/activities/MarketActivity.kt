@@ -19,7 +19,7 @@ import java.util.*
 /**
  * MarketActivity class
  */
-class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwipedListener {
+class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwipedListener, MarketRecyclerViewAdapter.Companion.OnItemClickListener {
     var marketService = MarketService()
 
     lateinit var recyclerView: RecyclerView
@@ -44,6 +44,7 @@ class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwi
                 .attachToRecyclerView(recyclerView)
 
         adapter.onSwipedListener = this
+        adapter.onItemClickListener = this
 
         // Add button
         findViewById<FloatingActionButton>(R.id.addButton).setOnClickListener {
@@ -132,5 +133,15 @@ class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwi
 
             adapter.remove(position)
         }
+    }
+
+    override fun onItemClick(listing: JSONObject) {
+        val extras = Bundle();
+        val user =  listing.getString("user")
+
+        extras.putString("TO", user);
+
+        launchActivity(ChatActivity::class.java, extras)
+        finish()
     }
 }

@@ -11,12 +11,33 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/textView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/messagesCollection"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="johny@gmail.com" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layoutAnimation="@anim/layout_slide_right"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/editTextMessage"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Write a message"
+                android:gravity="top"
+                android:inputType="text|textMultiLine"
+                />
+            <Button
+                android:id="@+id/sendButton"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Send"/>
+        </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView

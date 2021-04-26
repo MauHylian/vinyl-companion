@@ -38,13 +38,7 @@ class MarketRecyclerViewAdapter(
          * Set on click listener
          */
         fun setOnClickListener(event: (position: Int, type: Int) -> Unit): ViewHolder {
-            view.setOnClickListener {
-                event.invoke(adapterPosition, itemViewType)
-                // Toast.makeText(view.context, "CLICK", Toast.LENGTH_SHORT).show()
-                val intent = Intent(view.context, ChatActivity::class.java)
-                intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
-                view.context.startActivity(intent)
-            }
+            view.setOnClickListener { event.invoke(adapterPosition, itemViewType) }
             return this
         }
 

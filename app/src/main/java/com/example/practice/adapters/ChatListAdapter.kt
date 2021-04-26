@@ -7,14 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
 import com.example.practice.services.UserService
-import com.squareup.picasso.Picasso
 import org.json.JSONObject
-import org.w3c.dom.Text
 import java.util.*
 
 
@@ -50,9 +47,6 @@ class ChatListAdapter(
             return this
         }
 
-        /**
-         * Bind album data to views
-         */
         @SuppressLint("SetTextI18n")
         fun bind(chat: JSONObject) {
             if(chat.has("from")) {
@@ -98,9 +92,9 @@ class ChatListAdapter(
         interface OnItemClickListener {
             /**
              * On item click
-             * @param album
+             * @param chat
              */
-            fun onItemClick(album: JSONObject)
+            fun onItemClick(chat: JSONObject)
         }
 
         /**
@@ -122,12 +116,11 @@ class ChatListAdapter(
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.chat_item, parent, false)
+            .inflate(R.layout.message_head_item, parent, false)
 
         return ViewHolder(view).setOnClickListener { position: Int, _: Int ->
             onItemClickListener?.onItemClick(get(position))
         }
-
     }
 
     /**

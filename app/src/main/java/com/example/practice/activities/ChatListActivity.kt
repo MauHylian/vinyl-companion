@@ -9,7 +9,7 @@ import com.example.practice.services.ChatService
 import org.json.JSONObject
 import java.util.*
 
-class ChatListActivity : BaseActivity() {
+class ChatListActivity : BaseActivity(), ChatListAdapter.Companion.OnItemClickListener {
     var chatService = ChatService()
 
     lateinit var recyclerView: RecyclerView
@@ -24,6 +24,7 @@ class ChatListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         adapter = ChatListAdapter(applicationContext)
+        adapter.onItemClickListener = this
 
         recyclerView = findViewById(R.id.chatsCollection)
         recyclerView.adapter = adapter
@@ -49,6 +50,15 @@ class ChatListActivity : BaseActivity() {
             }
 
             if (chats != null) fillChats(chats)
+        }
+    }
+
+    override fun onItemClick(message: JSONObject) {
+        val extras = Bundle();
+
+        val user = chatService.getOtherUserFromMessage(message)
+        if(user != null) {
+            launchActivity(ChatActivity::class.java, extras)
         }
     }
 }

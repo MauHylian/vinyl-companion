@@ -20,7 +20,10 @@ class UserService {
             .document(id)
             .get()
             .addOnSuccessListener {
-                onGetListener(JSONObject(it.data), null)
+                if(it.data != null)
+                    onGetListener(JSONObject(it.data), null)
+                else
+                    onGetListener(null, UserNotFound())
             }
             .addOnFailureListener { e ->
                 onGetListener(null, e)
