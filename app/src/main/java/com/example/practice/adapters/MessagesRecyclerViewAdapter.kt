@@ -25,7 +25,6 @@ class MessagesRecyclerViewAdapter(
 
         var textMessage: TextView = view.findViewById(R.id.message)
         var textSendAt: TextView = view.findViewById(R.id.sendAt)
-        var textHeader: TextView = view.findViewById(R.id.header)
 
         @SuppressLint("SetTextI18n", "SimpleDateFormat")
         override fun bind(item: JSONObject) {
@@ -43,7 +42,7 @@ class MessagesRecyclerViewAdapter(
                 root.gravity = gravity
                 content.background.setTint(view.resources.getColor(color))
 
-                bindUser(from, textHeader)
+                //bindUser(from, textHeader)
             }
 
             if(item.has("message")) {
@@ -60,13 +59,6 @@ class MessagesRecyclerViewAdapter(
         @SuppressLint("SetTextI18n")
         private fun bindUser(id : String, textView: TextView, label : String? = null)
         {
-            /*
-            if(userService.isCurrentUser(id)) {
-                textView.text = textView.context.getString(R.string.sent_by_you)
-                return
-            }
-             */
-
             userService.get(id) { user, e ->
                 textView.text = id
 

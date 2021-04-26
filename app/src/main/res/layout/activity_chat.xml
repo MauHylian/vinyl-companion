@@ -11,6 +11,14 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/title"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Chat"
+            android:paddingVertical="4dp"
+            android:paddingHorizontal="12dp" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/messagesCollection"
             android:layout_width="match_parent"

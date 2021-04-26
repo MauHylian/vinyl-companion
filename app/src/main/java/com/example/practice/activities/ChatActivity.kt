@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
 import com.example.practice.adapters.*
 import com.example.practice.services.ChatService
+import com.example.practice.services.UserService
 import org.json.JSONObject
+import org.w3c.dom.Text
 import java.util.*
 
 class ChatActivity : BaseActivity(), OnItemClickListener {
     val chatService = ChatService()
+    val userService = UserService()
 
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: MessagesRecyclerViewAdapter
@@ -39,6 +43,7 @@ class ChatActivity : BaseActivity(), OnItemClickListener {
         adapter.onItemClickListener = this
 
         setupNewMessagesListener()
+        setupTitle()
 
         val sendButton = findViewById<Button>(R.id.sendButton)
         val editTextMessage = findViewById<EditText>(R.id.editTextMessage)
@@ -72,6 +77,28 @@ class ChatActivity : BaseActivity(), OnItemClickListener {
             }
 
             if(messages != null) fillNewMessages(messages)
+        }
+    }
+
+    private fun setupTitle()
+    {
+        var textTitle = findViewById<TextView>(R.id.title)
+
+        val other = getOtherUser()
+        if(other == null) {
+            Log.e("ChatActivity", "Other user is not defined")
+            return
+        }
+
+        userService.get(other) { user, e ->
+            if(e != null) {
+                Log.e("ChatActivity", "Failed to get other user", e)
+                return@get
+            }
+
+            if(user != null) {
+                textTitle.text = getString(R.string.chat_with) + " " + user.getString("username")
+            }
         }
     }
 

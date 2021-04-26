@@ -15,29 +15,6 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/from"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/from" />
-
-        <TextView
-            android:visibility="gone"
-            android:id="@+id/to"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/to" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/header"
-            android:text="@string/header"
-            android:textSize="12sp"
-            android:layout_marginBottom="4dp"
-            android:textStyle="bold"
-            />
 
         <TextView
             android:id="@+id/message"
