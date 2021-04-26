@@ -75,4 +75,10 @@ class UserService {
 
         save(user, onSaveListener)
     }
+
+    fun isCurrentUser(user : String) : Boolean {
+        val currUser = FirebaseAuth.getInstance().currentUser ?: return false
+
+        return currUser.uid == user
+    }
 }

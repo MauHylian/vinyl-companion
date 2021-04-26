@@ -3,7 +3,9 @@ package com.example.practice.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.practice.R
 import com.example.practice.services.UserService
@@ -18,19 +20,30 @@ class MessagesRecyclerViewAdapter(
         // TODO: Create singleton
         private val userService = UserService()
 
-        var textFrom: TextView = view.findViewById(R.id.from)
-        var textTo: TextView = view.findViewById(R.id.to)
+        var root : LinearLayout = view.findViewById(R.id.messageRoot)
+        var content : LinearLayout = view.findViewById(R.id.messageContent)
+
         var textMessage: TextView = view.findViewById(R.id.message)
         var textSendAt: TextView = view.findViewById(R.id.sendAt)
+        var textHeader: TextView = view.findViewById(R.id.header)
 
         @SuppressLint("SetTextI18n", "SimpleDateFormat")
         override fun bind(item: JSONObject) {
             if(item.has("from")) {
-                bindUser(item.getString("from"), textFrom, view.context.getString(R.string.from))
-            }
+                val from = item.getString("from")
 
-            if(item.has("to")) {
-                bindUser(item.getString("to"), textTo, view.context.getString(R.string.to))
+                var gravity = Gravity.START
+                var color = R.color.message_default
+
+                if(userService.isCurrentUser(from)) {
+                    gravity = Gravity.END
+                    color = R.color.purple_200
+                }
+
+                root.gravity = gravity
+                content.background.setTint(view.resources.getColor(color))
+
+                bindUser(from, textHeader)
             }
 
             if(item.has("message")) {
@@ -45,8 +58,15 @@ class MessagesRecyclerViewAdapter(
         }
 
         @SuppressLint("SetTextI18n")
-        private fun bindUser(id : String, textView: TextView, label : String)
+        private fun bindUser(id : String, textView: TextView, label : String? = null)
         {
+            /*
+            if(userService.isCurrentUser(id)) {
+                textView.text = textView.context.getString(R.string.sent_by_you)
+                return
+            }
+             */
+
             userService.get(id) { user, e ->
                 textView.text = id
 
@@ -62,7 +82,7 @@ class MessagesRecyclerViewAdapter(
                     }
                 }
 
-                textView.text = label + ": " + textView.text
+                if(label != null) textView.text = label + ": " + textView.text
             }
         }
     }

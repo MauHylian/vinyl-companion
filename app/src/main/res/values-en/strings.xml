@@ -45,4 +45,9 @@
     <string name="chats">Chats</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="send_at">Send at</string>
+    <string name="message">Message</string>
+    <string name="heading">Heading</string>
+    <string name="header">Header</string>
+    <string name="sent_by_you">Sent by you</string>
 </resources>
