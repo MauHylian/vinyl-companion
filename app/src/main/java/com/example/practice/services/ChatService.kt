@@ -142,17 +142,40 @@ class ChatService {
      * @param other Other user id
      * @param onGetMessagesListener Callback
      */
-    fun addNewMessagesListenerForCurrentUser(other: String, onGetMessagesListener: OnGetMessagesListener): ListenerRegistration? {
+    fun addNewMessagesListenerForCurrentUser(other: String, onGetMessagesListener: OnGetMessagesListener) {
         val user = auth.currentUser
 
         if(user == null)  {
             onGetMessagesListener(null, UserNotFound())
-            return null
+            return
         }
 
-        return db.collection(collMessages)
+        db.collection(collMessages)
                 .whereEqualTo("from", user.uid)
                 .whereEqualTo("to", other)
+                .addSnapshotListener{ snapshots, e ->
+                    if(e != null) {
+                        onGetMessagesListener(null, e)
+                        return@addSnapshotListener
+                    }
+
+                    val messages = MessagesType()
+
+                    for(dc in snapshots!!.documentChanges) {
+                        val type = dc.type
+                        if(type == DocumentChange.Type.ADDED) {
+                            val message = parseDocumentToMessage(dc.document)
+                            messages.add(message)
+                        }
+                    }
+
+                    if(!messages.isEmpty())
+                        onGetMessagesListener(messages, null)
+                }
+
+        db.collection(collMessages)
+                .whereEqualTo("from", other)
+                .whereEqualTo("to", user.uid)
                 .addSnapshotListener{ snapshots, e ->
                     if(e != null) {
                         onGetMessagesListener(null, e)
