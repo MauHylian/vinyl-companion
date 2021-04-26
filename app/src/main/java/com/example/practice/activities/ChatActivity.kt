@@ -50,6 +50,7 @@ class ChatActivity : BaseActivity(), OnItemClickListener {
 
         sendButton.setOnClickListener {
             saveMessage(editTextMessage.text.toString())
+            editTextMessage.text.clear()
         }
     }
 

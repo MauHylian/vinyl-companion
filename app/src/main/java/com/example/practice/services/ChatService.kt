@@ -74,7 +74,10 @@ class ChatService {
             return
         }
 
-        if(message.getString("message").isEmpty()) {
+        val content = message.getString("message").trim()
+        message.put("message", content)
+
+        if(content.isEmpty()) {
             if(onSaveMessageListener != null)
                 onSaveMessageListener(Exception("Message content is empty"))
             return
