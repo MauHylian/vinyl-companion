@@ -38,6 +38,8 @@ class ChatActivity : BaseActivity(), OnItemClickListener {
 
         adapter.onItemClickListener = this
 
+        setupNewMessagesListener()
+
         val sendButton = findViewById<Button>(R.id.sendButton)
         val editTextMessage = findViewById<EditText>(R.id.editTextMessage)
 
@@ -55,11 +57,33 @@ class ChatActivity : BaseActivity(), OnItemClickListener {
     override fun onItemClick(item: JSONObject) {
     }
 
+    private fun setupNewMessagesListener()
+    {
+        val other = getOtherUser()
+        if(other == null) {
+            Log.e("ChatActivity", "Other user is not defined")
+            return
+        }
+
+        chatService.addNewMessagesListenerForCurrentUser(other) { messages, e ->
+            if(e != null) {
+                Log.e("ChatActivity", "Error in new messages listener", e)
+                return@addNewMessagesListenerForCurrentUser
+            }
+
+            if(messages != null) fillNewMessages(messages)
+        }
+    }
+
+    private fun getOtherUser() : String? {
+        return  getExtra("TO")
+    }
+
     private fun saveMessage(content: String) {
         var message = JSONObject()
 
         message.put("message", content)
-        message.put("to", getExtra("TO"))
+        message.put("to", getOtherUser())
 
         chatService.saveForCurrentUser(message)
     }
@@ -69,9 +93,22 @@ class ChatActivity : BaseActivity(), OnItemClickListener {
         adapter.notifyDataSetChanged()
     }
 
+    private fun fillNewMessages(messages: LinkedList<JSONObject>)
+    {
+        adapter.collection.addAll(messages)
+        adapter.notifyDataSetChanged()
+        recyclerView.scrollToPosition(adapter.itemCount - 1)
+    }
+
     private fun getMessages()
     {
-        chatService.getForCurrentUser() { messages, e ->
+        val other = getOtherUser()
+        if(other == null) {
+            Log.e("ChatActivity", "Other user is not defined")
+            return
+        }
+
+        chatService.getForCurrentUser(other) { messages, e ->
             if(e != null) {
                 Log.e("ChatActivity", "Failed to get messages")
                 return@getForCurrentUser

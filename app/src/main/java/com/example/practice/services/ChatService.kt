@@ -1,5 +1,6 @@
 package com.example.practice.services
 
+import android.util.Log
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -8,10 +9,12 @@ import com.google.firebase.ktx.Firebase
 import org.json.JSONObject
 import java.lang.Exception
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.ListenerRegistration
 import java.util.*
 
 typealias MessagesType = LinkedList<JSONObject>
-typealias OnGetMessagesListener = (chats: ListingsType?, e: Exception?) -> Unit
+typealias OnGetMessagesListener = (messages: ListingsType?, e: Exception?) -> Unit
 typealias OnSaveMessageListener = (e: Exception?) -> Unit
 typealias OnRemoveMessageListener = (e: Exception?) -> Unit
 
@@ -27,18 +30,23 @@ class ChatService {
      */
     inner class UserNotFound : Exception("User was not found") {}
 
+    private fun parseDocumentToMessage(doc : DocumentSnapshot) : JSONObject
+    {
+        val message = JSONObject(doc.data)
+        message.put("id", doc.id)
+        message.put("sendAt", doc.data?.get("sendAt"))
+        return message
+    }
+
     /**
-     * Parse documents to chats
+     * Parse documents to messages
      * @param documents
      */
-    private fun parseDocumentsToCollection(documents: MutableList<DocumentSnapshot>): CollectionType {
+    private fun parseDocumentsToMessages(documents: MutableList<DocumentSnapshot>): MessagesType {
         val collection = CollectionType()
 
         for (doc in documents) {
-            val chat = JSONObject(doc.data)
-            chat.put("id", doc.id)
-            chat.put("sendAt", doc.data?.get("sendAt"))
-            collection.add(chat)
+            collection.add(parseDocumentToMessage(doc))
         }
 
         return collection
@@ -77,6 +85,8 @@ class ChatService {
         val map = ObjectMapper().readValue(message.toString(), HashMap::class.java) as HashMap<String, Any>
         map["sendAt"] = Timestamp(Calendar.getInstance().time)
 
+        // Save messages
+
         db.collection(collMessages)
                 .add(map)
                 .addOnSuccessListener {
@@ -88,10 +98,124 @@ class ChatService {
                         onSaveMessageListener(it)
                 }
 
-        // TODO: Update messages head collection
+        val from = message.getString("from")
+        val to = message.getString("to")
+
+        // Save head
+
+        db.collection(collHead)
+                .whereEqualTo("from", from)
+                .whereEqualTo("to", to)
+                .limit(1)
+                .get()
+                .addOnSuccessListener { query ->
+                    if(query.isEmpty) {
+                        db.collection(collHead)
+                                .whereEqualTo("from", to)
+                                .whereEqualTo("to", from)
+                                .limit(1)
+                                .get()
+                                .addOnSuccessListener { query ->
+                                    if(query.isEmpty) {
+                                        createMessageHead(map, onSaveMessageListener)
+                                    } else {
+                                        val id = query.documents[0].id
+                                        updateMessageHead(id, map, onSaveMessageListener)
+                                    }
+                                }
+                                .addOnFailureListener {
+                                    if(onSaveMessageListener != null)
+                                        onSaveMessageListener(it)
+                                }
+                    } else {
+                        val id = query.documents[0].id
+                        updateMessageHead(id, map, onSaveMessageListener)
+                    }
+                }
+                .addOnFailureListener {
+                    if(onSaveMessageListener != null)
+                        onSaveMessageListener(it)
+                }
     }
 
-    fun getForCurrentUser(onGetMessagesListener: OnGetMessagesListener) {
+    /**
+     * @param other Other user id
+     * @param onGetMessagesListener Callback
+     */
+    fun addNewMessagesListenerForCurrentUser(other: String, onGetMessagesListener: OnGetMessagesListener): ListenerRegistration? {
+        val user = auth.currentUser
+
+        if(user == null)  {
+            onGetMessagesListener(null, UserNotFound())
+            return null
+        }
+
+        return db.collection(collMessages)
+                .whereEqualTo("from", user.uid)
+                .whereEqualTo("to", other)
+                .addSnapshotListener{ snapshots, e ->
+                    if(e != null) {
+                        onGetMessagesListener(null, e)
+                        return@addSnapshotListener
+                    }
+
+                    val messages = MessagesType()
+
+                    for(dc in snapshots!!.documentChanges) {
+                        val type = dc.type
+                        if(type == DocumentChange.Type.ADDED) {
+                            val message = parseDocumentToMessage(dc.document)
+                            messages.add(message)
+                        }
+                    }
+
+                    if(!messages.isEmpty())
+                        onGetMessagesListener(messages, null)
+                }
+    }
+
+    private fun createMessageHead(data: HashMap<String, Any>, onSaveMessageListener: OnSaveMessageListener? = null)
+    {
+        db.collection(collHead)
+                .add(data)
+                .addOnSuccessListener {
+                    if(onSaveMessageListener != null)
+                        onSaveMessageListener(null)
+                }
+                .addOnFailureListener {
+                    if(onSaveMessageListener != null)
+                        onSaveMessageListener(it)
+                }
+    }
+
+    private fun updateMessageHead(id : String, data : HashMap<String, Any>, onSaveMessageListener: OnSaveMessageListener? = null)
+    {
+        db.collection(collHead)
+                .document(id)
+                .set(data)
+                .addOnSuccessListener {
+                    if(onSaveMessageListener != null)
+                        onSaveMessageListener(null)
+                }
+                .addOnFailureListener {
+                    if (onSaveMessageListener != null)
+                        onSaveMessageListener(it)
+                }
+    }
+
+    private fun sortMessages(messages: MessagesType) {
+        try {
+            messages.sortBy { it.get("sendAt") as Timestamp }
+        } catch (e : Exception) {
+            Log.e("ChatService", "Failed to sort messages by sendAt", e)
+        }
+    }
+
+    /**
+     * @param other Other user id
+     * @param onGetMessagesListener Callback
+     */
+    fun getForCurrentUser(other : String, onGetMessagesListener: OnGetMessagesListener) {
         val user = auth.currentUser
 
         if(user == null) {
@@ -101,15 +225,17 @@ class ChatService {
 
         db.collection(collMessages)
                 .whereEqualTo("from", user.uid)
+                .whereEqualTo("to", other)
                 .get()
                 .addOnSuccessListener { from ->
-                    val messages = parseDocumentsToCollection(from.documents)
+                    val messages = parseDocumentsToMessages(from.documents)
                     db.collection(collMessages)
+                            .whereEqualTo("from", other)
                             .whereEqualTo("to", user.uid)
                             .get()
                             .addOnSuccessListener { to ->
-                                messages.addAll(parseDocumentsToCollection(to.documents))
-                                messages.sortBy { it.get("sendAt") as Timestamp }
+                                messages.addAll(parseDocumentsToMessages(to.documents))
+                                sortMessages(messages)
 
                                 onGetMessagesListener(messages, null)
                             }
@@ -134,12 +260,14 @@ class ChatService {
             .whereEqualTo("from", user.uid)
             .get()
             .addOnSuccessListener { from ->
-                 var messages = parseDocumentsToCollection(from.documents)
+                val messages = parseDocumentsToMessages(from.documents)
                 db.collection(collHead)
                     .whereEqualTo("to", user.uid)
                     .get()
                     .addOnSuccessListener { to ->
-                        messages.addAll(parseDocumentsToCollection(to.documents))
+                        messages.addAll(parseDocumentsToMessages(to.documents))
+                        sortMessages(messages)
+
                         onGetMessagesListener(messages, null)
                     }
                     .addOnFailureListener { e ->

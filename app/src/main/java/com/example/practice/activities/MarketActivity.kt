@@ -141,7 +141,6 @@ class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwi
 
         extras.putString("TO", user);
 
-        launchActivity(ChatActivity::class.java, extras)
-        finish()
+        launchActivity(ChatActivity::class.java, extras, 0, true)
     }
 }

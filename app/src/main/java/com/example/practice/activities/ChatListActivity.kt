@@ -58,6 +58,7 @@ class ChatListActivity : BaseActivity(), ChatListAdapter.Companion.OnItemClickLi
 
         val user = chatService.getOtherUserFromMessage(message)
         if(user != null) {
+            extras.putString("TO", user)
             launchActivity(ChatActivity::class.java, extras)
         }
     }
