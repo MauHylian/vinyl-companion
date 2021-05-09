@@ -1,6 +1,8 @@
 package com.example.practice.activities
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -12,6 +14,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.example.practice.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -25,6 +28,10 @@ import kotlin.properties.Delegates
  */
 @Suppress("DEPRECATION")
 abstract class BaseActivity : AppCompatActivity() {
+
+    val permissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
+    val requestCode = 1
+
     private lateinit var toggle: ActionBarDrawerToggle
     private var currentAct = this.javaClass
 
@@ -45,6 +52,10 @@ abstract class BaseActivity : AppCompatActivity() {
         setContentView(getLayoutResourceID())
 
         // TODO: Refactor
+
+        if (!isPermissionGranted()) {
+            askPermissions()
+        }
 
         // Define ActionBar object
         val actionBar: ActionBar? = supportActionBar
@@ -100,9 +111,29 @@ abstract class BaseActivity : AppCompatActivity() {
                 R.id.item7 -> {
                     launchActivity(ChatListActivity::class.java)
                 }
+
+                R.id.item8 -> {
+                    launchActivity(CallActivity::class.java)
+                }
             }
             true
         }
+    }
+
+    // FOR VIDEO CALL
+    private fun askPermissions() {
+        ActivityCompat.requestPermissions(this, permissions, requestCode)
+    }
+
+    // FOR VIDEO CALL
+    private fun isPermissionGranted(): Boolean {
+
+        permissions.forEach {
+            if (ActivityCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED)
+                return false
+        }
+
+        return true
     }
 
     open fun setLocale(lang: String?) {

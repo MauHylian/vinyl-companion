@@ -37,6 +37,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 dependencies {
+
+    implementation 'com.google.firebase:firebase-database-ktx:19.7.0'
+
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation 'com.google.code.gson:gson:2.8.6'

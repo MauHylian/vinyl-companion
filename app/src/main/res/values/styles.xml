@@ -37,4 +37,10 @@
         <item name="android:layout_height">50dp</item>
         <item name="android:hint">Texto</item>
     </style>
+    
+    <style name="fullscreen">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
 </resources>

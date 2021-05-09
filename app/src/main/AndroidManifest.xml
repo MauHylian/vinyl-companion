@@ -50,6 +50,12 @@
         <activity
             android:name=".activities.ChatActivity"
             android:label="@string/Chat" />
+
+        <activity
+            android:name=".activities.CallActivity"
+            android:label="@string/Call"
+            android:theme="@style/fullscreen"
+            />
     </application>
 
 </manifest>

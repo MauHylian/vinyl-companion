@@ -24,4 +24,8 @@
     <item android:id="@+id/item5"
         android:icon="@drawable/ic_logout_24px"
         android:title="@string/logout"/>
+
+    <item android:id="@+id/item8"
+        android:icon="@drawable/ic_logout_24px"
+        android:title="Llamadas"/>
 </menu>
