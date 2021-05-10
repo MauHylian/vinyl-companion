@@ -18,7 +18,7 @@ import java.util.*
 
 class MarketRecyclerViewAdapter(
         private var context: Context,
-        var listings: LinkedList<JSONObject> = LinkedList()
+        var listings: MutableList<JSONObject> = LinkedList()
 ) : RecyclerView.Adapter<MarketRecyclerViewAdapter.ViewHolder>(), ItemTouchHelperAdapter{
     var onItemClickListener: OnItemClickListener? = null //check line
     var onSwipedListener: OnSwipedListener? = null

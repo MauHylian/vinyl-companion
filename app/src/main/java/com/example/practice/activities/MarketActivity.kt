@@ -1,8 +1,12 @@
 package com.example.practice.activities
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
@@ -12,6 +16,7 @@ import com.example.practice.utils.ItemTouchHelperCallback
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_market.*
 import org.json.JSONObject
 import java.util.*
 
@@ -24,6 +29,9 @@ class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwi
 
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: MarketRecyclerViewAdapter
+
+    var dbList = mutableListOf<JSONObject>()
+    var filteredList = mutableListOf<JSONObject>()
 
     //var listingJSON: JSONObject? = null
 
@@ -51,6 +59,48 @@ class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwi
             val intent = Intent(this, ProductActivity::class.java)
             startActivity(intent)
         }
+
+        search()
+
+    }
+
+    private fun search(){
+
+        search_bar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                closeKeyboard(listingCollection)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if(newText!!.isNotEmpty()){
+                    Log.e("List", dbList.toString())
+
+                    filteredList.clear()
+                    val search = newText.toLowerCase(Locale.getDefault())
+                    Log.e("DB List", filteredList.toString())
+                    dbList.forEach{
+                        if (it.has("title")){
+                            if (it.getString("title").toLowerCase(Locale.getDefault()).contains(search)) {
+                                filteredList.add(it)
+                            }
+                        }
+                    }
+                    adapter.notifyDataSetChanged()
+                }
+                else{
+                    filteredList.clear()
+                    filteredList.addAll(dbList)
+                    adapter.notifyDataSetChanged()
+                }
+                return true
+            }
+        })
+    }
+
+    private fun closeKeyboard(view: View){
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken,0)
     }
 
     override fun onStart() {
@@ -59,7 +109,7 @@ class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwi
         getListings()
     }
 
-    private fun fillListings(listings: LinkedList<JSONObject>) {
+    private fun fillListings(listings: MutableList<JSONObject>) {
         adapter.listings = listings
         adapter.notifyDataSetChanged()
 
@@ -77,7 +127,11 @@ class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwi
                 return@get
             }
 
-            if (listings != null) fillListings(listings)
+            if (listings != null){
+                dbList = listings.toMutableList()
+                filteredList = listings.toMutableList()
+                fillListings(filteredList)
+            }
         }
     }
 

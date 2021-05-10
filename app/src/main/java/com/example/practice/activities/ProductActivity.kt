@@ -6,6 +6,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.practice.R
+import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.activity_product.*
 
 
 class ProductActivity : BaseActivity() {

@@ -51,4 +51,8 @@
     <string name="sent_by_you">Sent by you</string>
     <string name="chat_with">Chat con</string>
     <string name="Call">Llamar</string>
+    <string name="texto">Texto</string>
+    <string name="description">Descripción</string>
+    <string name="subir_imagen">Subir Imagen</string>
+    <string name="nombre_imagen">Nombre Imagen</string>
 </resources>

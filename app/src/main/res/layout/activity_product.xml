@@ -14,72 +14,146 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical" android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:padding="20dp">
 
             <!-- Picture loader -->
 
-            <EditText
-                android:id="@+id/albumTitle"
-                style="@style/TextViewForm"
-                android:layout_width="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:hint="@string/t_tulo_del_album"
-                android:inputType="textPersonName"
-                android:text="Goodbye Yellow Brick Road" />
 
-            <EditText
-                android:id="@+id/albumDescription"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundMode="none"
+                style="@style/TextViewInfoForm"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/albumTitle"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:backgroundTint="#FFFFFF"
+                    android:hint="@string/t_tulo_del_album"
+                    android:inputType="textPersonName"
+                    android:text="Goodbye yellow brick road"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundMode="none"
                 style="@style/DescriptionBox"
-                android:layout_width="match_parent"
-                android:layout_height="125dp"
-                android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:gravity="top"
-                android:inputType="textMultiLine|textFilter"
-                android:text="Elton's Magun Opus" />
+                android:backgroundTint="@color/white">
 
-            <EditText
-                android:id="@+id/albumArtist"
-                style="@style/TextViewForm"
-                android:layout_width="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginBottom="16dp"
-                android:hint="@string/artista_o_grupo"
-                android:inputType="textPersonName"
-                android:text="Elton John" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/albumDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="125dp"
+                    android:layout_gravity="center"
+                    android:gravity="top"
+                    android:hint="@string/description"
+                    android:inputType="textMultiLine|textFilter"
+                    android:text="Elton's Magun Opus" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/albumReleaseCountry"
-                style="@style/TextViewForm"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                app:boxBackgroundMode="none"
+                style="@style/TextViewInfoForm"
                 android:layout_marginBottom="16dp"
-                android:hint="@string/pais_del_album"
-                android:inputType="textPersonName"
-                android:text="UK" />
+                android:backgroundTint="@color/white">
 
-            <EditText
-                android:id="@+id/albumReleaseYear"
-                style="@style/TextViewForm"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="16dp"
-                android:hint="@string/ano_de_salida"
-                android:inputType="textPersonName"
-                android:text="1973" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/albumArtist"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:hint="@string/artista_o_grupo"
+                    android:inputType="textPersonName"
+                    android:text="Elton John"
+                    android:layout_height="match_parent" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:id="@+id/albumPrice"
-                style="@style/TextViewForm"
-                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                app:boxBackgroundMode="none"
+                style="@style/TextViewInfoForm"
                 android:layout_marginBottom="16dp"
-                android:ems="10"
-                android:hint="@string/precio"
-                android:inputType="number"
-                android:text="700" />
+                android:backgroundTint="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/albumReleaseCountry"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:hint="@string/pais_del_album"
+                    android:inputType="textPersonName"
+                    android:text="UK" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundMode="none"
+                style="@style/TextViewInfoForm"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/albumReleaseYear"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:hint="@string/ano_de_salida"
+                    android:inputType="textPersonName"
+                    android:text="1973" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundMode="none"
+                style="@style/TextViewInfoForm"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:id="@+id/albumPrice"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:ems="10"
+                    android:hint="@string/precio"
+                    android:inputType="number"
+                    android:text="700" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="40"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvFilename"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="25"
+                    android:layout_gravity="center"
+                    android:text="@string/nombre_imagen" />
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_weight="15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/subir_imagen" />
+            </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/postAlbum"
