@@ -33,6 +33,7 @@ class CallActivity : BaseActivity() {
         return R.layout.activity_call
     }
 
+    // set username to current user email
     var username = ""
     var friendUsername = ""
 
