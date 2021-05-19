@@ -33,9 +33,8 @@ class CallActivity : BaseActivity() {
         return R.layout.activity_call
     }
 
-    // set username to current user email
     var username = ""
-    var friendUsername = ""
+    var friendsUsername = ""
 
     var isPeerConnected = false
 
@@ -44,27 +43,28 @@ class CallActivity : BaseActivity() {
     var isAudio = true
     var isVideo = true
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setTitle(R.string.Chat)
-        super.onCreate(savedInstanceState)
 
-        // username = intent.getStringExtra("username")!!
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_call)
+
+        username = intent.getStringExtra("username")!!
 
         callBtn.setOnClickListener {
-            friendUsername = friendNameEdit.text.toString()
+            friendsUsername = friendNameEdit.text.toString()
             sendCallRequest()
         }
 
         toggleAudioBtn.setOnClickListener {
             isAudio = !isAudio
             callJavascriptFunction("javascript:toggleAudio(\"${isAudio}\")")
-            toggleAudioBtn.setImageResource(if (isAudio) R.drawable.ic_baseline_mic_24 else R.drawable.ic_baseline_mic_off_24)
+            toggleAudioBtn.setImageResource(if (isAudio) R.drawable.ic_baseline_mic_24 else R.drawable.ic_baseline_mic_off_24 )
         }
 
         toggleVideoBtn.setOnClickListener {
             isVideo = !isVideo
             callJavascriptFunction("javascript:toggleVideo(\"${isVideo}\")")
-            toggleVideoBtn.setImageResource(if (isVideo) R.drawable.ic_baseline_videocam_24 else R.drawable.ic_baseline_videocam_off_24)
+            toggleVideoBtn.setImageResource(if (isVideo) R.drawable.ic_baseline_videocam_24 else R.drawable.ic_baseline_videocam_off_24 )
         }
 
         setupWebView()
@@ -72,12 +72,12 @@ class CallActivity : BaseActivity() {
 
     private fun sendCallRequest() {
         if (!isPeerConnected) {
-            Toast.makeText(this, "No estas conectado, revisa tu internet.", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "You're not connected. Check your internet", Toast.LENGTH_LONG).show()
             return
         }
 
-        firebaseRef.child(friendUsername).child("incoming").setValue(username)
-        firebaseRef.child(friendUsername).child("isAvailable").addValueEventListener(object: ValueEventListener {
+        firebaseRef.child(friendsUsername).child("incoming").setValue(username)
+        firebaseRef.child(friendsUsername).child("isAvailable").addValueEventListener(object: ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -87,11 +87,15 @@ class CallActivity : BaseActivity() {
                 }
 
             }
+
         })
+
     }
 
     private fun listenForConnId() {
-        firebaseRef.child(friendUsername).child("connId").addValueEventListener(object: ValueEventListener {
+        firebaseRef.child(friendsUsername).child("connId").addValueEventListener(object: ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {}
+
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.value == null)
                     return
@@ -99,12 +103,11 @@ class CallActivity : BaseActivity() {
                 callJavascriptFunction("javascript:startCall(\"${snapshot.value}\")")
             }
 
-            override fun onCancelled(error: DatabaseError) {}
-
         })
     }
 
     private fun setupWebView() {
+
         webView.webChromeClient = object: WebChromeClient() {
             override fun onPermissionRequest(request: PermissionRequest?) {
                 request?.grant(request.resources)
@@ -113,17 +116,13 @@ class CallActivity : BaseActivity() {
 
         webView.settings.javaScriptEnabled = true
         webView.settings.mediaPlaybackRequiresUserGesture = false
-        webView.settings.allowContentAccess = true; // extra
-        webView.settings.allowFileAccess = true; // config
         webView.addJavascriptInterface(JavascriptInterface(this), "Android")
 
         loadVideoCall()
-
     }
 
     private fun loadVideoCall() {
-        val filePath = "./src/main/assets/Content/call.html"
-        // val filePath = "file:///android_asset/Content/call.html"
+        val filePath = "file:///android_asset/Content/call.html"
         webView.loadUrl(filePath)
 
         webView.webViewClient = object: WebViewClient() {
@@ -140,14 +139,15 @@ class CallActivity : BaseActivity() {
         uniqueId = getUniqueID()
 
         callJavascriptFunction("javascript:init(\"${uniqueId}\")")
-        firebaseRef.child(username).child("incoming").addValueEventListener(object:
-                ValueEventListener {
+        firebaseRef.child(username).child("incoming").addValueEventListener(object: ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                onCallRequest(snapshot.value as String?) // Added !! to prevent crash
+                onCallRequest(snapshot.value as? String)
             }
+
         })
+
     }
 
     private fun onCallRequest(caller: String?) {
@@ -176,6 +176,7 @@ class CallActivity : BaseActivity() {
         callControlLayout.visibility = View.VISIBLE
     }
 
+
     private fun getUniqueID(): String {
         return UUID.randomUUID().toString()
     }
@@ -183,6 +184,7 @@ class CallActivity : BaseActivity() {
     private fun callJavascriptFunction(functionString: String) {
         webView.post { webView.evaluateJavascript(functionString, null) }
     }
+
 
     fun onPeerConnected() {
         isPeerConnected = true

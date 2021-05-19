@@ -26,6 +26,6 @@
         android:title="@string/logout"/>
 
     <item android:id="@+id/item8"
-        android:icon="@drawable/ic_logout_24px"
+        android:icon="@drawable/ic_baseline_videocam_24_menu"
         android:title="Llamadas"/>
 </menu>

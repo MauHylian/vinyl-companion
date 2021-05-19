@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey">
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -45,8 +46,8 @@
             android:id="@+id/rejectBtn"
             android:padding="20dp"
             android:layout_alignParentEnd="true" />
-
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,8 +69,8 @@
             android:text="call"
             android:id="@+id/callBtn"
             android:layout_alignParentEnd="true" />
-
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,8 +96,8 @@
             android:layout_marginStart="36dp"
             android:id="@+id/toggleAudioBtn"
             android:src="@drawable/ic_baseline_mic_24" />
-
     </LinearLayout>
+
 </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
