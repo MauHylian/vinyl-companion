@@ -113,7 +113,8 @@ abstract class BaseActivity : AppCompatActivity() {
                 }
 
                 R.id.item8 -> {
-                    launchActivity(CallActivity::class.java)
+                    // launchActivity(CallActivity::class.java)
+                    launchActivity(TestActivity::class.java)
                 }
             }
             true

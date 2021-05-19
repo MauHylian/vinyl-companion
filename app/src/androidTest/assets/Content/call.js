@@ -12,7 +12,7 @@ function init(userId) {
     peer = new Peer(userId, {
         host: '192.168.0.10',
         port: 9000,
-        path: '/videocallapp'
+        path: '/desktop'
     })
 
     peer.on('open', () => {

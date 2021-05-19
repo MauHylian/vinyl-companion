@@ -48,7 +48,7 @@ class CallActivity : BaseActivity() {
         setTitle(R.string.Chat)
         super.onCreate(savedInstanceState)
 
-        username = intent.getStringExtra("username")!!
+        // username = intent.getStringExtra("username")!!
 
         callBtn.setOnClickListener {
             friendUsername = friendNameEdit.text.toString()
@@ -113,6 +113,8 @@ class CallActivity : BaseActivity() {
 
         webView.settings.javaScriptEnabled = true
         webView.settings.mediaPlaybackRequiresUserGesture = false
+        webView.settings.allowContentAccess = true; // extra
+        webView.settings.allowFileAccess = true; // config
         webView.addJavascriptInterface(JavascriptInterface(this), "Android")
 
         loadVideoCall()
@@ -120,7 +122,8 @@ class CallActivity : BaseActivity() {
     }
 
     private fun loadVideoCall() {
-        val filePath = "file:android_asset/call.html"
+        val filePath = "./src/main/assets/Content/call.html"
+        // val filePath = "file:///android_asset/Content/call.html"
         webView.loadUrl(filePath)
 
         webView.webViewClient = object: WebViewClient() {
@@ -138,11 +141,11 @@ class CallActivity : BaseActivity() {
 
         callJavascriptFunction("javascript:init(\"${uniqueId}\")")
         firebaseRef.child(username).child("incoming").addValueEventListener(object:
-            ValueEventListener {
+                ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                onCallRequest(snapshot.value as String)
+                onCallRequest(snapshot.value as String?) // Added !! to prevent crash
             }
         })
     }

@@ -52,9 +52,12 @@
             android:label="@string/Chat" />
 
         <activity
+            android:name=".activities.TestActivity"
+            android:label="@string/Call"/>
+
+        <activity
             android:name=".activities.CallActivity"
-            android:label="@string/Call"
-            android:theme="@style/fullscreen"/>
+            android:label="@string/Call"/>
     </application>
 
 </manifest>
