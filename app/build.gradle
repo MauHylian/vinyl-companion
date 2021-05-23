@@ -58,6 +58,7 @@ dependencies {
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+    implementation 'com.google.firebase:firebase-storage:19.2.2'
 
     def arch_version = '2.3.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$arch_version"

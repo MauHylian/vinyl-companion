@@ -147,6 +147,7 @@ class MarketActivity : BaseActivity(), MarketRecyclerViewAdapter.Companion.OnSwi
         listing.put("year", getExtra("year"))
         listing.put("country", getExtra("country"))
         listing.put("price", getExtra("price"))
+        listing.put("image", getExtra("image"))
 
         return listing
     }

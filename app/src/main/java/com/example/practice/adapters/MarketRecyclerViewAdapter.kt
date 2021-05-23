@@ -7,11 +7,13 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.R
 import com.example.practice.activities.ChatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import org.json.JSONObject
 import java.util.*
 
@@ -33,6 +35,7 @@ class MarketRecyclerViewAdapter(
         var description : TextView = view.findViewById(R.id.listingDescription)
         var price : TextView = view.findViewById(R.id.listingPrice)
         var yearAndCountry : TextView = view.findViewById(R.id.listingYearAndCountry)
+        var image : ImageView = view.findViewById(R.id.listingImage)
 
         /**
          * Set on click listener
@@ -64,6 +67,10 @@ class MarketRecyclerViewAdapter(
             if (listing.has("year") && listing.has("country")) {
                 yearAndCountry.text = listing.getString("year")
                 yearAndCountry.text = yearAndCountry.text.toString()+ " " + listing.getString("country")
+            }
+
+            if (listing.has("image")){
+                Picasso.get().load(listing.getString("image")).into(image)
             }
         }
     }

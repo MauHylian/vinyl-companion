@@ -32,8 +32,8 @@
                     android:id="@+id/albumTitle"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:layout_gravity="center"
-                    android:backgroundTint="#FFFFFF"
+                    android:gravity="top"
+                    style="@style/TextViewInfoForm"
                     android:hint="@string/t_tulo_del_album"
                     android:inputType="textPersonName"
                     android:text="Goodbye yellow brick road"/>
@@ -51,11 +51,10 @@
                     android:id="@+id/albumDescription"
                     android:layout_width="match_parent"
                     android:layout_height="125dp"
-                    android:layout_gravity="center"
                     android:gravity="top"
+                    style="@style/DescriptionBox"
                     android:hint="@string/description"
-                    android:inputType="textMultiLine|textFilter"
-                    android:text="Elton's Magun Opus" />
+                    android:inputType="textMultiLine|textFilter"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -71,6 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_gravity="center"
                     android:hint="@string/artista_o_grupo"
+                    style="@style/TextViewInfoForm"
                     android:inputType="textPersonName"
                     android:text="Elton John"
                     android:layout_height="match_parent" />
@@ -89,6 +89,7 @@
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
                     android:layout_gravity="center"
+                    style="@style/TextViewInfoForm"
                     android:hint="@string/pais_del_album"
                     android:inputType="textPersonName"
                     android:text="UK" />
@@ -107,6 +108,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_width="match_parent"
+                    style="@style/TextViewInfoForm"
                     android:hint="@string/ano_de_salida"
                     android:inputType="textPersonName"
                     android:text="1973" />
@@ -126,6 +128,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:ems="10"
+                    style="@style/TextViewInfoForm"
                     android:hint="@string/precio"
                     android:inputType="number"
                     android:text="700" />
@@ -135,7 +138,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:weightSum="40"
+                android:weightSum="100"
                 android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
 
@@ -143,13 +146,21 @@
                     android:id="@+id/tvFilename"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="25"
                     android:layout_gravity="center"
+                    android:layout_weight="50"
                     android:text="@string/nombre_imagen" />
 
+                <ImageView
+                    android:id="@+id/ivPrev"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="20"
+                    app:srcCompat="@android:drawable/btn_dialog" />
+
                 <Button
-                    android:id="@+id/button"
-                    android:layout_weight="15"
+                    android:id="@+id/btUploadImage"
+                    android:layout_weight="30"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/subir_imagen" />
