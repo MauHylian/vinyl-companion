@@ -29,7 +29,7 @@ class TestActivity : AppCompatActivity() {
 
         Firebase.initialize(this)
 
-        // TODO Pasar el username de la sesión actual
+        // TODO Pasar el username de la sesión actual 
 
         loginBtn.setOnClickListener {
             val username = usernameEdit.text.toString()

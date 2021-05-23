@@ -11,14 +11,14 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter a username"
+        android:hint="@string/nombre_de_usuario"
         android:id="@+id/usernameEdit" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/loginBtn"
-        android:text="Login" />
+        android:text="@string/iniciar" />
 
 
 </LinearLayout>

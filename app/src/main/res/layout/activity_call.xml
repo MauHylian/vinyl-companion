@@ -60,13 +60,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/friendNameEdit"
             android:layout_toStartOf="@id/callBtn"
-            android:hint="Who do you want to call?" />
+            android:hint="@string/who_do_you_want_to_call" />
 
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="call"
+            android:text="@string/call"
             android:id="@+id/callBtn"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>

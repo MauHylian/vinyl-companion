@@ -55,4 +55,9 @@
     <string name="description">Descripción</string>
     <string name="subir_imagen">Subir Imagen</string>
     <string name="nombre_imagen">Nombre Imagen</string>
+    <string name="nombre_de_usuario">Nombre de usuario</string>
+    <string name="iniciar">Iniciar sesión</string>
+    <string name="who_do_you_want_to_call">¿A quién quieres llamar?</string>
+    <string name="call">Llama</string>
+    <string name="llamadas">Llamadas</string>
 </resources>
